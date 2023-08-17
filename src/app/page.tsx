@@ -19,8 +19,7 @@ export default async function Home(req: NextRequest) {
         <>
           <span className="text-xl">Please Sign In</span>
           <div className="flex gap-4">
-            <SignInButton text="Sign in with Discord" provider="discord" />
-            <SignInButton text="Sign in with Azure AD" provider="azure-ad" />
+            <SignInButton text="Sign in with Azure AD" />
           </div>
         </>
       )}
