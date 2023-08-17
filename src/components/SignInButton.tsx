@@ -9,7 +9,7 @@ interface SignInButtonProps {
 function SignInButton({ text }: SignInButtonProps) {
   return (
     <button
-      onClick={() => signIn()}
+      onClick={() => signIn("azure-ad")}
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       {text}
     </button>

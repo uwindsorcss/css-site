@@ -20,9 +20,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
-      if (user) {
-        token.provider = account?.provider;
-      }
       return token;
     },
   },
