@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { authOptions } from "../[...nextauth]/route";
 import { prisma } from "@/lib/db";
 
+const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
+
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -18,7 +20,7 @@ export async function GET(req: Request) {
 
     // Exchange the authorization code for an access token from Discord
     const discordResponse = await fetch(
-      "https://discordapp.com/api/oauth2/token",
+      "${DISCORD_API_ENDPOINT}/oauth2/token",
       {
         method: "POST",
         headers: {
@@ -36,7 +38,7 @@ export async function GET(req: Request) {
       expiresAt.getSeconds() + discordResponse.expires_in - 60
     );
 
-    const user = await fetch("https://discordapp.com/api/users/@me", {
+    const user = await fetch("${DISCORD_API_ENDPOINT}/users/@me", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -80,6 +82,37 @@ export async function GET(req: Request) {
         },
       });
     }
+
+    // Send a confirmation DM to the user
+    await fetch(`${DISCORD_API_ENDPOINT}/users/@me/channels`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipient_id: user.id,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error("Error sending DM to user:", error);
+      })
+      .then((channel) => {
+        fetch(`${DISCORD_API_ENDPOINT}/channels/${channel.id}/messages`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: `Your discord account has been successfully linked to your university account!`,
+          }),
+        });
+      })
+      .catch((error) => {
+        console.error("Error sending DM to user:", error);
+      });
 
     // redirect
     return NextResponse.redirect(new URL("/", req.url));
