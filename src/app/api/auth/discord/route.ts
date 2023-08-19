@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
     // Exchange the authorization code for an access token from Discord
     const discordResponse = await fetch(
-      "${DISCORD_API_ENDPOINT}/oauth2/token",
+      `${DISCORD_API_ENDPOINT}/oauth2/token`,
       {
         method: "POST",
         headers: {
@@ -38,7 +38,7 @@ export async function GET(req: Request) {
       expiresAt.getSeconds() + discordResponse.expires_in - 60
     );
 
-    const user = await fetch("${DISCORD_API_ENDPOINT}/users/@me", {
+    const user = await fetch(`${DISCORD_API_ENDPOINT}/users/@me`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
