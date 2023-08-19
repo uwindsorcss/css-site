@@ -27,6 +27,19 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model DiscordAccount {
+  id           String   @unique
+  userId       String   @unique
+  username     String?
+  email        String?
+  avatar       String?
+  access_token String?  @db.Text
+  expires_at   DateTime?
+  created_at   DateTime
+  updated_at   DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -36,13 +49,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
+  id             String          @id @default(cuid())
+  name           String?
+  email          String?         @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  discordAccount DiscordAccount?
 }
 
 model VerificationToken {
