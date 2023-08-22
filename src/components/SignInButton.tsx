@@ -1,6 +1,7 @@
 "use client";
 import { signIn } from "next-auth/react";
 import React from "react";
+import { Button } from "./ui/button";
 
 interface SignInButtonProps {
   text: string;
@@ -8,11 +9,12 @@ interface SignInButtonProps {
 
 function SignInButton({ text }: SignInButtonProps) {
   return (
-    <button
-      onClick={() => signIn("azure-ad")}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <Button
+      onClick={() => {
+        signIn("azure-ad");
+      }}>
       {text}
-    </button>
+    </Button>
   );
 }
 

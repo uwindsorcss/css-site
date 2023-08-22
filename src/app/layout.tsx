@@ -1,5 +1,5 @@
 import AuthProvider from "@/components/AuthProvider";
-import "./globals.css";
+import "./global.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
