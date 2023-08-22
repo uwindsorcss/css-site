@@ -1,21 +1,22 @@
 "use client";
 import { unlinkDiscordAccount } from "@/app/_actions";
 import React, { useTransition } from "react";
+import { Button } from "@/components/ui/button";
 
 function UnlinkDiscordButton() {
   const [isPending, startTransition] = useTransition();
 
   return (
-    <button
-      onClick={() =>
+    <Button
+      variant="destructive"
+      onClick={() => {
         startTransition(() => {
           unlinkDiscordAccount();
-        })
-      }
-      disabled={isPending}
-      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        });
+      }}
+      disabled={isPending}>
       Unlink Discord
-    </button>
+    </Button>
   );
 }
 
