@@ -1,4 +1,4 @@
-import { BsGithub, BsLinkedin, BsTwitter } from "react-icons/bs";
+import { BsGithub, BsLinkedin, BsTwitter, BsYoutube } from "react-icons/bs";
 import { AiFillFacebook, AiFillInstagram } from "react-icons/ai";
 import SocialIcon from "./SocialIcon";
 
@@ -19,6 +19,7 @@ const Footer = () => {
           href="https://facebook.com/uwindsorcss"
           icon={AiFillFacebook}
         />
+        <SocialIcon href="https://youtube.com/@uwindsorcss" icon={BsYoutube} />
         <SocialIcon href="https://github.com/uwindsorcss" icon={BsGithub} />
       </div>
       <p>
