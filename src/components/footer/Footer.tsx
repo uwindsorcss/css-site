@@ -4,7 +4,7 @@ import SocialIcon from "./SocialIcon";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary/95 text-primary-foreground py-8 text-center">
+    <footer className="bg-primary text-primary-foreground py-8 text-center">
       <div className="flex justify-center gap-4 mb-5">
         <SocialIcon
           href="https://www.linkedin.com/company/uwindsor-css/"
