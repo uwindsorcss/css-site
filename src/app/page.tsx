@@ -1,33 +1,39 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import LinkDiscordButton from "@/components/discord/LinkDiscordButton";
-import UnlinkDiscordButton from "@/components/discord/UnlinkDiscordButton";
-import { prisma } from "@/lib/db";
-import { getServerSession } from "next-auth/next";
+import Hero from "@/components/home/Hero";
+import Section from "@/components/home/Section";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { BsDiscord } from "react-icons/bs";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-  const discordAccount = await prisma.discordAccount.findFirst({
-    where: { userId: session?.user?.id },
-  });
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-      <h1 className="text-4xl text-center font-bold">
-        Computer Science Society
-      </h1>
-      {session ? (
-        <>
-          <span className="text-xl">Welcome, {session.user?.name}</span>
-          <span className="text-xl">
-            {discordAccount
-              ? `Discord: ${discordAccount.username}`
-              : "Discord: Not Linked"}
-          </span>
-          {discordAccount ? <UnlinkDiscordButton /> : <LinkDiscordButton />}
-        </>
-      ) : (
-        <span className="text-xl">Please Sign In</span>
-      )}
-    </div>
+    <>
+      <Hero>
+        <h2 className="text-3xl text-center font-bold text-yellow-500">
+          University of Windsor
+        </h2>
+        <h1 className="text-6xl text-center font-black">
+          Computer Science Society
+        </h1>
+        <h3 className="text-lg text-center mb-4">
+          A student-run organization that aims to provide a community for
+          Computer Science students.
+        </h3>
+        <Button variant="discord" asChild>
+          <Link href="/discord">
+            <BsDiscord className="text-lg mr-2" />
+            Join Our Discord
+          </Link>
+        </Button>
+      </Hero>
+      <Section>
+        <h2 className="text-2xl text-center font-bold">Section 1</h2>
+      </Section>
+      <Section>
+        <h2 className="text-2xl text-center font-bold">Section 2</h2>
+      </Section>
+      <Section>
+        <h2 className="text-2xl text-center font-bold">Section 3</h2>
+      </Section>
+    </>
   );
 }
