@@ -1,11 +1,10 @@
 import ThemeButton from "./ThemeButton";
-import SignOutButton from "../account/SignOutButton";
-import SignInButton from "../account/SignInButton";
 import DesktopMenu from "./DesktopMenu";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
+import AuthButton from "../account/AuthButton";
 
 async function NavBar() {
   const session = await getServerSession(authOptions);
@@ -59,7 +58,7 @@ async function NavBar() {
         <DesktopMenu links={links} />
         <div className="flex gap-2 justify-self-end">
           <ThemeButton />
-          {session ? <SignOutButton /> : <SignInButton />}
+          <AuthButton session={session} />
           <MobileMenu links={links} />
         </div>
       </div>

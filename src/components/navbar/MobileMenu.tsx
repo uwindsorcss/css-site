@@ -2,9 +2,8 @@
 import { motion, AnimatePresence, useCycle } from "framer-motion";
 import React from "react";
 import { Button } from "../ui/button";
-import { AiOutlineClose } from "react-icons/ai";
-import { GiHamburgerMenu } from "react-icons/gi";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 interface MobileMenuProps {
   links: Link[];
@@ -15,11 +14,7 @@ function MobileMenu({ links }: MobileMenuProps) {
   return (
     <div className="lg:hidden">
       <Button variant="outline" size="icon" onClick={() => cycleOpen()}>
-        {open ? (
-          <AiOutlineClose className="text-md" />
-        ) : (
-          <GiHamburgerMenu className="text-md" />
-        )}
+        {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </Button>
       <AnimatePresence>
         {open && (

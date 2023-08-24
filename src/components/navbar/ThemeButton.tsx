@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
 import { Button } from "../ui/button";
+import { Moon, Sun } from "lucide-react";
 
 interface ThemeButtonProps {
   className?: string;
@@ -21,9 +21,9 @@ const ThemeButton = ({ className }: ThemeButtonProps) => {
       size="icon"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
       {mounted && resolvedTheme === "dark" ? (
-        <BsFillSunFill className="text-md" />
+        <Sun className="w-5 h-5" />
       ) : (
-        <BsFillMoonFill className="text-md" />
+        <Moon className="w-5 h-5" />
       )}
     </Button>
   );

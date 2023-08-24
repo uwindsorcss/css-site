@@ -1,11 +1,10 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { IconType } from "react-icons";
 
 interface SocialIconProps {
   href: string;
-  icon: IconType;
+  icon: any;
 }
 
 const SocialIcon = ({ href, icon }: SocialIconProps) => {

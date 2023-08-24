@@ -3,7 +3,7 @@ import Hero from "@/components/home/Hero";
 import Section from "@/components/home/Section";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { BsDiscord } from "react-icons/bs";
+import { SiDiscord } from "@icons-pack/react-simple-icons";
 
 export default async function Home() {
   const memberCount = await fetch(
@@ -33,7 +33,7 @@ export default async function Home() {
         </h3>
         <Button variant="discord" asChild>
           <Link href="/discord">
-            <BsDiscord className="text-lg mr-2" />
+            <SiDiscord className="w-5 h-5 mr-2" />
             Join Our Discord
           </Link>
         </Button>
