@@ -1,6 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import LinkDiscordButton from "@/components/discord/LinkDiscordButton";
-import UnlinkDiscordButton from "@/components/discord/UnlinkDiscordButton";
+import DiscordAuthButton from "@/components/discord/DiscordAuthButton";
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 
@@ -20,7 +19,7 @@ export default async function DiscordPage() {
               ? `Discord: ${discordAccount.username}`
               : "Discord: Not Linked"}
           </span>
-          {discordAccount ? <UnlinkDiscordButton /> : <LinkDiscordButton />}
+          <DiscordAuthButton linked={discordAccount !== null} />
         </>
       ) : (
         <span className="text-xl">Please Sign In</span>

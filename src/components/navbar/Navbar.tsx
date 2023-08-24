@@ -20,15 +20,14 @@ async function NavBar() {
       href: "#",
       sublinks: [
         {
-          name: "Tutoring Schedule",
-          href: "http://tutor.cs.uwindsor.ca",
-          description: "Tutoring schedule for the current semester.",
+          name: "CSS Wiki",
+          href: "https://uwindsorcss.github.io/wiki",
+          description: "A wiki for Computer Science students at UWindsor.",
         },
         {
-          name: "Facebook Group",
-          href: "https://www.facebook.com/groups/210441872352826",
-          description:
-            "Join the Compsci Kool Kats Facebook group to stay up to date.",
+          name: "Store",
+          href: "https://store.uwindsorcss.ca",
+          description: "Buy CSS merch and swag.",
         },
         {
           name: "Student Guide",
@@ -36,14 +35,9 @@ async function NavBar() {
           description: "A guide for new students to the University of Windsor.",
         },
         {
-          name: "UWindsor Timetable Creator",
-          href: "https://utable.net",
-          description: "A timetable creator for UWindsor students.",
-        },
-        {
-          name: "Job Tracker Chrome Extension",
-          href: "https://chrome.google.com/webstore/detail/eztrackr/kdpbamlhffmfbgglmaedhopenkpgkfdg",
-          description: "A Chrome extension to track job postings.",
+          name: "Gallery",
+          href: "/gallery",
+          description: "A gallery of photos from CSS events.",
         },
       ],
     },
@@ -51,7 +45,7 @@ async function NavBar() {
 
   return (
     <div className="z-10 w-full h-16 fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
-      <div className="h-full px-4 lg:px-8 mx-auto items-center max-w-7xl grid grid-row-1 grid-cols-2 lg:grid-cols-3 my-auto">
+      <div className="h-full px-8 mx-auto items-center max-w-7xl grid grid-row-1 grid-cols-2 lg:grid-cols-3 my-auto">
         <div className="flex justify-between py-2 justify-self-start">
           <Logo />
         </div>

@@ -39,17 +39,23 @@ export default async function Home() {
         </Button>
       </Hero>
       <Section>
-        <span className="text-4xl font-semibold">
+        <h2 className="text-2xl text-center font-bold">Upcoming Events</h2>
+      </Section>
+      <Section>
+        <h2 className="text-2xl text-center font-bold">Featured Newsletters</h2>
+      </Section>
+      <Section>
+        <span className="text-4xl font-semibold mb-10">
           <span>Connect with </span>
           <MemberCount memberCount={memberCount} />
           <span> Students in Our Discord Server</span>
         </span>
-      </Section>
-      <Section>
-        <h2 className="text-2xl text-center font-bold">Section 2</h2>
-      </Section>
-      <Section>
-        <h2 className="text-2xl text-center font-bold">Section 3</h2>
+        <Button variant="discord" asChild>
+          <Link href="/discord">
+            <SiDiscord className="w-5 h-5 mr-2" />
+            Link Your Account
+          </Link>
+        </Button>
       </Section>
     </>
   );
