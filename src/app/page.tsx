@@ -1,3 +1,4 @@
+import MemberCount from "@/components/discord/MemberCount";
 import Hero from "@/components/home/Hero";
 import Section from "@/components/home/Section";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,18 @@ import Link from "next/link";
 import { BsDiscord } from "react-icons/bs";
 
 export default async function Home() {
+  const memberCount = await fetch(
+    `https://discordapp.com/api/guilds/${process.env.DISCORD_GUILD_ID}/preview`,
+    {
+      next: { revalidate: 3600 },
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+      },
+    }
+  )
+    .then((res) => res.json().then((data) => data.approximate_member_count))
+    .catch(() => 0);
+
   return (
     <>
       <Hero>
@@ -26,7 +39,11 @@ export default async function Home() {
         </Button>
       </Hero>
       <Section>
-        <h2 className="text-2xl text-center font-bold">Section 1</h2>
+        <span className="text-4xl font-semibold">
+          <span>Connect with </span>
+          <MemberCount memberCount={memberCount} />
+          <span> Students in Our Discord Server</span>
+        </span>
       </Section>
       <Section>
         <h2 className="text-2xl text-center font-bold">Section 2</h2>

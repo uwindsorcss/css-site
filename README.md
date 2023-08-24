@@ -35,6 +35,7 @@ AZURE_AD_TENANT_ID="your-azure-ad-tenant-id"
 DISCORD_CLIENT_ID="your-discord-client-id"
 DISCORD_CLIENT_SECRET="your-discord-client-secret"
 DISCORD_BOT_TOKEN="your-discord-bot-token"
+DISCORD_GUILD_ID="your-discord-guild-id"
 DISCORD_REDIRECT_URI="http://localhost:3000/api/auth/discord"
 
 # The following variables are required for the database
