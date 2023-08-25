@@ -28,7 +28,7 @@ export async function GET(req: Request) {
       }
     ).then((res) => res.json());
 
-    if (discordResponse.id) {
+    if (!discordResponse.error && discordResponse.access_token) {
       await linkDiscordAccount(discordResponse);
       return NextResponse.redirect(
         new URL(

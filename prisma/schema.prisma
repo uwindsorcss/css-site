@@ -28,16 +28,15 @@ model Account {
 }
 
 model DiscordAccount {
-  id           String   @unique
-  userId       String   @unique
+  id           String    @unique
+  userId       String    @unique
   username     String?
-  email        String?
   avatar       String?
-  access_token String?  @db.Text
+  access_token String?   @db.Text
   expires_at   DateTime?
   created_at   DateTime
   updated_at   DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Session {
@@ -53,6 +52,7 @@ model User {
   name           String?
   email          String?         @unique
   emailVerified  DateTime?
+  title          String?
   image          String?
   accounts       Account[]
   sessions       Session[]
@@ -65,4 +65,8 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model BlackList {
+  email String @unique
 }

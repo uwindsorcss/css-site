@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
-import AuthButton from "../account/AuthButton";
+import AccountButton from "./AccountButton";
 
 async function NavBar() {
   const session = await getServerSession(authOptions);
@@ -20,9 +20,9 @@ async function NavBar() {
       href: "#",
       sublinks: [
         {
-          name: "CSS Wiki",
+          name: "Wiki",
           href: "https://uwindsorcss.github.io/wiki",
-          description: "A wiki for Computer Science students at UWindsor.",
+          description: "A wiki of everything CS at UWindsor.",
         },
         {
           name: "Store",
@@ -30,14 +30,15 @@ async function NavBar() {
           description: "Buy CSS merch and swag.",
         },
         {
-          name: "Student Guide",
-          href: "https://css.uwindsor.ca/guide",
-          description: "A guide for new students to the University of Windsor.",
-        },
-        {
           name: "Gallery",
           href: "/gallery",
           description: "A gallery of photos from CSS events.",
+        },
+        {
+          name: "Incoming Student Guide",
+          href: "https://css.uwindsor.ca/guide",
+          description:
+            "A guide for new students to help them get started with CS at UWindsor.",
         },
       ],
     },
@@ -52,7 +53,7 @@ async function NavBar() {
         <DesktopMenu links={links} />
         <div className="flex gap-2 justify-self-end">
           <ThemeButton />
-          <AuthButton session={session} />
+          <AccountButton session={session} />
           <MobileMenu links={links} />
         </div>
       </div>
