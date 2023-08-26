@@ -26,7 +26,9 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
     return (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive">Unlink Discord</Button>
+          <Button variant="destructive" size="full">
+            Unlink Discord
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -52,6 +54,8 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
   } else {
     return (
       <Button
+        size="full"
+        variant="discord"
         onClick={() => {
           router.replace("/api/discord/link");
         }}>
