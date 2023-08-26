@@ -65,6 +65,7 @@ export async function linkDiscordAccount(discordResponse: any) {
         },
         body: JSON.stringify({
           access_token: accessToken,
+          nick: session?.user.name,
         }),
       }
     );
