@@ -25,7 +25,8 @@ npm install
 ```env
 NODE_ENV="development"
 NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-nextauth-secret" # You can generate a secret on linux using `openssl rand -hex 32`
+# You can generate a secret using `openssl rand -hex 32`
+NEXTAUTH_SECRET="your-nextauth-secret" 
 
 # The following variables are required for authentication
 AZURE_AD_CLIENT_ID="your-azure-ad-client-id"
@@ -47,13 +48,19 @@ POSTGRES_PORT="5432"
 DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 ```
 
-4. Set up the database using Docker Compose:
+4. Build the database image using Docker Compose:
 
 ```bash
-docker-compose up -d
+docker compose build
 ```
 
-5. Run the migrations using Prisma:
+5. Set up the database container using Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+6. Run the migrations using Prisma:
 
 ```bash
 npx prisma migrate dev
