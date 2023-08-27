@@ -21,7 +21,7 @@ export default async function Home() {
   return (
     <>
       <Hero>
-        <h2 className="text-2xl md:text-3xl text-center font-bold text-yellow-500">
+        <h2 className="text-2xl md:text-3xl text-center font-bold text-blue-900 dark:text-yellow-500">
           University of Windsor
         </h2>
         <h1 className="text-3xl md:text-5xl lg:text-6xl text-center font-black">
