@@ -1,4 +1,5 @@
 import styles from "./Hero.module.css";
+import HeroCircuitAnimation from "./HeroCircuitAnimation";
 
 interface HeroProps {
   children: React.ReactNode;
@@ -7,7 +8,8 @@ interface HeroProps {
 function Hero({ children }: HeroProps) {
   return (
     <div className={styles.hero}>
-      <section className="flex flex-col items-center justify-center min-h-screen gap-5 text-white relative z-1">
+      <HeroCircuitAnimation />
+      <section className="flex flex-col items-center justify-center min-h-screen gap-8 text-white relative z-10">
         {children}
       </section>
     </div>

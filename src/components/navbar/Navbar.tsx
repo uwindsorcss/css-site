@@ -45,7 +45,7 @@ async function NavBar() {
   ];
 
   return (
-    <div className="z-10 w-full h-16 fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
+    <div className="z-50 w-full h-16 fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
       <div className="h-full px-8 mx-auto items-center max-w-7xl grid grid-row-1 grid-cols-2 lg:grid-cols-3 my-auto">
         <div className="flex justify-between py-2 justify-self-start">
           <Logo />
