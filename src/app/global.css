@@ -15,8 +15,8 @@ body {
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 3% 99%;
+    --popover-foreground: 222.2 84% 4.9%;
 
     --primary: 222.2 45% 15%;
     --primary-foreground: 210 40% 98%;
@@ -36,7 +36,7 @@ body {
     --success: 120 33% 49%;
     --success-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
+    --border: 210 20% 75%;
     --input: 214.3 10% 35%;
     --ring: 222.2 84% 4.9%;
 
