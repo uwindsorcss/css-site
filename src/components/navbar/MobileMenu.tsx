@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useCycle } from "framer-motion";
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
 interface MobileMenuProps {
   links: Link[];
@@ -39,7 +39,7 @@ function MobileMenu({ links }: MobileMenuProps) {
                     <div className="text-3xl font-medium p-3 pb-4">
                       {link.name}
                     </div>
-                    <div className="ml-1 mb-1">
+                    <div className="ml-3 mb-1">
                       {link.sublinks.map((sublink) => (
                         <Link
                           className="flex flex-col p-2 hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -47,7 +47,12 @@ function MobileMenu({ links }: MobileMenuProps) {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => cycleOpen()}>
-                          {sublink.name}
+                          <div className="inline-flex text-sm font-medium leading-none">
+                            {sublink.name}
+                            {sublink.href?.startsWith("http") && (
+                              <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
+                            )}
+                          </div>
                           <div className="text-muted-foreground text-sm">
                             {sublink.description}
                           </div>

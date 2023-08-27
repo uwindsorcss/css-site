@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -111,7 +111,12 @@ const ListItem = React.forwardRef<
             className
           )}
           {...props}>
-          <div className="text-sm font-medium leading-none">{title}</div>
+          <div className="inline-flex text-sm font-medium leading-none">
+            {title}
+            {props.href?.startsWith("http") && (
+              <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
+            )}
+          </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
