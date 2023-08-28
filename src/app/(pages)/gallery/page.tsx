@@ -1,45 +1,63 @@
-import { NextPage } from 'next';
-import Link from 'next/link';
+import { NextPage } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import PageWrapper from "@/components/PageWrapper";
 
-import './style.css'; // Import the CSS file
-
-type Image = {
-  url: string;
-  event: string;
-  width: number;
-  height: number;
+type Event = {
+  name: string;
+  slug: string;
+  thumbnail: string;
+  images?: string[];
 };
 
-const images: Image[] = [
-  { url: '/images/css-logo-shield.png', event: 'none', width: 200, height: 200 },
-  { url: '/images/event1/image1.jpg', event: 'event1', width: 100, height: 200 },
-  { url: '/images/event1/image2.jpg', event: 'event1', width: 200, height: 100 },
-  { url: '/images/event2/image1.jpg', event: 'event2', width: 150, height: 150 },
-  { url: '/images/event2/image2.jpg', event: 'event2', width: 250, height: 250 },
+const events: Event[] = [
+  {
+    name: "event 1",
+    slug: "event1",
+    thumbnail: "/images/placeholder/480x360.png",
+  },
+  {
+    name: "event 2",
+    slug: "event2",
+    thumbnail: "/images/placeholder/480x360.png",
+  },
+  {
+    name: "event 3",
+    slug: "event3",
+    thumbnail: "/images/placeholder/480x360.png",
+  },
+  {
+    name: "event 4",
+    slug: "event4",
+    thumbnail: "/images/placeholder/480x360.png",
+  },
 ];
 
 const GalleryPage: NextPage = () => {
-  const events = Array.from(new Set(images.map(image => image.event)));
-
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen gap-4'>
-      <h1 className='text-2xl md:text-4xl text-center font-bold'>Gallery</h1>
-      <div className="cards-container">
-        {events.map(event => {
-          const eventData:any = images.find(image => image.event === event);
-          const thumbnailUrl = event === 'none' ? '/images/css-logo-shield.png' : eventData.url;
-
+    <PageWrapper>
+      <h1 className="text-2xl md:text-4xl text-center font-bold">Gallery</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {events.map((event, i) => {
           return (
-            <Link key={event} className='card' href={`/gallery/${event}`} passHref>
-              <div className='thumbnail-container'>
-                <img src={thumbnailUrl} alt={`Thumbnail for ${event}`} />
-              </div>
-              <h2>{event}</h2>
+            <Link
+              key={i}
+              className="bg-card flex flex-col items-center p-5 border rounded-md border-border shadow-sm hover:shadow-md hover:border-blue-950/50 hover:shadow-blue-950/20 dark:hover:border-yellow-600/50  dark:hover:shadow-yellow-600/20 hover:-translate-y-1 transition duration-300 ease-in-out transform"
+              href={`/gallery/${event.slug}`}>
+              <Image
+                className="rounded-md"
+                src={event.thumbnail}
+                alt={`Thumbnail for ${event.name}`}
+                width={480}
+                height={360}
+                style={{ objectFit: "cover" }}
+              />
+              <span className="text-lg font-semibold mt-5">{event.name}</span>
             </Link>
           );
         })}
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 

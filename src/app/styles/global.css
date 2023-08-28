@@ -13,7 +13,7 @@ body {
     --background: 220 5% 95%;
     --foreground: 222.2 84% 4.9%;
 
-    --card: 0 0% 100%;
+    --card: 220 5% 97%;
     --card-foreground: 222.2 84% 4.9%;
 
     --popover: 220 3% 99%;
@@ -40,11 +40,9 @@ body {
     --border: 210 20% 75%;
     --input: 214.3 10% 35%;
     --ring: 222.2 84% 4.9%;
-
-    --circuit-background: #b8b8b8;
-
     --radius: 0.5rem;
 
+    --circuit-background: #b8b8b8;
     --hero-background: radial-gradient(
       ellipse at center 30%,
       rgb(255, 232, 157),
@@ -61,10 +59,10 @@ body {
     --background: 222.2 30% 6%;
     --foreground: 210 40% 98%;
 
-    --card: 222.2 84% 4.9%;
+    --card: 222.2 50% 9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222.2 84% 4.9%;
+    --popover: 222.2 50% 9%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 222.2 45% 10.5%;
@@ -90,7 +88,6 @@ body {
     --ring: 212.7 26.8% 83.9%;
 
     --circuit-background: #000;
-
     --hero-background: var(--noise),
       radial-gradient(
         ellipse at center 30%,

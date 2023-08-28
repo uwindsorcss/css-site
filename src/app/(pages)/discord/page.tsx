@@ -41,7 +41,7 @@ export default async function DiscordPage() {
                       href="https://discord.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline text-primary-foreground">
+                      className="underline text-foreground">
                       Discord
                     </a>
                     {
