@@ -1,4 +1,3 @@
-import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import PageWrapper from "@/components/PageWrapper";
@@ -33,7 +32,7 @@ const events: Event[] = [
   },
 ];
 
-const GalleryPage: NextPage = () => {
+export default function GalleryPage() {
   return (
     <PageWrapper>
       <h1 className="text-2xl md:text-4xl text-center font-bold">Gallery</h1>
@@ -59,6 +58,4 @@ const GalleryPage: NextPage = () => {
       </div>
     </PageWrapper>
   );
-};
-
-export default GalleryPage;
+}

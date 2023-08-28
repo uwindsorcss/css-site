@@ -1,16 +1,13 @@
-import React, { FC } from 'react'
+import PageWrapper from "@/components/PageWrapper";
 
-interface pageProps{
-    params: {events:string}
+interface pageProps {
+  params: { events: string };
 }
 
-const page:FC<pageProps>= ({params}) => {
-
+export default function Event({ params }: pageProps) {
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen gap-4'>
-      <h1 className='text-4xl text-center font-bold'>{params.events}</h1>
-    </div>
-  )
+    <PageWrapper>
+      <h1 className="text-4xl text-center font-bold">{params.events}</h1>
+    </PageWrapper>
+  );
 }
-
-export default page

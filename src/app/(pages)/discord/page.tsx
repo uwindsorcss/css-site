@@ -18,6 +18,7 @@ import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
+import PageWrapper from "@/components/PageWrapper";
 
 export default async function DiscordPage() {
   const session = await getServerSession(authOptions);
@@ -26,7 +27,7 @@ export default async function DiscordPage() {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen h-screen">
+    <PageWrapper>
       <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
         <div className="flex justify-end">
           <HoverCard>
@@ -109,6 +110,6 @@ export default async function DiscordPage() {
           )}
         </CardFooter>
       </Card>
-    </div>
+    </PageWrapper>
   );
 }
