@@ -44,19 +44,13 @@ export default async function DiscordPage() {
                       className="underline text-foreground">
                       Discord
                     </a>
-                    {
-                      " is a free application that makes it easy to communicate between users in chat channels. Discord is available on the web, desktop, and mobile devices."
-                    }
+                    {` is a free application that makes it easy to communicate between users in chat channels. Discord is available on the web, desktop, and mobile devices.`}
                   </p>
                   <p>
-                    {
-                      "The Computer Science Society created a private Discord server to connect Computer Science students and enable discussions for courses, co-op/internships, general chat and more."
-                    }
+                    {`The Computer Science Society created a private Discord server to connect Computer Science students and enable discussions for courses, co-op/internships, general chat and more.`}
                   </p>
                   <p>
-                    {
-                      "All users in the Discord server are linked to their UWindsor email addresses to verify identity and to restrict the server to UWindsor students only."
-                    }
+                    {`All users in the Discord server are linked to their UWindsor email addresses to verify identity and to restrict the server to UWindsor students only.`}
                   </p>
                 </div>
               </div>
@@ -96,8 +90,8 @@ export default async function DiscordPage() {
             </>
           ) : (
             <span className="text-center text-sm">
-              You're currently not logged in. Please log in to link your Discord
-              account.
+              {`You're currently not logged in. Please log in to link your Discord
+              account.`}
             </span>
           )}
         </CardContent>

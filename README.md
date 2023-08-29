@@ -9,6 +9,7 @@
 - Node.js: [Download and Install Node.js](https://nodejs.org/)
 - Docker: [Download and Install Docker](https://www.docker.com/)
 - Docker Compose: [Download and Install Docker Compose](https://docs.docker.com/compose/install/)
+- pnpm: [Download and Install pnpm](https://pnpm.io/installation)
 
 ### Installation
 
@@ -17,7 +18,7 @@
 2. Install project dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 3. Copy the `.env.example` file and rename it to `.env`. Update the variables with appropriate values:
@@ -26,7 +27,7 @@ npm install
 NODE_ENV="development"
 NEXTAUTH_URL="http://localhost:3000"
 # You can generate a secret using `openssl rand -hex 32`
-NEXTAUTH_SECRET="your-nextauth-secret" 
+NEXTAUTH_SECRET="your-nextauth-secret"
 
 # The following variables are required for authentication
 AZURE_AD_CLIENT_ID="your-azure-ad-client-id"
@@ -63,7 +64,7 @@ docker compose up -d
 6. Run the migrations using Prisma:
 
 ```bash
-npx prisma migrate dev
+pnpx prisma migrate dev
 ```
 
 ### Development
@@ -71,7 +72,7 @@ npx prisma migrate dev
 Start the Next.js development server:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Your development environment is now set up and running. Access the site at [http://localhost:3000](http://localhost:3000).
