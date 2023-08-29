@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import PageWrapper from "@/components/PageWrapper";
 import { prisma } from "@/lib/db";
 
 export default async function GalleryPage() {
@@ -17,7 +16,7 @@ export default async function GalleryPage() {
   });
 
   return (
-    <PageWrapper>
+    <>
       <h1 className="text-2xl md:text-4xl text-center font-bold">Gallery</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {events.length === 0 && (
@@ -48,6 +47,6 @@ export default async function GalleryPage() {
           );
         })}
       </div>
-    </PageWrapper>
+    </>
   );
 }
