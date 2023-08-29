@@ -35,7 +35,6 @@ export const authOptions: NextAuthOptions = {
 
         // Confirm that profile photo was returned
         let image;
-        // TODO: Do this without Buffer
         if (response.ok && typeof Buffer !== "undefined") {
           try {
             const pictureBuffer = await response.arrayBuffer();
@@ -81,9 +80,14 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, user }) {
+      const userInJson = await prisma.user.findUnique({
+        where: { email: session.user.email },
+      });
+
       if (session.user) {
-        session.user.title = user.title;
         session.user.id = user.id;
+        session.user.title = user.title;
+        session.user.role = userInJson.role;
       }
       return session;
     },

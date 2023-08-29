@@ -47,16 +47,26 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+  user
+  mod
+  admin
+}
+
 model User {
-  id             String          @id @default(cuid())
+  id             String           @id @default(cuid())
   name           String?
-  email          String?         @unique
+  email          String?          @unique
   emailVerified  DateTime?
+  role           Role             @default(user)
   title          String?
   image          String?
   accounts       Account[]
   sessions       Session[]
   discordAccount DiscordAccount?
+  Event          Event[]
+  EventImage     EventImage[]
+  ThumbnailImage ThumbnailImage[]
 }
 
 model VerificationToken {
@@ -80,13 +90,17 @@ model Event {
   slug           String          @unique
   thumbnailImage ThumbnailImage?
   eventImages    EventImage[]
+  author         User?           @relation(fields: [authorId], references: [id])
+  authorId       String?
   created_at     DateTime        @default(now())
   updated_at     DateTime        @updatedAt
 }
 
 model EventImage {
   id         String   @id @default(cuid())
-  url        String   
+  url        String
+  author     User?    @relation(fields: [authorId], references: [id])
+  authorId   String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   event      Event    @relation(fields: [eventId], references: [id])
@@ -96,6 +110,8 @@ model EventImage {
 model ThumbnailImage {
   id         String   @id @default(cuid())
   url        String
+  author     User?    @relation(fields: [authorId], references: [id])
+  authorId   String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   event      Event    @relation(fields: [eventId], references: [id])
