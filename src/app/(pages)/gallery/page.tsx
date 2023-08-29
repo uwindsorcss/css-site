@@ -1,42 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
 import PageWrapper from "@/components/PageWrapper";
+import { prisma } from "@/lib/db";
 
-type Event = {
-  name: string;
-  slug: string;
-  thumbnail: string;
-  images?: string[];
-};
+export default async function GalleryPage() {
+  const events = await prisma.event.findMany({
+    orderBy: {
+      date: "desc",
+    },
+    select: {
+      id: true,
+      title: true,
+      slug: true,
+      thumbnailImage: true,
+    },
+  });
 
-const events: Event[] = [
-  {
-    name: "event 1",
-    slug: "event1",
-    thumbnail: "/images/placeholder/480x360.png",
-  },
-  {
-    name: "event 2",
-    slug: "event2",
-    thumbnail: "/images/placeholder/480x360.png",
-  },
-  {
-    name: "event 3",
-    slug: "event3",
-    thumbnail: "/images/placeholder/480x360.png",
-  },
-  {
-    name: "event 4",
-    slug: "event4",
-    thumbnail: "/images/placeholder/480x360.png",
-  },
-];
-
-export default function GalleryPage() {
   return (
     <PageWrapper>
       <h1 className="text-2xl md:text-4xl text-center font-bold">Gallery</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {events.length === 0 && (
+          <div className="col-span-full text-center">
+            <span className="text-lg text-muted font-semibold">
+              No events to show
+            </span>
+          </div>
+        )}
         {events.map((event, i) => {
           return (
             <Link
@@ -45,13 +35,15 @@ export default function GalleryPage() {
               href={`/gallery/${event.slug}`}>
               <Image
                 className="rounded-md"
-                src={event.thumbnail}
-                alt={`Thumbnail for ${event.name}`}
+                src={
+                  event.thumbnailImage?.url ?? "/images/placeholder/480x360.png"
+                }
+                alt={`Thumbnail for ${event.title}`}
                 width={480}
                 height={360}
                 style={{ objectFit: "cover" }}
               />
-              <span className="text-lg font-semibold mt-5">{event.name}</span>
+              <span className="text-lg font-semibold mt-5">{event.title}</span>
             </Link>
           );
         })}

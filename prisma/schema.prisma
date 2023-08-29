@@ -70,3 +70,34 @@ model VerificationToken {
 model BlackList {
   email String @unique
 }
+
+model Event {
+  id             String          @id @default(cuid())
+  title          String
+  description    String?
+  date           DateTime
+  location       String?
+  slug           String          @unique
+  thumbnailImage ThumbnailImage?
+  eventImages    EventImage[]
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+}
+
+model EventImage {
+  id         String   @id @default(cuid())
+  url        String   
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  event      Event    @relation(fields: [eventId], references: [id])
+  eventId    String
+}
+
+model ThumbnailImage {
+  id         String   @id @default(cuid())
+  url        String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  event      Event    @relation(fields: [eventId], references: [id])
+  eventId    String   @unique
+}
