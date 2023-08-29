@@ -49,19 +49,13 @@ POSTGRES_PORT="5432"
 DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
 ```
 
-4. Build the database image using Docker Compose:
+4. Set up the database container using Docker Compose:
 
 ```bash
-docker compose build
+docker compose up -d --build db
 ```
 
-5. Set up the database container using Docker Compose:
-
-```bash
-docker compose up -d
-```
-
-6. Run the migrations using Prisma:
+5. Run the migrations using Prisma:
 
 ```bash
 pnpx prisma migrate dev

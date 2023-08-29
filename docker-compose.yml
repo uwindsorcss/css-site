@@ -1,5 +1,14 @@
 version: "3.9"
 services:
+  app:
+    image: css-site
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
   db:
     image: postgres:15.3-alpine
     restart: unless-stopped
