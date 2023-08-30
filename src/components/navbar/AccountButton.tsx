@@ -44,7 +44,7 @@ function AccountButton({ session }: { session: Session | null }) {
       router.replace(path);
       router.refresh();
     }
-  }, [searchParams]);
+  }, [searchParams, path, router, toast]);
 
   if (session)
     return (
