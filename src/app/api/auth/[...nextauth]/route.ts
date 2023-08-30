@@ -2,11 +2,28 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/db";
 
+function CustomPrismaAdapter(p: typeof prisma) {
+  return {
+    ...PrismaAdapter(p),
+    async createUser(data: User) {
+      return prisma.user.create({
+        data: {
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          title: data.title,
+          image: data.image,
+        },
+      });
+    },
+  };
+}
+
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  adapter: PrismaAdapter(prisma),
+  adapter: CustomPrismaAdapter(prisma),
   pages: {
     signIn: "/",
     signOut: "/",
