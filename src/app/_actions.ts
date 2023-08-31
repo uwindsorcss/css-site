@@ -37,7 +37,7 @@ export async function linkDiscordAccount(discordResponse: any) {
       },
     });
 
-    const data: any = {
+    const data: DiscordAccount = {
       id: user.id,
       userId: session?.user.id!,
       username: user.username,
@@ -45,20 +45,18 @@ export async function linkDiscordAccount(discordResponse: any) {
       avatar: user.avatar,
       access_token: accessToken,
       expires_at: expiresAt,
-      updated_at: new Date(),
     };
 
-    if (!discordAccount) {
-      data.created_at = new Date();
-      await prisma.discordAccount.create({
-        data: data,
-      });
-    } else {
+    if (discordAccount) {
       await prisma.discordAccount.update({
         where: {
           id: discordAccount.id,
         },
-        data: data,
+        data,
+      });
+    } else {
+      await prisma.discordAccount.create({
+        data,
       });
     }
 
