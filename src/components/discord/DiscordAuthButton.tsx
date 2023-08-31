@@ -41,7 +41,7 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              className="bg-destructive hover:bg-destructive/90"
+              variant="destructive"
               onClick={() => {
                 router.replace("/api/discord/unlink");
               }}>
