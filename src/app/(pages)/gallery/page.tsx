@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 
+export const metadata: Metadata = {
+  title: "Gallery",
+};
+
 export default async function GalleryPage() {
   const events = await prisma.event.findMany({
     orderBy: {

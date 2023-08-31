@@ -19,6 +19,10 @@ import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
 
+export const metadata: Metadata = {
+  title: "Discord",
+};
+
 export default async function DiscordPage() {
   const session = await getServerSession(authOptions);
   const discordAccount = await prisma.discordAccount.findFirst({

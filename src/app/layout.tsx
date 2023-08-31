@@ -9,7 +9,10 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CSS Site",
+  title: {
+    template: "%s | Computer Science Society",
+    default: "Computer Science Society",
+  },
   description: "CSS Site",
   icons: {
     icon: "/favicon.ico",

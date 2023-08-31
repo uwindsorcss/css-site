@@ -1,3 +1,7 @@
+export const metadata: Metadata = {
+  title: "Newsletter",
+};
+
 export default function NewsletterPage() {
   return (
     <>
