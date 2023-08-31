@@ -66,15 +66,16 @@ model User {
 }
 
 model DiscordAccount {
-  id           String    @unique
-  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String    @unique
-  username     String?
-  avatar       String?
-  access_token String?   @db.Text
-  expires_at   DateTime?
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
+  id            String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String    @unique
+  username      String?
+  discriminator String?
+  avatar        String?
+  access_token  String?   @db.Text
+  expires_at    DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
 }
 
 model BlackList {

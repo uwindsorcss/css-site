@@ -41,6 +41,7 @@ export async function linkDiscordAccount(discordResponse: any) {
       id: user.id,
       userId: session?.user.id!,
       username: user.username,
+      discriminator: user.discriminator,
       email: user.email,
       avatar: user.avatar,
       access_token: accessToken,
