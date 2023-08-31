@@ -6,6 +6,14 @@ import { getServerSession } from "next-auth";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
+// TODO: Update thumbnail link
+const discordEmbed = {
+  title: "UWindsor Computer Science Society",
+  url: "https://css.uwindsor.ca",
+  thumbnail: { url: "https://css.uwindsor.ca/css-logo-square.png" },
+  color: "3447003",
+};
+
 export async function linkDiscordAccount(discordResponse: any) {
   try {
     const accessToken = discordResponse.access_token;
@@ -71,7 +79,11 @@ export async function linkDiscordAccount(discordResponse: any) {
     );
 
     // Send a confirmation DM to the user
-    await sendDiscordDM(user.id, "You've successfully linked your account.");
+    await sendDiscordDM(
+      user.id,
+      `🔗✅ You've successfully linked your account.\n\n Welcome to the **University of Windsor CS Discord**! You've come to a great place.\n\n
+      We've set your nickname to **${session?.user.name}**. Please contact a CSS member if you'd like to shorten your name (e.g. Johnathon Middlename Doe -> John Doe).`
+    );
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -87,6 +99,12 @@ export async function unlinkDiscordAccount() {
     });
 
     if (discordAccount) {
+      await sendDiscordDM(
+        discordAccount.id,
+        `🔗💥 You've successfully unlinked your account.\n\n 
+        You've been removed from the server. If you'd like to rejoin, please [relink](https://css.uwindsor.ca/discord) your account.`
+      );
+
       // Remove the user from the server
       await fetch(
         `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.id}`,
@@ -105,11 +123,6 @@ export async function unlinkDiscordAccount() {
           id: discordAccount.id,
         },
       });
-
-      await sendDiscordDM(
-        discordAccount.id,
-        "You've successfully unlinked your account."
-      );
     } else {
       throw new Error("Discord account not found");
     }
@@ -142,7 +155,10 @@ export async function sendDiscordDM(userID: string, message: string) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: message,
+        embed: {
+          ...discordEmbed,
+          description: message,
+        },
       }),
     });
   } catch (error) {
