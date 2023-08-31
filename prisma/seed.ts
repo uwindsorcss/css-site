@@ -13,7 +13,8 @@ async function seed() {
         data: {
           title: eventData.title,
           description: eventData.description,
-          date: eventData.date,
+          startDate: eventData.startDate,
+          endDate: eventData.endDate,
           location: eventData.location,
           slug: eventData.slug,
           thumbnailImage: {

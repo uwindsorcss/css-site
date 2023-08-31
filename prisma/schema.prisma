@@ -81,18 +81,21 @@ model BlackList {
 }
 
 model Event {
-  id             String          @id @default(cuid())
-  title          String
-  description    String?
-  date           DateTime
-  location       String?
-  slug           String          @unique
-  thumbnailImage ThumbnailImage?
-  eventImages    EventImage[]
-  author         User?           @relation(fields: [authorId], references: [id])
-  authorId       String?
-  created_at     DateTime        @default(now())
-  updated_at     DateTime        @updatedAt
+  id                  String          @id @default(cuid())
+  slug                String          @unique
+  title               String
+  description         String?
+  startDate           DateTime
+  endDate             DateTime
+  location            String?
+  capacity            Int?
+  registrationEnabled Boolean         @default(false)
+  thumbnailImage      ThumbnailImage?
+  eventImages         EventImage[]
+  author              User?           @relation(fields: [authorId], references: [id])
+  authorId            String?
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
 }
 
 model EventImage {
