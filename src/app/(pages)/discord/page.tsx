@@ -20,6 +20,7 @@ import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
 import { getMemberCount } from "@/app/_actions";
 import MemberCount from "@/components/discord/MemberCount";
+import discordContent from "./content.json";
 
 export const metadata: Metadata = {
   title: "Discord",
@@ -44,22 +45,7 @@ export default async function DiscordPage() {
             <HoverCardContent className="w-80">
               <div className="flex justify-between space-x-4">
                 <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
-                  <p>
-                    <a
-                      href="https://discord.com/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline text-foreground">
-                      Discord
-                    </a>
-                    {` is a free application that makes it easy to communicate between users in chat channels. Discord is available on the web, desktop, and mobile devices.`}
-                  </p>
-                  <p>
-                    {`The Computer Science Society created a private Discord server to connect Computer Science students and enable discussions for courses, co-op/internships, general chat and more.`}
-                  </p>
-                  <p>
-                    {`All users in the Discord server are linked to their UWindsor email addresses to verify identity and to restrict the server to UWindsor students only.`}
-                  </p>
+                  {parseTextWithLinks(discordContent.hoverCardText)}
                 </div>
               </div>
             </HoverCardContent>
@@ -73,48 +59,38 @@ export default async function DiscordPage() {
           </div>
           <CardTitle className="flex flex-col justify-center items-center gap-2">
             <span className="text-xl font-semibold text-center">
-              UWindsor Computer Science
+              {discordContent.cardInfo.title}
             </span>
             <div className="flex gap-4">
               <MemberCount
                 ping
                 count={memberCount}
-                text="Members"
+                text={discordContent.cardInfo.memberCountText}
                 className="text-sm text-foreground"
               />
               <MemberCount
                 ping
                 count={onlineCount}
-                text="Online"
+                text={discordContent.cardInfo.onlineCountText}
                 className="text-sm text-foreground"
               />
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground">
+        <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground text-center text-sm">
           {session ? (
-            <>
-              {discordAccount && discordAccount !== null ? (
-                <>
-                  <span className="text-center text-sm">
-                    Your Discord account is linked.
-                  </span>
-                  <span className="text-center font-semibold text-sm">
-                    Account: {discordAccount.username}
-                  </span>
-                </>
-              ) : (
-                <span className="text-center text-sm">
-                  Linking your Discord account will allow you to access the CSS
-                  Discord server.
+            discordAccount && discordAccount !== null ? (
+              <>
+                {discordContent.cardInfo.linkedAccountText}
+                <span className="font-semibold">
+                  Account: {discordAccount.username}
                 </span>
-              )}
-            </>
+              </>
+            ) : (
+              discordContent.cardInfo.linkingAccountText
+            )
           ) : (
-            <span className="text-center text-sm">
-              {`You're currently not logged in. Please log in to link your Discord
-              account.`}
-            </span>
+            discordContent.cardInfo.notLoggedInText
           )}
         </CardContent>
         <CardFooter className="flex w-full px-2 pb-2">
@@ -127,4 +103,49 @@ export default async function DiscordPage() {
       </Card>
     </div>
   );
+
+  function parseTextWithLinks(text: string) {
+    const linkRegex = /\[([^[]+)]\(([^)]+)\)/g;
+    const lines = text.split("\n");
+    const parts = [];
+
+    lines.forEach((line, lineIndex) => {
+      let lastIndex = 0;
+
+      line.replace(linkRegex, (match, linkText, linkUrl, index) => {
+        const beforeText = line.substring(lastIndex, index);
+
+        if (beforeText)
+          parts.push(
+            <span key={`${lineIndex}-before-${index}`}>{beforeText}</span>
+          );
+
+        parts.push(
+          <a
+            key={`${lineIndex}-${index}`}
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline text-foreground">
+            {linkText}
+          </a>
+        );
+
+        lastIndex = index + match.length;
+        return match;
+      });
+
+      if (lastIndex < line.length)
+        parts.push(
+          <span key={`${lineIndex}-remaining`}>
+            {line.substring(lastIndex)}
+          </span>
+        );
+
+      if (lineIndex < lines.length - 1)
+        parts.push(<br key={`line-break-${lineIndex}`} />);
+    });
+
+    return <span>{parts}</span>;
+  }
 }

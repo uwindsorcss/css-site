@@ -1,0 +1,11 @@
+{
+  "hoverCardText": "[Discord](https://discord.com) is a free application that simplifies communication through chat channels. It's accessible on the web, desktop, and mobile devices.\n\n The Computer Science Society has established a private Discord server to provide a platform for students to communicate with each other and enable discussions for courses, co-op/internships, general chat and more.\n\n To ensure server access exclusively for UWindsor students, all users must link their Discord accounts to their UWindsor email addresses for identity verification.",
+  "cardInfo": {
+    "title": "UWindsor Computer Science",
+    "memberCountText": "Members",
+    "onlineCountText": "Online",
+    "notLoggedInText": "You're not currently logged in. Please log in to link your Discord account.",
+    "linkedAccountText": "Your Discord account is linked.",
+    "linkingAccountText": "Link your Discord account to gain access to the CSS Discord server."
+  }
+}
