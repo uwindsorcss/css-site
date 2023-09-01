@@ -43,8 +43,8 @@ export async function linkDiscordAccount(discordResponse: any) {
       username: user.username,
       discriminator: user.discriminator,
       avatar: user.avatar,
-      access_token: accessToken,
-      expires_at: expiresAt,
+      accessToken: accessToken,
+      expiresAt: expiresAt,
     };
 
     if (discordAccount) {

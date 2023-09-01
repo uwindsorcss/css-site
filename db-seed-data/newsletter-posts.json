@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Test Post 1",
+    "slug": "test-post-1",
+    "content": "This is a test post"
+  },
+  {
+    "title": "Test Post 2",
+    "slug": "test-post-2",
+    "content": "This is a test post"
+  },
+  {
+    "title": "Test Post 3",
+    "slug": "test-post-3",
+    "content": "This is a test post"
+  },
+  {
+    "title": "Test Post 4",
+    "slug": "test-post-4",
+    "content": "This is a test post"
+  }
+]

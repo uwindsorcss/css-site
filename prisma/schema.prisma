@@ -72,10 +72,10 @@ model DiscordAccount {
   username      String?
   discriminator String?
   avatar        String?
-  access_token  String?   @db.Text
-  expires_at    DateTime?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
+  accessToken   String?   @db.Text
+  expiresAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model BlackList {
@@ -96,41 +96,42 @@ model Event {
   eventImages         EventImage[]
   author              User?           @relation(fields: [authorId], references: [id])
   authorId            String?
-  created_at          DateTime        @default(now())
-  updated_at          DateTime        @updatedAt
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 }
 
 // Event Images for gallery
 model EventImage {
-  id         String   @id @default(cuid())
-  url        String
-  author     User?    @relation(fields: [authorId], references: [id])
-  authorId   String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  event      Event    @relation(fields: [eventId], references: [id])
-  eventId    String
+  id        String   @id @default(cuid())
+  url       String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String
 }
 
 // Thumbnail Images for events and posts
 model ThumbnailImage {
-  id         String   @id @default(cuid())
-  url        String
-  author     User?    @relation(fields: [authorId], references: [id])
-  authorId   String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  event      Event    @relation(fields: [eventId], references: [id])
-  eventId    String   @unique
+  id        String   @id @default(cuid())
+  url       String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   String   @unique
 }
 
 // Newsletter Post
 model Post {
-  id         String   @id @default(cuid())
-  title      String
-  content    String
-  author     User?    @relation(fields: [authorId], references: [id])
-  authorId   String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  content   String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
-import blacklistedEmails from "../data/blacklist.json";
-import eventsData from "../data/events.json";
+import blacklistedEmails from "../db-seed-data/blacklist.json";
+import eventsData from "../db-seed-data/events.json";
+import newsletterPostsData from "../db-seed-data/newsletter-posts.json";
 
 const prisma = new PrismaClient();
 
@@ -31,6 +32,19 @@ async function seed() {
       });
 
       console.log(`Event "${event.title}" created.`);
+    }
+
+    //Newsletter Posts
+    for (const newsletterPostData of newsletterPostsData) {
+      const newsletterPost = await prisma.post.create({
+        data: {
+          title: newsletterPostData.title,
+          slug: newsletterPostData.slug,
+          content: newsletterPostData.content,
+        },
+      });
+
+      console.log(`Newsletter Post "${newsletterPost.title}" created.`);
     }
   }
 
