@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 interface MemberCountProps {
   count: number;
-  ping: boolean;
+  ping?: boolean;
   text?: string;
   className?: string;
 }
@@ -16,7 +16,7 @@ function MemberCount({
   text,
   className,
 }: MemberCountProps) {
-  const nodeRef = useRef();
+  const nodeRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
   const inView = useInView(nodeRef, { once: true });
   const pingColor = text === "Online" ? "bg-green-500" : "bg-gray-500";
 

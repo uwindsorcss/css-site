@@ -37,12 +37,11 @@ export async function linkDiscordAccount(discordResponse: any) {
       },
     });
 
-    const data: DiscordAccount = {
+    const data = {
       id: user.id,
       userId: session?.user.id!,
       username: user.username,
       discriminator: user.discriminator,
-      email: user.email,
       avatar: user.avatar,
       access_token: accessToken,
       expires_at: expiresAt,
@@ -165,7 +164,10 @@ export async function sendDiscordDM(userID: string, message: string) {
   }
 }
 
-export async function getMemberCount() {
+export async function getMemberCount(): Promise<{
+  memberCount: number;
+  onlineCount: number;
+}> {
   try {
     const response = await fetch(
       `https://discordapp.com/api/guilds/${process.env.DISCORD_GUILD_ID}/preview`,
@@ -183,5 +185,6 @@ export async function getMemberCount() {
     };
   } catch (error) {
     console.error("An error occurred:", error);
+    throw error;
   }
 }

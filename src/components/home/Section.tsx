@@ -1,6 +1,6 @@
 interface HeroProps {
   title?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 function Hero({ children, title }: HeroProps) {

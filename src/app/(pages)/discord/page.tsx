@@ -21,6 +21,7 @@ import SignInButton from "@/components/discord/SignInButton";
 import { getMemberCount } from "@/app/_actions";
 import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Discord",
@@ -107,7 +108,7 @@ export default async function DiscordPage() {
   function parseTextWithLinks(text: string) {
     const linkRegex = /\[([^[]+)]\(([^)]+)\)/g;
     const lines = text.split("\n");
-    const parts = [];
+    const parts: JSX.Element[] = [];
 
     lines.forEach((line, lineIndex) => {
       let lastIndex = 0;

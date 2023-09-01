@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Gallery",
