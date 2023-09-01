@@ -9,9 +9,3 @@
   -webkit-mask-image: var(--hero-background-mask);
   mask-image: var(--hero-background-mask);
 }
-
-@media (max-width: 767px) {
-  .hiddenMobile {
-    display: none;
-  }
-}

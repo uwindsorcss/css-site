@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     template: "%s | Computer Science Society",
     default: "Computer Science Society",
   },
+  viewport: {
+    width: "device-width",
+    minimumScale: 1,
+  },
   description: "CSS Site",
   icons: {
     icon: "/favicon.ico",
