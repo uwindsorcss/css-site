@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default async function GalleryPage() {
   const events = await prisma.event.findMany({
     orderBy: {
-      date: "desc",
+      startDate: "desc",
     },
     select: {
       id: true,

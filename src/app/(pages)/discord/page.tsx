@@ -30,7 +30,7 @@ export default async function DiscordPage() {
   });
 
   return (
-    <>
+    <div className="mt-48">
       <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
         <div className="flex justify-end">
           <HoverCard>
@@ -107,6 +107,6 @@ export default async function DiscordPage() {
           )}
         </CardFooter>
       </Card>
-    </>
+    </div>
   );
 }
