@@ -6,20 +6,10 @@ import IconCard from "@/components/home/IconCard";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { GraduationCap, Code2, Users, FerrisWheel } from "lucide-react";
+import { getMemberCount } from "@/app/_actions";
 
 export default async function Home() {
-  const memberCount = await fetch(
-    `https://discordapp.com/api/guilds/${process.env.DISCORD_GUILD_ID}/preview`,
-    {
-      next: { revalidate: 3600 },
-      headers: {
-        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-      },
-    }
-  )
-    .then((res) => res.json().then((data) => data.approximate_member_count))
-    .catch(() => 0);
-
+  const { memberCount } = await getMemberCount();
   return (
     <>
       <Hero>
@@ -72,7 +62,10 @@ export default async function Home() {
       <Section>
         <span className="text-xl md:text-2xl lg:text-3xl text-center font-semibold">
           <span>Connect with </span>
-          <MemberCount memberCount={memberCount} />
+          <MemberCount
+            count={memberCount}
+            className="font-black text-yellow-500"
+          />
           <span> Students in Our Discord Server</span>
         </span>
         <Button variant="discord" asChild>

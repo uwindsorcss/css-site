@@ -164,3 +164,24 @@ export async function sendDiscordDM(userID: string, message: string) {
     console.error("An error occurred:", error);
   }
 }
+
+export async function getMemberCount() {
+  try {
+    const response = await fetch(
+      `https://discordapp.com/api/guilds/${process.env.DISCORD_GUILD_ID}/preview`,
+      {
+        next: { revalidate: 3600 },
+        headers: {
+          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        },
+      }
+    );
+    const data = await response.json();
+    return {
+      memberCount: data.approximate_member_count,
+      onlineCount: data.approximate_presence_count,
+    };
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}

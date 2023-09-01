@@ -18,6 +18,8 @@ import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
+import { getMemberCount } from "@/app/_actions";
+import MemberCount from "@/components/discord/MemberCount";
 
 export const metadata: Metadata = {
   title: "Discord",
@@ -28,6 +30,8 @@ export default async function DiscordPage() {
   const discordAccount = await prisma.discordAccount.findFirst({
     where: { userId: session?.user?.id },
   });
+
+  const { memberCount, onlineCount } = await getMemberCount();
 
   return (
     <div className="mt-48">
@@ -67,10 +71,24 @@ export default async function DiscordPage() {
             <div className="h-10 w-px bg-border mx-2 rounded-full" />
             <SiDiscord className="w-10 h-10" />
           </div>
-          <CardTitle className="flex justify-center">
+          <CardTitle className="flex flex-col justify-center items-center gap-2">
             <span className="text-xl font-semibold text-center">
               UWindsor Computer Science
             </span>
+            <div className="flex gap-4">
+              <MemberCount
+                ping
+                count={memberCount}
+                text="Members"
+                className="text-sm text-foreground"
+              />
+              <MemberCount
+                ping
+                count={onlineCount}
+                text="Online"
+                className="text-sm text-foreground"
+              />
+            </div>
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground">
