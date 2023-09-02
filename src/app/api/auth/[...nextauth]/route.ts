@@ -9,7 +9,6 @@ function CustomPrismaAdapter(p: typeof prisma) {
     async createUser(data: User) {
       return prisma.user.create({
         data: {
-          id: data.id,
           name: data.name,
           email: data.email,
           title: data.title,

@@ -25,6 +25,8 @@ pnpm install
 
 ```env
 NODE_ENV="development"
+SEED_OLD_DATA="false"
+
 NEXTAUTH_URL="http://localhost:3000"
 # You can generate a secret using `openssl rand -hex 32`
 NEXTAUTH_SECRET="your-nextauth-secret"

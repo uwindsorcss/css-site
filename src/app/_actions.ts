@@ -25,7 +25,7 @@ export async function linkDiscordAccount(discordResponse: any) {
       expiresAt.getSeconds() + discordResponse.expires_in - 60
     );
 
-    const user = await fetch(`${DISCORD_API_ENDPOINT}/users/@me`, {
+    const discordUser = await fetch(`${DISCORD_API_ENDPOINT}/users/@me`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -39,11 +39,11 @@ export async function linkDiscordAccount(discordResponse: any) {
     });
 
     const data = {
-      id: user.id,
+      discordId: discordUser.id,
       userId: session?.user.id!,
-      username: user.username,
-      discriminator: user.discriminator,
-      avatar: user.avatar,
+      username: discordUser.username,
+      discriminator: discordUser.discriminator,
+      avatar: discordUser.avatar,
       accessToken: accessToken,
       expiresAt: expiresAt,
     };
@@ -63,7 +63,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
     // Add the user to the server
     await fetch(
-      `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${user.id}`,
+      `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordUser.id}`,
       {
         method: "PUT",
         headers: {
@@ -79,7 +79,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
     // Send a confirmation DM to the user
     await sendDiscordDM(
-      user.id,
+      discordUser.id,
       `🔗✅ You've successfully linked your account.\n\n Welcome to the **University of Windsor CS Discord**! You've come to a great place.\n\n
       We've set your nickname to **${session?.user.name}**. Please contact a CSS member if you'd like to shorten your name (e.g. Johnathon Middlename Doe -> John Doe).`
     );
@@ -99,7 +99,7 @@ export async function unlinkDiscordAccount() {
 
     if (discordAccount) {
       await sendDiscordDM(
-        discordAccount.id,
+        discordAccount.discordId,
         `🔗💥 You've successfully unlinked your account.\n\n 
         You've been removed from the server. If you'd like to rejoin, please [relink](https://css.uwindsor.ca/discord) your account.`
       );
@@ -171,7 +171,7 @@ export async function getMemberCount(): Promise<{
 }> {
   try {
     const response = await fetch(
-      `https://discordapp.com/api/guilds/${process.env.DISCORD_GUILD_ID}/preview`,
+      `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/preview`,
       {
         next: { revalidate: 3600 },
         headers: {
@@ -194,7 +194,7 @@ export async function updateDiscordAccount(discordAccount: DiscordAccount) {
   if (discordAccount.updatedAt.getTime() > Date.now() - 300000) return;
 
   const res = await fetch(
-    `https://discord.com/api/v10/users/${discordAccount.id}`,
+    `${DISCORD_API_ENDPOINT}/users/${discordAccount.discordId}`,
     {
       next: { revalidate: 300 },
       headers: {
@@ -219,7 +219,7 @@ export async function updateDiscordAccount(discordAccount: DiscordAccount) {
 export async function getDiscordAccountAvatar(discordAccount: DiscordAccount) {
   if (discordAccount && discordAccount !== null)
     return await fetch(
-      `https://cdn.discordapp.com/avatars/${discordAccount.id}/${discordAccount.avatar}.png`,
+      `https://cdn.discordapp.com/avatars/${discordAccount.discordId}/${discordAccount.avatar}.png`,
       {
         next: { revalidate: 300 },
       }

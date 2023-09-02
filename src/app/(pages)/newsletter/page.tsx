@@ -7,11 +7,12 @@ export const metadata: Metadata = {
   title: "Newsletter",
 };
 
-type NewsletterPageParams = URLSearchParams & {
-  page?: string;
-};
+interface NewsletterPageProps {
+  searchParams: URLSearchParams & { page?: string };
+}
 
-export default async function NewsletterPage({ page }: NewsletterPageParams) {
+export default async function NewsletterPage({ searchParams }: NewsletterPageProps) {
+  const page = searchParams.page;
   const currentPage = parseInt(page ?? "1");
   const postsPerPage = 10;
   const totalPages = Math.ceil((await prisma.post.count()) / postsPerPage);
@@ -42,13 +43,13 @@ export default async function NewsletterPage({ page }: NewsletterPageParams) {
 
   return (
     <>
-      <h1 className="text-4xl text-center font-bold">Newsletter</h1>
+      <h1 className="text-4xl text-center font-bold">News</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
         {posts.map((post) => (
           <Link key={post.id} href={`/newsletter/${post.slug}`}
-            className="flex flex-col p-6 w-full bg-card hover:bg-gray-200 dark:hover:bg-card/50 text-card-foreground rounded-md transition-colors duration-300">
+            className="flex flex-col p-6 w-full bg-card hover:bg-gray-200 dark:hover:bg-card/50 text-card-foreground rounded-md transition-colors duration-300 break-words overflow-hidden">
             <h2 className="text-2xl font-bold">{post.title}</h2>
-            <span className="text-sm text-muted-foreground mb-2">{post.author?.name ?? "User"} ● {formatShortenedTimeDistance(post.createdAt)}</span>
+            <span className="text-sm text-muted-foreground mb-2">{post.author?.name ?? "CSS Team"} ● {formatShortenedTimeDistance(post.createdAt)}</span>
             <p>{post.content}</p>
           </Link>
         ))}

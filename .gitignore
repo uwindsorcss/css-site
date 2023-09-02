@@ -33,6 +33,8 @@ yarn-error.log*
 
 #docker database
 .data
+*.sqlite3
+/prisma/oldData/
 
 # typescript
 *.tsbuildinfo
