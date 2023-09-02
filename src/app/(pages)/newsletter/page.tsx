@@ -3,6 +3,8 @@ import { formatShortenedTimeDistance } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
 import MarkDownView from "@/components/MarkDownView";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Newsletter",
@@ -45,15 +47,41 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
         ))}
       </div>
       <div className="flex justify-center gap-2">
-        {currentPage > 1 && (
-          <Link href={`/newsletter?page=${currentPage - 1}`} className="p-2 bg-card text-card-foreground rounded-md hover:bg-card/50 transition-colors duration-300">
-            Previous
-          </Link>
+        {currentPage > 1 ? (
+          <Button asChild size="icon">
+            <Link href={`/newsletter?page=1`}>
+              <ChevronsLeft />
+            </Link>
+          </Button>
+        ) :
+          <Button disabled size="icon"><ChevronsLeft /></Button>
+        }
+        {currentPage > 1 ? (
+          <Button asChild size="icon">
+            <Link href={`/newsletter?page=${currentPage - 1}`}>
+              <ChevronLeft />
+            </Link>
+          </Button>
+        ) :
+          <Button disabled size="icon"><ChevronLeft /></Button>
+        }
+        {currentPage < totalPages ? (
+          <Button asChild size="icon">
+            <Link href={`/newsletter?page=${currentPage + 1}`}>
+              <ChevronRight />
+            </Link>
+          </Button>
+        ) : (
+          <Button disabled size="icon"><ChevronRight /></Button>
         )}
-        {currentPage < totalPages && (
-          <Link href={`/newsletter?page=${currentPage + 1}`} className="p-2 bg-card text-card-foreground rounded-md hover:bg-card/50 transition-colors duration-300">
-            Next
-          </Link>
+        {currentPage < totalPages ? (
+          <Button asChild size="icon">
+            <Link href={`/newsletter?page=${totalPages}`}>
+              <ChevronsRight />
+            </Link>
+          </Button>
+        ) : (
+          <Button disabled size="icon"><ChevronsRight /></Button>
         )}
       </div>
     </>

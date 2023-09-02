@@ -9,7 +9,6 @@ interface DiscordAccountProps {
 
 async function DiscordAccount({ account }: DiscordAccountProps) {
     const { username, avatarUrl } = await getUpdatedDiscordAccount(account);
-    console.log(username, avatarUrl);
 
     return (
         <div className="inline-flex font-semibold text-foreground items-center gap-2 mt-2">
