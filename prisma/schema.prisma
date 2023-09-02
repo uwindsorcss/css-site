@@ -132,7 +132,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
   title     String
-  content   String
+  content   String   @db.Text
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   createdAt DateTime @default(now())

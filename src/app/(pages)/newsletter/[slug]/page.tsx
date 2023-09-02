@@ -1,3 +1,4 @@
+import MarkDownView from "@/components/MarkDownView";
 import { prisma } from "@/lib/db";
 interface pageProps {
     params: { slug: string };
@@ -13,7 +14,10 @@ export default async function Post({ params }: pageProps) {
     return (
         <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
             <h1 className="text-4xl text-center font-bold">{post?.title}</h1>
-            <p>{post?.content}</p>
+            <MarkDownView
+                className="prose dark:prose-invert max-w-none w-full break-words"
+                markdown={post!.content}
+            />
         </div>
     )
 }
