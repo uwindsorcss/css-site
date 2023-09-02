@@ -19,7 +19,7 @@ export default function AboutPage() {
       <h1 className="text-4xl text-center font-bold">About Us</h1>
         <MarkDownView
               className="prose dark:prose-invert max-w-none w-full break-words"
-              markdown={data.content}
+              markdown={data[0].content}
             />
     </>
   
