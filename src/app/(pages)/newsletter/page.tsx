@@ -3,7 +3,7 @@ import { formatShortenedTimeDistance } from "@/lib/utils";
 import { Metadata } from "next";
 import Link from "next/link";
 import MarkDownView from "@/components/MarkDownView";
-import PaginationButtons from "@/components/newsletter/PaginationButtons";
+import PaginationButtons from "@/components/ui/pagination-buttons";
 
 export const metadata: Metadata = {
   title: "Newsletter",
@@ -45,7 +45,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
           </Link>
         ))}
       </div>
-      <PaginationButtons currentPage={currentPage} totalPages={totalPages} />
+      <PaginationButtons href={"/newsletter"} currentPage={currentPage} totalPages={totalPages} />
     </>
   );
 }
