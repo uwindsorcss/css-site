@@ -138,11 +138,3 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-// Plain Text (used in about page)
-model PlainText {
-  id        Int      @id @default(autoincrement())
-  content   String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
