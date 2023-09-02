@@ -190,38 +190,46 @@ export async function getMemberCount(): Promise<{
   }
 }
 
-export async function updateDiscordAccount(discordAccount: DiscordAccount) {
-  if (discordAccount.updatedAt.getTime() > Date.now() - 300000) return;
+export async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
+  let { username, avatar } = discordAccount;
+  let avatarUrl = "/images/discord-avatar.png";
 
-  const res = await fetch(
-    `${DISCORD_API_ENDPOINT}/users/${discordAccount.discordId}`,
-    {
-      next: { revalidate: 300 },
-      headers: {
-        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-      },
-    }
-  );
-
-  if (res.ok) {
-    const data = await res.json();
-    await prisma.discordAccount.update({
-      where: { id: discordAccount.id },
-      data: {
-        username: data.username,
-        discriminator: data.discriminator,
-        avatar: data.avatar,
-      },
-    });
-  }
-}
-
-export async function getDiscordAccountAvatar(discordAccount: DiscordAccount) {
-  if (discordAccount && discordAccount !== null)
-    return await fetch(
-      `https://cdn.discordapp.com/avatars/${discordAccount.discordId}/${discordAccount.avatar}.png`,
+  if (discordAccount.updatedAt.getTime() < Date.now() - 300000) {
+    const res = await fetch(
+      `${DISCORD_API_ENDPOINT}/users/${discordAccount.discordId}`,
       {
         next: { revalidate: 300 },
+        headers: {
+          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+        },
       }
-    ).then((res) => res.url);
+    );
+
+    if (res.ok) {
+      const data = await res.json();
+      await prisma.discordAccount.update({
+        where: { id: discordAccount.id },
+        data: {
+          username: data.username,
+          discriminator: data.discriminator,
+          avatar: data.avatar,
+        },
+      });
+      username = data.username;
+      avatarUrl = await getDiscordAccountAvatar(data.id, data.avatar);
+    }
+  } else if (avatar) {
+    avatarUrl = await getDiscordAccountAvatar(discordAccount.discordId, avatar);
+  }
+
+  return { username, avatarUrl };
+}
+
+async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
+  return await fetch(
+    `https://cdn.discordapp.com/avatars/${discordId}/${avatarId}.png`,
+    {
+      next: { revalidate: 300 },
+    }
+  ).then((res) => res.url);
 }

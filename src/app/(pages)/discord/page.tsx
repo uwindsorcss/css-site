@@ -18,11 +18,11 @@ import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
-import { getDiscordAccountAvatar, getMemberCount, updateDiscordAccount } from "@/app/_actions";
+import { getMemberCount } from "@/app/_actions";
 import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
 import { Metadata } from "next";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import DiscordAccount from "@/components/discord/DiscordAccount";
 
 export const metadata: Metadata = {
   title: "Discord",
@@ -33,9 +33,6 @@ export default async function DiscordPage() {
   const discordAccount = await prisma.discordAccount.findFirst({
     where: { userId: session?.user?.id },
   });
-
-  if (session && discordAccount && discordAccount !== null)
-    await updateDiscordAccount(discordAccount);
 
   const { memberCount, onlineCount } = await getMemberCount();
 
@@ -87,16 +84,9 @@ export default async function DiscordPage() {
             discordAccount && discordAccount !== null ? (
               <>
                 {discordContent.cardInfo.linkedAccountText}
-                <div className="inline-flex font-semibold text-foreground items-center gap-2 mt-2">
-                  <Avatar>
-                    <AvatarImage
-                      src={await getDiscordAccountAvatar(discordAccount)}
-                      alt={discordAccount.username ?? ""}
-                      className="w-6 h-6 mr-2"
-                    />
-                  </Avatar>
-                  {discordAccount.username}
-                </div>
+                <DiscordAccount
+                  account={discordAccount}
+                />
               </>
             ) : (
               discordContent.cardInfo.linkingAccountText
