@@ -1,4 +1,5 @@
 import MarkDownView from "@/components/MarkDownView";
+import BackButton from "@/components/newsletter/BackButton";
 import { prisma } from "@/lib/db";
 interface pageProps {
     params: { slug: string };
@@ -18,6 +19,7 @@ export default async function Post({ params }: pageProps) {
                 className="prose dark:prose-invert max-w-none w-full break-words"
                 markdown={post!.content}
             />
+            <BackButton />
         </div>
     )
 }
