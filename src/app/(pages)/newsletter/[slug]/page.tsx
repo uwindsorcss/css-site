@@ -13,7 +13,7 @@ export default async function Post({ params }: pageProps) {
 
     return (
         <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
-            <h1 className="text-4xl text-center font-bold">{post?.title}</h1>
+            <h1 className="text-4xl text-center font-bold mb-10">{post?.title}</h1>
             <MarkDownView
                 className="prose dark:prose-invert max-w-none w-full break-words"
                 markdown={post!.content}
