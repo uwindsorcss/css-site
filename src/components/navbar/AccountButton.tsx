@@ -50,14 +50,14 @@ function AccountButton({ session }: { session: Session | null }) {
     return (
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Avatar>
+          <Avatar className="cursor-pointer">
             <AvatarImage
               src={session.user.image ?? ""}
               alt={session.user.name}
-              className="hover:brightness-90 cursor-pointer transition-all"
+              className="hover:brightness-90 transition-all"
             />
             <AvatarFallback>
-              {(session.user.name.match(/\b(\w)/g) ?? []).join("")}
+              {(session.user.name?.match(/\b(\w)/g) ?? []).join("")}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

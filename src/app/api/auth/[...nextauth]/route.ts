@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/db";
+import { User } from "@prisma/client";
 
 function CustomPrismaAdapter(p: typeof prisma) {
   return {
@@ -23,6 +24,7 @@ function CustomPrismaAdapter(p: typeof prisma) {
 // https://next-auth.js.org/configuration/options
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
+  // @ts-ignore
   adapter: CustomPrismaAdapter(prisma),
   pages: {
     signIn: "/",
@@ -37,6 +39,7 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.AZURE_AD_CLIENT_ID,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
       type: "oauth",
+      allowDangerousEmailAccountLinking: true,
       wellKnown: `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/v2.0/.well-known/openid-configuration?appid=${process.env.AZURE_AD_CLIENT_ID}`,
       authorization: {
         params: {
@@ -65,6 +68,22 @@ export const authOptions: NextAuthOptions = {
           headers: { Authorization: `Bearer ${tokens.access_token}` },
         }).then((res) => res.json().then((data) => data.jobTitle));
 
+        // if the user exists in the database, update the user
+        const user = await prisma.user.findUnique({
+          where: { email: profile.email },
+        });
+
+        if (user) {
+          await prisma.user.update({
+            where: { email: profile.email },
+            data: {
+              name: profile.name,
+              title: jobTitle,
+              image: image ?? null,
+            },
+          });
+        }
+
         return {
           id: profile.sub,
           name: profile.name,
@@ -76,9 +95,10 @@ export const authOptions: NextAuthOptions = {
     },
   ],
   callbacks: {
-    async signIn({ user }) {
+    // @ts-ignore
+    async signIn({ user }: { user: User }) {
       const userInJson = await prisma.blackList.findUnique({
-        where: { email: user.email },
+        where: { email: user.email! },
       });
 
       if (
@@ -88,15 +108,17 @@ export const authOptions: NextAuthOptions = {
       ) {
         return true;
       }
-      return false;
+      return "/?error=It seems like you are not a student, if you think this is a mistake, please contact us.";
     },
-    async jwt({ token, profile }) {
+    // @ts-ignore
+    async jwt({ token, profile }: { token: any; profile: any }) {
       if (profile) {
         token.title = profile.title;
       }
       return token;
     },
-    async session({ session, user }) {
+    // @ts-ignore
+    async session({ session, user }: { session: any; user: User }) {
       const userInJson = await prisma.user.findUnique({
         where: { email: session.user.email },
       });
@@ -104,7 +126,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.id = user.id;
         session.user.title = user.title;
-        session.user.role = userInJson.role;
+        session.user.role = userInJson?.role;
       }
       return session;
     },
