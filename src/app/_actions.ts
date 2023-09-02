@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/db";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
+import { DiscordAccount } from "@prisma/client";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
@@ -186,5 +187,31 @@ export async function getMemberCount(): Promise<{
   } catch (error) {
     console.error("An error occurred:", error);
     throw error;
+  }
+}
+
+export async function updateDiscordAccount(discordAccount: DiscordAccount) {
+  if (discordAccount.updatedAt.getTime() > Date.now() - 300000) return;
+
+  const res = await fetch(
+    `https://discord.com/api/v10/users/${discordAccount.id}`,
+    {
+      next: { revalidate: 300 },
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+      },
+    }
+  );
+
+  if (res.ok) {
+    const data = await res.json();
+    await prisma.discordAccount.update({
+      where: { id: discordAccount.id },
+      data: {
+        username: data.username,
+        discriminator: data.discriminator,
+        avatar: data.avatar,
+      },
+    });
   }
 }

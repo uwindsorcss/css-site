@@ -18,7 +18,7 @@ import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
-import { getMemberCount } from "@/app/_actions";
+import { getMemberCount, updateDiscordAccount } from "@/app/_actions";
 import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
 import { Metadata } from "next";
@@ -32,6 +32,9 @@ export default async function DiscordPage() {
   const discordAccount = await prisma.discordAccount.findFirst({
     where: { userId: session?.user?.id },
   });
+
+  if (session && discordAccount && discordAccount !== null)
+    await updateDiscordAccount(discordAccount);
 
   const { memberCount, onlineCount } = await getMemberCount();
 
