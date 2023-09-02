@@ -14,13 +14,13 @@ export default function AboutPage() {
   const markdownFile = fs.readFileSync('src/app/(pages)/about/content.mdx', 'utf-8');
 
   return (
-    <>
-      <h1 className="text-4xl text-center font-bold">About Us</h1>
+    <div className="w-full max-w-3xl">
+      <h1 className="text-4xl text-center font-bold mb-8">About Us</h1>
       <MarkDownView
         className="prose dark:prose-invert max-w-none w-full break-words"
         markdown={markdownFile}
       />
-    </>
+    </div >
   );
 }
 
