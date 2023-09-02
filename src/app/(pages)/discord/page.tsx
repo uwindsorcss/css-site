@@ -18,10 +18,11 @@ import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
-import { getMemberCount, updateDiscordAccount } from "@/app/_actions";
+import { getDiscordAccountAvatar, getMemberCount, updateDiscordAccount } from "@/app/_actions";
 import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
 import { Metadata } from "next";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export const metadata: Metadata = {
   title: "Discord",
@@ -86,9 +87,16 @@ export default async function DiscordPage() {
             discordAccount && discordAccount !== null ? (
               <>
                 {discordContent.cardInfo.linkedAccountText}
-                <span className="font-semibold">
-                  Account: {discordAccount.username}
-                </span>
+                <div className="inline-flex font-semibold text-foreground items-center gap-2 mt-2">
+                  <Avatar>
+                    <AvatarImage
+                      src={await getDiscordAccountAvatar(discordAccount)}
+                      alt={discordAccount.username ?? ""}
+                      className="w-6 h-6 mr-2"
+                    />
+                  </Avatar>
+                  {discordAccount.username}
+                </div>
               </>
             ) : (
               discordContent.cardInfo.linkingAccountText

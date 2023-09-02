@@ -215,3 +215,13 @@ export async function updateDiscordAccount(discordAccount: DiscordAccount) {
     });
   }
 }
+
+export async function getDiscordAccountAvatar(discordAccount: DiscordAccount) {
+  if (discordAccount && discordAccount !== null)
+    return await fetch(
+      `https://cdn.discordapp.com/avatars/${discordAccount.id}/${discordAccount.avatar}.png`,
+      {
+        next: { revalidate: 300 },
+      }
+    ).then((res) => res.url);
+}
