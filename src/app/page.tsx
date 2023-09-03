@@ -7,71 +7,122 @@ import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { GraduationCap, Code2, Users, FerrisWheel } from "lucide-react";
 import { getMemberCount } from "@/app/_actions";
+import { prisma } from "@/lib/db";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { getEventRelativeTime } from "@/lib/utils";
+import Post from "@/components/newsletter/Post";
+import content from './content.json';
 
 export default async function Home() {
   const { memberCount } = await getMemberCount();
+  const upcomingEvents = await prisma.event.findMany({
+    take: 3,
+    orderBy: {
+      startDate: "desc",
+    },
+  });
+  const featuredNewsletters = await prisma.post.findMany({
+    take: 3,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  const areAllEventsInPast = upcomingEvents.every((event) => event.startDate < new Date());
+  const icons = [GraduationCap, Code2, Users, FerrisWheel];
+
   return (
     <>
       <Hero>
         <h2 className="text-2xl md:text-3xl text-center font-bold text-blue-900 dark:text-yellow-500">
-          University of Windsor
+          {content.hero.heading}
         </h2>
         <h1 className="text-3xl md:text-5xl lg:text-6xl text-center font-black">
-          Computer Science Society
+          {content.hero.subheading}
         </h1>
         <h3 className="text-lg text-center mb-4">
-          A student-run organization that aims to provide a community for
-          Computer Science students.
+          {content.hero.description}
         </h3>
         <Button variant="discord" asChild>
           <Link href="/discord">
             <SiDiscord className="w-5 h-5 mr-2" />
-            Join Our Discord
+            {content.hero.buttonText}
           </Link>
         </Button>
       </Hero>
-      <Section title="A Little About Us">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-28">
-          <IconCard
-            icon={GraduationCap}
-            title="Learn"
-            description="We are a group of passionate computer science students dedicated to expanding our knowledge and skills beyond the classroom. Our goal is to foster a community of learners who are excited about exploring the world of technology."
-          />
-          <IconCard
-            icon={Code2}
-            title="Code"
-            description="At our core, we're a coding-centric society. We host coding workshops, hackathons, and coding challenges to help our members enhance their programming skills. Whether you're a beginner or an experienced coder, there's a place for you here."
-          />
-          <IconCard
-            icon={Users}
-            title="Connect"
-            description="Building connections is as important as writing code. Our society provides numerous opportunities to network with fellow students, professors, and professionals in the tech industry. Expand your circle and forge valuable relationships."
-          />
-          <IconCard
-            icon={FerrisWheel}
-            title="Fun"
-            description="We're not all work and no play. We host a variety of events throughout the year to help our members unwind and have fun. From game nights to movie nights, there's always something to do."
-          />
+      <Section heading="A Little About Us">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:py-16">
+          {content.aboutUs.cards.map((card, index) => (
+            <IconCard
+              key={index}
+              icon={icons[index]}
+              heading={card.heading}
+              description={card.description}
+            />
+          ))}
         </div>
         <Button asChild>
-          <Link href="/about">Learn More</Link>
+          <Link href="/about">{content.aboutUs.learnMoreButtonText}</Link>
         </Button>
       </Section>
-      <Section title="Upcoming Events"></Section>
-      <Section title="Featured Newsletters"></Section>
+
+      <Section heading={areAllEventsInPast ? content.events.recentEventsHeading : content.events.upcomingEventsHeading}
+        subheading={areAllEventsInPast ? content.events.recentEventsSubheading : content.events.upcomingEventsSubheading}
+      >
+        <div className="flex flex-wrap gap-5 justify-center w-full">
+          {upcomingEvents.map((event) => (
+            <Link href={`/events/${event.id}`} key={event.id} className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
+              <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+                <CardTitle>
+                  {event.title}
+                </CardTitle>
+                <CardDescription
+                  className="text-sm flex flex-col items-center justify-center gap-2"
+                >
+                  {event.startDate.toLocaleDateString("en-US", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                  <span className="font-bold">
+                    {
+                      getEventRelativeTime(event.startDate, event.endDate)
+                    }
+                  </span>
+                </CardDescription>
+              </Card>
+            </Link>
+          ))}
+        </div>
+        <Button asChild>
+          <Link href="/events">{content.events.viewAllEventsButtonText}</Link>
+        </Button>
+      </Section>
+
+      <Section heading={content.newsletters.featuredNewslettersHeading} subheading={content.newsletters.subheadingSubheading}>
+        <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
+          {featuredNewsletters.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
+        </div>
+        <Button asChild>
+          <Link href="/newsletter">{content.newsletters.viewAllNewslettersButtonText}</Link>
+        </Button>
+      </Section>
+
       <Section>
         <span className="text-xl md:text-2xl lg:text-3xl text-center font-semibold">
-          <span>Connect with </span>
+          {content.connectWithStudents.text1}
           <MemberCount
             count={memberCount}
             className="font-black text-yellow-500"
           />
-          <span> Students in Our Discord Server</span>
+          {content.connectWithStudents.text2}
         </span>
         <Button variant="discord" asChild>
           <Link href="/discord">
             <SiDiscord className="w-5 h-5 mr-2" />
-            Link Your Account
+            {content.connectWithStudents.buttonText}
           </Link>
         </Button>
       </Section>

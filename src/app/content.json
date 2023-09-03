@@ -1,0 +1,46 @@
+{
+  "hero": {
+    "heading": "University of Windsor",
+    "subheading": "Computer Science Society",
+    "description": "A student-run organization that aims to provide a community for Computer Science students.",
+    "buttonText": "Join Our Discord"
+  },
+  "aboutUs": {
+    "cards": [
+      {
+        "heading": "Learn",
+        "description": "Join a passionate community of learners dedicated to exploring the world of technology beyond the classroom."
+      },
+      {
+        "heading": "Code",
+        "description": "Enhance your programming skills through coding workshops, hackathons, and challenges."
+      },
+      {
+        "heading": "Connect",
+        "description": "Expand your network by connecting with students, professors, and tech professionals."
+      },
+      {
+        "heading": "Fun",
+        "description": "Balance work and play with our diverse range of fun events, from game nights to movie nights."
+      }
+    ],
+    "learnMoreButtonText": "Learn More"
+  },
+  "events": {
+    "upcomingEventsHeading": "Upcoming Events",
+    "upcomingEventsSubheading": "Check out our upcoming events and join us!",
+    "recentEventsHeading": "Recent Events",
+    "recentEventsSubheading": "We currently don't have any upcoming events. Check out our past events while we plan new ones for you!",
+    "viewAllEventsButtonText": "View All Events"
+  },
+  "newsletters": {
+    "featuredNewslettersHeading": "Featured Newsletters",
+    "subheadingSubheading": "Discover the latest insights and updates in our newsletters.",
+    "viewAllNewslettersButtonText": "View All Newsletters"
+  },
+  "connectWithStudents": {
+    "text1": "Connect with ",
+    "text2": " Students in Our Discord Server",
+    "buttonText": "Link Your Account"
+  }
+}
