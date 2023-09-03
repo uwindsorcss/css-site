@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { formatDateRange, formatShortenedTimeDistance } from "@/lib/utils";
 import PaginationButtons from "../ui/pagination-buttons";
 import { redirect } from "next/navigation";
+import MarkDownView from "../MarkDownView";
 
 interface EventsListViewProps {
     searchParams: URLSearchParams & { page?: string };
@@ -45,7 +46,11 @@ async function ListView({ searchParams }: EventsListViewProps) {
                             <CardTitle>{event.title}</CardTitle>
                             <CardDescription className="font-semibold">{formatDateRange(event.startDate, event.endDate)} ({getEventRelativeTime(event.startDate, event.endDate)
                             })</CardDescription>
-                            <CardContent className="p-0 text-muted-foreground">{event.description}</CardContent>
+                            <CardContent className="p-0 text-muted-foreground">
+                                <MarkDownView
+                                    className="prose dark:prose-invert max-w-none w-full break-words"
+                                    markdown={event.description!} />
+                            </CardContent>
                         </CardHeader>
                     </Card>
                 ))
