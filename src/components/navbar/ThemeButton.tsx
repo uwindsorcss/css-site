@@ -21,9 +21,9 @@ const ThemeButton = ({ className }: ThemeButtonProps) => {
       size="icon"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
       {mounted && resolvedTheme === "dark" ? (
-        <Sun className="w-5 h-5" />
-      ) : (
         <Moon className="w-5 h-5" />
+      ) : (
+        <Sun className="w-5 h-5" />
       )}
     </Button>
   );
