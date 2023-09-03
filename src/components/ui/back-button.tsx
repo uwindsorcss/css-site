@@ -14,8 +14,16 @@ function BackButton({ href }: BackButtonProps) {
 
     const goBack = () => {
         const page = searchParams.get("page");
-        if (page) router.replace(`${href}?page=${page}`);
-        else router.replace(href);
+        const filter = searchParams.get("filter");
+        if (page && filter) {
+            router.replace(`${href}?page=${page}&filter=${filter}`);
+        } else if (page) {
+            router.replace(`${href}?page=${page}`);
+        } else if (filter) {
+            router.replace(`${href}?filter=${filter}`);
+        } else {
+            router.replace(`${href}`);
+        }
     };
 
     return (

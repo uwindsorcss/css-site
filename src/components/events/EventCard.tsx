@@ -7,12 +7,13 @@ import { Event } from "@prisma/client";
 interface EventCardProps {
     event: Event;
     currentPage: number;
+    filter?: string;
 }
 
-function EventCard({ event, currentPage }: EventCardProps) {
+function EventCard({ event, currentPage, filter }: EventCardProps) {
     return (
         <Card className="hover:bg-gray-200 dark:hover:bg-card/50 transition-colors duration-300">
-            <Link key={event.id} href={`/events/${event.slug}?page=${currentPage}`} >
+            <Link key={event.id} href={`/events/${event.slug}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`}>
                 <CardHeader>
                     <CardTitle>{event.title}</CardTitle>
                     <CardDescription className="font-medium mb-2">{formatDateRange(event.startDate, event.endDate)} ({getEventRelativeTime(event.startDate, event.endDate)
