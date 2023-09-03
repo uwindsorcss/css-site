@@ -33,7 +33,7 @@ export default async function GalleryPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {events.length === 0 && (
           <div className="col-span-full text-center">
-            <span className="text-lg text-muted font-semibold">
+            <span className="text-lg text-muted-foreground font-semibold">
               No events to show
             </span>
           </div>

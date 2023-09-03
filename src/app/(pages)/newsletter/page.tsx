@@ -35,7 +35,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
         {posts.map((post) => (
           <Link key={post.id} href={`/newsletter/${post.slug}?page=${currentPage}`}
-            className="flex flex-col gap-2 p-6 w-full bg-card hover:bg-gray-200 dark:hover:bg-card/50 text-card-foreground rounded-md transition-colors duration-300">
+            className="flex flex-col gap-2 p-6 w-full bg-card hover:bg-gray-200 dark:hover:bg-card/50 text-card-foreground rounded-md transition-colors duration-300 border border-border">
             <h2 className="text-2xl font-bold">{post.title}</h2>
             <span className="text-sm text-muted-foreground mb-2">{post.author?.name ?? "CSS Team"} ● {formatShortenedTimeDistance(post.createdAt)}</span>
             <MarkDownView
