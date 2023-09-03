@@ -15,19 +15,22 @@ export function formatShortenedTimeDistance(date: Date) {
     return `${Math.floor(diff / 60)} minute${diff < 120 ? "" : "s"} ${unit}`;
   if (diff < 60 * 60 * 24)
     return `${Math.floor(diff / (60 * 60))} hour${
-      diff < 7200 ? "" : "s"
+      diff < 60 * 60 * 2 ? "" : "s"
+    } ${unit}`;
+  if (diff < 60 * 60 * 24 * 7)
+    return `${Math.floor(diff / (60 * 60 * 24))} day${
+      diff < 60 * 60 * 24 * 2 ? "" : "s"
     } ${unit}`;
   if (diff < 60 * 60 * 24 * 30)
-    return `${Math.floor(diff / (60 * 60 * 24))} day${
-      diff < 172800 ? "" : "s"
+    return `${Math.floor(diff / (60 * 60 * 24 * 7))} week${
+      diff < 60 * 60 * 24 * 7 * 2 ? "" : "s"
     } ${unit}`;
-  if (diff < 60 * 60 * 24 * 30 * 12)
+  if (diff < 60 * 60 * 24 * 365)
     return `${Math.floor(diff / (60 * 60 * 24 * 30))} month${
-      diff < 525600 ? "" : "s"
+      diff < 60 * 60 * 24 * 30 * 2 ? "" : "s"
     } ${unit}`;
-
-  return `${Math.floor(diff / (60 * 60 * 24 * 30 * 12))} year${
-    diff < 631139 ? "" : "s"
+  return `${Math.floor(diff / (60 * 60 * 24 * 365))} year${
+    diff < 60 * 60 * 24 * 365 * 2 ? "" : "s"
   } ${unit}`;
 }
 
@@ -68,3 +71,10 @@ export function formatDateRange(start: Date, end: Date) {
     options
   )} to ${end.toLocaleDateString(undefined, options)} `;
 }
+
+export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
+  const now = new Date();
+  if (startDate <= now && endDate >= now) return "Currently Happening";
+  else if (startDate > now) return formatShortenedTimeDistance(startDate);
+  return formatShortenedTimeDistance(endDate);
+};

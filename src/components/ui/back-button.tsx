@@ -1,17 +1,21 @@
 "use client";
 
 import { ChevronLeft } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "./button";
 import { useRouter, useSearchParams } from "next/navigation";
 
-function BackButton() {
+interface BackButtonProps {
+    href: string;
+}
+
+function BackButton({ href }: BackButtonProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
     const goBack = () => {
         const page = searchParams.get("page");
-        if (page) router.replace("/newsletter?page=" + page);
-        else router.replace("/newsletter");
+        if (page) router.replace(`${href}?page=${page}`);
+        else router.replace(href);
     };
 
     return (
