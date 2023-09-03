@@ -6,16 +6,21 @@ type Props = {
     className?: string;
     children?: ReactNode;
     markdown: string;
+    allowLinks?: boolean;
 };
 
-const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown }) {
+const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown, allowLinks }) {
     return (
         <ReactMarkdown
             className={className}
             remarkPlugins={[remarkGfm]}
             components={{
                 p: ({ node, ...props }) => <p className="whitespace-pre-wrap" {...props} />,
-                a: ({ node, ...props }) => <a target="_blank" rel="noopener noreferrer" {...props} />,
+                a: ({ node, ...props }) => {
+                    if (allowLinks)
+                        return <a {...props} />;
+                    return <span className="underline font-medium" {...props} />;
+                }
             }}
         >
             {markdown}

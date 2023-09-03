@@ -19,6 +19,7 @@ export default async function Post({ params }: pageProps) {
             <span className="text-sm font-semibold text-muted-foreground mb-8">{formatDateRange(event!.startDate, event!.endDate)} ({getEventRelativeTime(event!.startDate, event!.endDate)
             })</span>
             <MarkDownView
+                allowLinks
                 className="prose dark:prose-invert max-w-none w-full break-words"
                 markdown={event?.description!}
             />

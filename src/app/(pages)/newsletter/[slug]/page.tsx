@@ -21,6 +21,7 @@ export default async function Post({ params }: pageProps) {
             <h1 className="text-2xl md:text-4xl text-center font-bold">{post?.title}</h1>
             <span className="text-sm text-muted-foreground mb-8">{post?.author?.name ?? "CSS Team"} ● {formatShortenedTimeDistance(post!.createdAt)}</span>
             <MarkDownView
+                allowLinks
                 className="prose dark:prose-invert max-w-none w-full break-words"
                 markdown={post!.content}
             />
