@@ -130,7 +130,7 @@ export default async function Home() {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
             {content.connectWithStudents.heading}
           </h2>
-          <span className="text-md md:text-lg lg:text-xl font-medium mb-2">
+          <span className="inline-flex gap-2 text-md md:text-lg lg:text-xl font-medium mb-2">
             {content.connectWithStudents.text1}
             <MemberCount
               count={memberCount}
