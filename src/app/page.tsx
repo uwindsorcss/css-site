@@ -49,8 +49,8 @@ export default async function Home() {
           </Link>
         </Button>
       </Hero>
-      <Section heading="A Little About Us">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:py-16">
+      <Section heading={content.aboutUs.heading} subheading={content.aboutUs.subheading}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:py-8">
           {content.aboutUs.cards.map((card, index) => (
             <IconCard
               key={index}
@@ -66,33 +66,38 @@ export default async function Home() {
       </Section>
 
       <Section heading={areAllEventsInPast ? content.events.recentEventsHeading : content.events.upcomingEventsHeading}
-        subheading={areAllEventsInPast ? content.events.recentEventsSubheading : content.events.upcomingEventsSubheading}
-      >
+        subheading={areAllEventsInPast ? content.events.recentEventsSubheading : content.events.upcomingEventsSubheading}>
         <div className="flex flex-wrap gap-5 justify-center w-full">
-          {upcomingEvents.map((event) => (
-            <Link href={`/events/${event.id}`} key={event.id} className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
-              <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-                <CardTitle>
-                  {event.title}
-                </CardTitle>
-                <CardDescription
-                  className="text-sm flex flex-col items-center justify-center gap-2"
-                >
-                  {event.startDate.toLocaleDateString("en-US", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                  <span className="font-bold">
-                    {
-                      getEventRelativeTime(event.startDate, event.endDate)
-                    }
-                  </span>
-                </CardDescription>
-              </Card>
-            </Link>
-          ))}
+          {upcomingEvents === null || upcomingEvents.length === 0 ? (
+            <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+              <CardTitle>
+                {content.events.noEventsHeading}
+              </CardTitle>
+            </Card>
+          ) : (
+            <>
+              {upcomingEvents.map((event) => (
+                <Link href={`/events/${event.id}`} key={event.id} className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
+                  <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+                    <CardTitle>
+                      {event.title}
+                    </CardTitle>
+                    <CardDescription className="text-sm flex flex-col items-center justify-center gap-2">
+                      {event.startDate.toLocaleDateString("en-US", {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                      <span className="font-bold">
+                        {getEventRelativeTime(event.startDate, event.endDate)}
+                      </span>
+                    </CardDescription>
+                  </Card>
+                </Link>
+              ))}
+            </>
+          )}
         </div>
         <Button asChild>
           <Link href="/events">{content.events.viewAllEventsButtonText}</Link>
@@ -101,30 +106,45 @@ export default async function Home() {
 
       <Section heading={content.newsletters.featuredNewslettersHeading} subheading={content.newsletters.subheadingSubheading}>
         <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
-          {featuredNewsletters.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
+          {featuredNewsletters === null || featuredNewsletters.length === 0 ? (
+            <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+              <CardTitle>
+                {content.newsletters.noNewslettersHeading}
+              </CardTitle>
+            </Card>
+          ) : (
+            <>
+              {featuredNewsletters.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+            </>
+          )}
         </div>
         <Button asChild>
           <Link href="/newsletter">{content.newsletters.viewAllNewslettersButtonText}</Link>
         </Button>
       </Section>
 
-      <Section>
-        <span className="text-xl md:text-2xl lg:text-3xl text-center font-semibold">
-          {content.connectWithStudents.text1}
-          <MemberCount
-            count={memberCount}
-            className="font-black text-yellow-500"
-          />
-          {content.connectWithStudents.text2}
-        </span>
-        <Button variant="discord" asChild>
-          <Link href="/discord">
-            <SiDiscord className="w-5 h-5 mr-2" />
-            {content.connectWithStudents.buttonText}
-          </Link>
-        </Button>
+      <Section className="flex flex-col items-center justify-center w-full">
+        <div className="flex flex-col items-center justify-center text-center gap-4 bg-secondary text-secondary-foreground rounded-md w-full py-28">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+            {content.connectWithStudents.heading}
+          </h2>
+          <span className="text-md md:text-lg lg:text-xl font-medium mb-2">
+            {content.connectWithStudents.text1}
+            <MemberCount
+              count={memberCount}
+              className="font-black"
+            />
+            {content.connectWithStudents.text2}
+          </span>
+          <Button variant="secondary" asChild>
+            <Link href="/discord">
+              <SiDiscord className="w-5 h-5 mr-2" />
+              {content.connectWithStudents.buttonText}
+            </Link>
+          </Button>
+        </div>
       </Section>
     </>
   );

@@ -6,6 +6,8 @@
     "buttonText": "Join Our Discord"
   },
   "aboutUs": {
+    "heading": "About Us",
+    "subheading": "TL;DR - We're a group of Computer Science students who love to learn, code, and have fun!",
     "cards": [
       {
         "heading": "Learn",
@@ -31,14 +33,17 @@
     "upcomingEventsSubheading": "Check out our upcoming events and join us!",
     "recentEventsHeading": "Recent Events",
     "recentEventsSubheading": "We currently don't have any upcoming events. Check out our past events while we plan new ones for you!",
+    "noEventsHeading": "No Events Found",
     "viewAllEventsButtonText": "View All Events"
   },
   "newsletters": {
     "featuredNewslettersHeading": "Featured Newsletters",
     "subheadingSubheading": "Discover the latest insights and updates in our newsletters.",
+    "noNewslettersHeading": "No Newsletters Found",
     "viewAllNewslettersButtonText": "View All Newsletters"
   },
   "connectWithStudents": {
+    "heading": "Join The Community!",
     "text1": "Connect with ",
     "text2": " Students in Our Discord Server",
     "buttonText": "Link Your Account"
