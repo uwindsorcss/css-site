@@ -18,6 +18,13 @@ export default async function GalleryPage() {
       slug: true,
       thumbnailImage: true,
     },
+    where: {
+      NOT: {
+        eventImages: {
+          none: {},
+        },
+      },
+    },
   });
 
   return (
