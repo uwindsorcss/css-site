@@ -62,10 +62,10 @@ function MobileMenu({ links }: MobileMenuProps) {
                             <div className="inline-flex text-sm font-medium leading-none">
                               {sublink.name}
                               {sublink.href?.startsWith("http") && (
-                                <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
+                                <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted dark:text-muted-foreground" />
                               )}
                             </div>
-                            <div className="text-muted-foreground text-sm">
+                            <div className="text-muted dark:text-muted-foreground text-sm mt-2">
                               {sublink.description}
                             </div>
                           </Link>
