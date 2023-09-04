@@ -6,6 +6,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import ListView from "@/components/events/ListView";
+import CalendarView from "@/components/events/CalendarView";
 export const metadata: Metadata = {
   title: "Events",
 };
@@ -15,7 +16,6 @@ interface EventsProps {
 }
 
 export default async function EventsPage({ searchParams }: EventsProps) {
-
   return (
     <>
       <h1 className="text-4xl text-center font-bold">Events</h1>
@@ -28,8 +28,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
           <ListView searchParams={searchParams} />
         </TabsContent>
         <TabsContent value="calendar">
-          {/* TODO: Implement Calendar View */}
-          <h2 className="text-2xl text-center font-bold mt-10">Calendar View</h2>
+          <CalendarView />
         </TabsContent>
       </Tabs >
     </>

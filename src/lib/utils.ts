@@ -34,6 +34,12 @@ export function formatShortenedTimeDistance(date: Date) {
   } ${unit}`;
 }
 
+export const display12HourTime = (date: Date) => {
+  return `${date.getHours() % 12 || 12}:${
+    (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+  } ${date.getHours() >= 12 ? "PM" : "AM"}`;
+};
+
 export function formatDateRange(start: Date, end: Date) {
   const isSameDay = start.toDateString() === end.toDateString();
 
@@ -42,12 +48,6 @@ export function formatDateRange(start: Date, end: Date) {
     year: "numeric",
     month: "long",
     day: "numeric",
-  };
-
-  const display12HourTime = (date: Date) => {
-    return `${date.getHours() % 12 || 12}:${
-      (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
-    } ${date.getHours() >= 12 ? "PM" : "AM"}`;
   };
 
   if (isSameDay)
