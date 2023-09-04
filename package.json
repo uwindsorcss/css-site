@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prisma:generate": "pnpm prisma generate",
-    "prisma:migrate": "pnpm prisma migrate dev --name init",
+    "prisma:migrate": "pnpm prisma migrate deploy",
     "prisma:seed": "pnpm prisma db seed",
     "start:docker": "pnpm run prisma:generate && pnpm run prisma:migrate && pnpm run prisma:seed && pnpm next build && pnpm next start",
     "preinstall": "npx only-allow pnpm",
