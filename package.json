@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prisma:generate": "pnpm prisma generate",
+    "prisma:migrate": "pnpm prisma migrate dev --name init",
+    "prisma:seed": "pnpm prisma db seed",
+    "start:docker": "pnpm run prisma:generate && pnpm run prisma:migrate && pnpm run prisma:seed && pnpm next build && pnpm next start",
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev",
     "build": "next build",
@@ -29,6 +33,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.4",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^20.5.7",
     "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
@@ -53,7 +58,6 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.9",
     "@types/react": "18.2.20",
     "@types/react-dom": "18.2.7",
     "eslint": "8.47.0",

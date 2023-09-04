@@ -24,7 +24,7 @@ function Calendar({ events }: { events: any[] }) {
     useEffect(() => {
         window.addEventListener('resize', resizeHandler)
         return () => window.removeEventListener('resize', resizeHandler)
-    }, [])
+    }, [resizeHandler])
 
     return (
         <FullCalendar

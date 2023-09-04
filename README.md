@@ -25,6 +25,7 @@ pnpm install
 
 ```env
 NODE_ENV="development"
+SEED="true"
 SEED_OLD_DATA="false"
 
 NEXTAUTH_URL="http://localhost:3000"

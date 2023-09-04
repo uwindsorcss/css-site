@@ -8,6 +8,8 @@ async function seed() {
   let counter = 0;
   let data: any;
 
+  if (process.env.SEED === "false") return;
+
   // development data
   if (
     process.env.NODE_ENV === "development" &&

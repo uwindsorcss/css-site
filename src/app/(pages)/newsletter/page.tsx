@@ -1,8 +1,5 @@
 import { prisma } from "@/lib/db";
-import { formatShortenedTimeDistance } from "@/lib/utils";
 import { Metadata } from "next";
-import Link from "next/link";
-import MarkDownView from "@/components/MarkDownView";
 import PaginationButtons from "@/components/ui/pagination-buttons";
 import Post from "@/components/newsletter/Post";
 
