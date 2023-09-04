@@ -7,11 +7,10 @@ import { DiscordAccount } from "@prisma/client";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
-// TODO: Update thumbnail link
 const discordEmbed = {
   title: "UWindsor Computer Science Society",
   url: "https://css.uwindsor.ca",
-  thumbnail: { url: "https://css.uwindsor.ca/css-logo-square.png" },
+  thumbnail: { url: "https://css.uwindsor.ca/images/css-logo-shield.png" },
   color: "3447003",
 };
 
