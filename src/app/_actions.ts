@@ -47,7 +47,7 @@ export async function linkDiscordAccount(discordResponse: any) {
       expiresAt: expiresAt,
     };
 
-    if (discordAccount) {
+    if (discordAccount && discordAccount !== null) {
       await prisma.discordAccount.update({
         where: {
           id: discordAccount.id,
@@ -61,20 +61,20 @@ export async function linkDiscordAccount(discordResponse: any) {
     }
 
     // Add the user to the server
-    await fetch(
-      `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordUser.id}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          access_token: accessToken,
-          nick: session?.user.name,
-        }),
-      }
-    );
+    // await fetch(
+    //   `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordUser.id}`,
+    //   {
+    //     method: "PUT",
+    //     headers: {
+    //       Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       access_token: accessToken,
+    //       nick: session?.user.name,
+    //     }),
+    //   }
+    // );
 
     // Send a confirmation DM to the user
     await sendDiscordDM(
@@ -104,17 +104,17 @@ export async function unlinkDiscordAccount() {
       );
 
       // Remove the user from the server
-      await fetch(
-        `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-          },
-        }
-      ).catch((error) => {
-        console.error("An error occurred:", error);
-      });
+      // await fetch(
+      //   `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.id}`,
+      //   {
+      //     method: "DELETE",
+      //     headers: {
+      //       Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+      //     },
+      //   }
+      // ).catch((error) => {
+      //   console.error("An error occurred:", error);
+      // });
 
       await prisma.discordAccount.delete({
         where: {
