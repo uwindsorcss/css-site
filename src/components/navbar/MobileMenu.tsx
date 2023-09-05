@@ -22,7 +22,7 @@ function MobileMenu({ links }: MobileMenuProps) {
           <>
             <RemoveScrollBar />
             <motion.aside
-              className="lg:hidden bg-primary text-primary-foreground w-full absolute left-0 right-0 top-16 z-50"
+              className="lg:hidden bg-primary text-primary-foreground w-full absolute left-0 right-0 top-16 z-50 overflow-scroll min-h-screen pb-16"
               initial={{ height: 0 }}
               animate={{
                 height: "100vh",
@@ -39,7 +39,7 @@ function MobileMenu({ links }: MobileMenuProps) {
                 {links.map((link, id) =>
                   link.sublinks ? (
                     <div key={id} className="border-b-2 border-border-900">
-                      <div className="text-3xl font-medium p-3 pb-4">
+                      <div className="text-2xl font-medium p-2 pb-4">
                         {link.name}
                       </div>
                       <div className="ml-3 mb-1">
@@ -74,7 +74,7 @@ function MobileMenu({ links }: MobileMenuProps) {
                     </div>
                   ) : (
                     <Link
-                      className="border-b-2 border-border-900 hover:bg-accent hover:text-accent-foreground transition-colors no-underline text-3xl font-medium p-4"
+                      className="border-b-2 border-border-900 hover:bg-accent hover:text-accent-foreground transition-colors no-underline text-2xl font-medium p-2"
                       href={link.href}
                       key={id}
                       onClick={() => cycleOpen()}>
