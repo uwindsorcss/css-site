@@ -29,14 +29,6 @@ export async function linkDiscordAccount(discordResponse: any) {
       },
     }).then((res) => res.json());
 
-    //check if the user is already in the server
-    const member = await getMemberFromServer(discordUser.id);
-
-    if (member.user)
-      throw new Error(
-        "It looks like you're already in the server. If you think this is a mistake, please contact a CSS admin."
-      );
-
     //translate discordResponse.expires_in to a date
     const expiresAt = new Date();
     expiresAt.setSeconds(
@@ -60,6 +52,10 @@ export async function linkDiscordAccount(discordResponse: any) {
       update: data,
       create: data,
     });
+
+    const member = await getMemberFromServer(discordUser.id);
+
+    if (member.user) return;
 
     // Add the user to the server
     await fetch(
@@ -121,7 +117,7 @@ export async function unlinkDiscordAccount() {
 
     // Remove the user from the server
     await fetch(
-      `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.id}`,
+      `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.discordId}`,
       {
         method: "DELETE",
         headers: {
