@@ -42,7 +42,7 @@ export async function GET(req: Request) {
       discordResponse.error
     );
 
-    const errorMessage = `There was an error linking your account. Please try again. From 1: {discordResponse.error}`;
+    const errorMessage = `There was an error linking your account. Please try again. From 1: ${discordResponse.error}`;
 
     return NextResponse.redirect(
       `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
