@@ -24,19 +24,13 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   themeColor: "#0f1627",
+  metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
   openGraph: {
     type: "website",
     url: "https://css.uwindsor.ca",
     title: "Computer Science Society",
     description: "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
-    images: [
-      {
-        url: `${process.env.NEXTAUTH_URL}/images/css-logo-shield.png`,
-        width: 2248,
-        height: 2248,
-        alt: "Computer Science Society",
-      },
-    ],
+    images: "/images/css-logo-shield.png",
   },
   twitter: {
     card: 'app',
