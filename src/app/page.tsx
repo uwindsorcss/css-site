@@ -78,7 +78,7 @@ export default async function Home() {
             <>
               {upcomingEvents.map((event) => (
                 <Link href={`/events/${event.id}`} key={event.id} className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
-                  <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+                  <Card className="flex flex-col items-center justify-center gap-2 text-center w-full h-full px-2 py-10 md:p-20">
                     <CardTitle>
                       {event.title}
                     </CardTitle>
@@ -126,8 +126,8 @@ export default async function Home() {
       </Section>
 
       <Section className="flex flex-col items-center justify-center w-full">
-        <div className="flex flex-col items-center justify-center text-center gap-4 bg-secondary text-secondary-foreground rounded-md w-full py-28">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+        <div className="flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-secondary text-secondary-foreground rounded-md w-full py-28 px-12">
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">
             {content.connectWithStudents.heading}
           </h2>
           <span className="inline-block text-md md:text-lg lg:text-xl font-medium mb-2">
