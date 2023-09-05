@@ -46,6 +46,18 @@ export const metadata: Metadata = {
       url: '/images/css-logo-shield.png',
       alt: 'Computer Science Society',
     },
+    app: {
+      name: 'Computer Science Society',
+      id: {
+        iphone: 'https://css.uwindsor.ca',
+        ipad: 'https://css.uwindsor.ca',
+        googleplay: 'https://css.uwindsor.ca',
+      },
+      url: {
+        iphone: 'https://css.uwindsor.ca',
+        ipad: 'https://css.uwindsor.ca',
+      },
+    },
   },
 };
 
