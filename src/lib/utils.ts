@@ -41,12 +41,16 @@ export const display12HourTime = (date: Date) => {
 };
 
 export function formatDateRange(start: Date, end: Date) {
+  //convert from etc to utc
+  start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
+  end = new Date(end.getTime() + end.getTimezoneOffset() * 60000);
+
   const isSameDay = start.toDateString() === end.toDateString();
 
   let options: any = {
     weekday: "short",
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
   };
 
@@ -59,7 +63,7 @@ export function formatDateRange(start: Date, end: Date) {
   options = {
     weekday: "short",
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
