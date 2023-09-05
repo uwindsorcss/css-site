@@ -31,25 +31,16 @@ export async function GET(req: Request) {
     if (!discordResponse.error && discordResponse.access_token) {
       await linkDiscordAccount(discordResponse);
       return NextResponse.redirect(
-        new URL(
-          "/discord?success=Your%20account%20has%20been%20linked.",
-          req.url
-        )
+        `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20linked.`
       );
     }
     return NextResponse.redirect(
-      new URL(
-        "/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.",
-        req.url
-      )
+      `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20linked.`
     );
   } catch (error) {
     console.error("Error handling Discord callback:", error);
     return NextResponse.redirect(
-      new URL(
-        "/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.",
-        req.url
-      )
+      `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20linked.`
     );
   }
 }
