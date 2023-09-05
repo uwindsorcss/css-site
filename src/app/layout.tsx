@@ -17,11 +17,35 @@ export const metadata: Metadata = {
     width: "device-width",
     minimumScale: 1,
   },
-  description: "CSS Site",
+  description: "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://css.uwindsor.ca",
+    title: "Computer Science Society",
+    description: "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
+    images: [
+      {
+        url: "/images/css-logo-shield.png",
+        width: 2248,
+        height: 2248,
+        alt: "Computer Science Society",
+      },
+    ],
+  },
+  twitter: {
+    card: 'app',
+    title: 'Computer Science Society',
+    description: 'A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.',
+    creator: '@UWindsorCSS',
+    images: {
+      url: '/images/css-logo-shield.png',
+      alt: 'Computer Science Society',
+    },
   },
 };
 
