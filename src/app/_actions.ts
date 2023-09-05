@@ -18,7 +18,7 @@ export async function linkDiscordAccount(discordResponse: any) {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user?.id)
+    if (!session?.user.id)
       throw new Error("Error while linking account. Session not found.");
 
     const accessToken = discordResponse.access_token;
@@ -37,7 +37,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
     const data = {
       discordId: discordUser.id,
-      userId: session?.user.id!,
+      userId: session.user.id,
       username: discordUser.username,
       discriminator: discordUser.discriminator,
       avatar: discordUser.avatar,
@@ -47,7 +47,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
     await prisma.discordAccount.upsert({
       where: {
-        userId: session?.user.id!,
+        userId: session.user.id,
       },
       update: data,
       create: data,
@@ -56,29 +56,32 @@ export async function linkDiscordAccount(discordResponse: any) {
     //check if the user is already in the server
     const member = await getMemberFromServer(discordUser.id);
 
-    if (!member.user) {
-      // Add the user to the server
-      await fetch(
-        `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordUser.id}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            access_token: accessToken,
-            nick: session?.user.name,
-          }),
-        }
+    if (member.user)
+      throw new Error(
+        "It looks like you're already in the server. If you think this is a mistake, please contact a CSS admin."
       );
-    }
+
+    // Add the user to the server
+    await fetch(
+      `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordUser.id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          access_token: accessToken,
+          nick: session.user.name,
+        }),
+      }
+    );
 
     // Send a confirmation DM to the user
     await sendDiscordDM(
       discordUser.id,
       `🔗✅ You've successfully linked your account.\n\n Welcome to the **University of Windsor CS Discord**! You've come to a great place.\n\n
-            We've set your nickname to **${session?.user.name}**. Please contact a CSS member if you'd like to shorten your name (e.g. Johnathon Middlename Doe -> John Doe).`
+              We've set your nickname to **${session.user.name}**. Please contact a CSS member if you'd like to shorten your name (e.g. Johnathon Middlename Doe -> John Doe).`
     );
   } catch (error) {
     console.error("An error occurred:", error);
@@ -90,50 +93,51 @@ export async function unlinkDiscordAccount() {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user?.id)
+    if (!session?.user.id)
       throw new Error("Error while unlinking account. Session not found.");
 
     const discordAccount = await prisma.discordAccount.findUnique({
       where: {
-        userId: session?.user?.id!,
+        userId: session.user.id,
       },
     });
 
-    if (discordAccount && discordAccount !== null) {
-      // Check if the user is in the server
-      const member = await getMemberFromServer(discordAccount.discordId);
+    if (!discordAccount || discordAccount === null)
+      throw new Error("No discord account found. Please try again.");
 
-      await sendDiscordDM(
-        discordAccount.discordId,
-        `🔗💥 You've successfully unlinked your account.\n\n 
-        You've been removed from the server. If you'd like to rejoin, please [relink](https://css.uwindsor.ca/discord) your account.`
+    // Check if the user is in the server
+    const member = await getMemberFromServer(discordAccount.discordId);
+
+    if (!member.user || member.user === null)
+      throw new Error(
+        "It looks like you're not in the server. If you think this is a mistake, please contact a CSS admin."
       );
 
-      if (member.user) {
-        // Remove the user from the server
-        await fetch(
-          `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.id}`,
-          {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-            },
-          }
-        ).catch((error) => {
-          console.error("An error occurred:", error);
-        });
-      }
+    await sendDiscordDM(
+      discordAccount.discordId,
+      `🔗💥 You've successfully unlinked your account.\n\n 
+          You've been removed from the server. If you'd like to rejoin, please [relink](https://css.uwindsor.ca/discord) your account.`
+    );
 
-      // Delete the discord account from the database
-      await prisma.discordAccount.delete({
-        where: {
-          id: discordAccount.id,
+    // Remove the user from the server
+    await fetch(
+      `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordAccount.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
         },
-      });
+      }
+    );
 
-      return true;
-    }
-    throw new Error("No discord account found. Please try again.");
+    // Delete the discord account from the database
+    await prisma.discordAccount.delete({
+      where: {
+        id: discordAccount.id,
+      },
+    });
+
+    return true;
   } catch (error) {
     console.error("An error occurred:", error);
     throw error;
@@ -142,7 +146,7 @@ export async function unlinkDiscordAccount() {
 
 async function getMemberFromServer(userId: string) {
   return await fetch(
-    `https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${userId}`,
+    `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${userId}`,
     {
       headers: {
         Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
