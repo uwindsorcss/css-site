@@ -1,18 +1,20 @@
 import { Metadata } from "next";
 import MarkDownView from "@/components/views/MarkDownView";
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import FeedView from "@/components/views/FeedView";
+import path from "path";
 
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "About",
 };
 
 
-export default function AboutPage() {
+export default async function AboutPage() {
   // const data = prisma.plainText.findMany({
   //   where: {id:1}
   // })
-  const markdownFile = fs.readFileSync('src/app/(pages)/about/content.mdx', 'utf-8');
+  const markdownFile = await fs.readFile(path.join(process.cwd(), "src", "app", "(pages)", "about") + "/content.mdx", "utf8");
 
   return (
     <FeedView>
