@@ -16,6 +16,12 @@ const discordEmbed = {
 
 export async function linkDiscordAccount(discordResponse: any) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+      throw new Error("from linkDiscordAccount: no session found");
+    }
+
     const accessToken = discordResponse.access_token;
 
     //translate discordResponse.expires_in to a date
@@ -30,7 +36,6 @@ export async function linkDiscordAccount(discordResponse: any) {
       },
     }).then((res) => res.json());
 
-    const session = await getServerSession(authOptions);
     const discordAccount = await prisma.discordAccount.findUnique({
       where: {
         userId: session?.user.id!,
