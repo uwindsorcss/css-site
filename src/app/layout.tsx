@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description: "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
     images: [
       {
-        url: "/images/css-logo-shield.png",
+        url: `${process.env.NEXTAUTH_URL}/images/css-logo-shield.png`,
         width: 2248,
         height: 2248,
         alt: "Computer Science Society",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: 'A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.',
     creator: '@UWindsorCSS',
     images: {
-      url: '/images/css-logo-shield.png',
+      url: `${process.env.NEXTAUTH_URL}/images/css-logo-shield.png`,
       alt: 'Computer Science Society',
     },
     app: {
