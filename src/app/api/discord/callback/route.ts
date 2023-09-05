@@ -50,9 +50,12 @@ export async function GET(req: Request) {
       )}`
     );
   } catch (error) {
-    console.error("Error handling Discord callback:", error);
+    const errorMessage = `There was an error linking your account. Please try again. From 2: ${error}`;
+
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.`
+      `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
+        errorMessage.trim()
+      )}`
     );
   }
 }
