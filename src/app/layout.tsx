@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: "#07519D",
+  themeColor: "#0b0d14",
   openGraph: {
     type: "website",
     url: "https://css.uwindsor.ca",
