@@ -89,6 +89,12 @@ export async function linkDiscordAccount(discordResponse: any) {
 
 export async function unlinkDiscordAccount() {
   const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    console.log("from unlinkDiscordAccount: no session found");
+    return false;
+  }
+
   try {
     const discordAccount = await prisma.discordAccount.findUnique({
       where: {
@@ -121,11 +127,11 @@ export async function unlinkDiscordAccount() {
           id: discordAccount.id,
         },
       });
+      return true;
     } else {
-      throw new Error("Discord account not found");
+      console.log("from unlinkDiscordAccount: no discord account found");
     }
-
-    return true;
+    return false;
   } catch (error) {
     console.error("An error occurred:", error);
     return false;
