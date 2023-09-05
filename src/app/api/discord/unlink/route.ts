@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { unlinkDiscordAccount } from "@/app/_actions";
 import { revalidatePath } from "next/cache";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const unlikeDiscordAccount = await unlinkDiscordAccount();
