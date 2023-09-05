@@ -22,7 +22,7 @@ function MobileMenu({ links }: MobileMenuProps) {
           <>
             <RemoveScrollBar />
             <motion.aside
-              className="lg:hidden bg-primary text-primary-foreground w-full absolute left-0 right-0 top-16 z-50 overflow-scroll min-h-screen pb-16"
+              className="lg:hidden bg-primary text-primary-foreground w-full absolute left-0 right-0 top-16 z-50"
               initial={{ height: 0 }}
               animate={{
                 height: "100vh",
@@ -32,7 +32,7 @@ function MobileMenu({ links }: MobileMenuProps) {
                 transition: { delay: 0.1 },
               }}>
               <motion.div
-                className="p-5 flex flex-col"
+                className="p-5 flex flex-col overflow-y-scroll h-full pb-16"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { delay: 0.1 } }}
                 exit={{ opacity: 0 }}>
