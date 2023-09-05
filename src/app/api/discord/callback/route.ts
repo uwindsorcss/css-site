@@ -29,30 +29,19 @@ export async function GET(req: Request) {
       }
     ).then((res) => res.json());
 
-    console.log("discordResponse", discordResponse);
-
     if (!discordResponse.error && discordResponse.access_token) {
       await linkDiscordAccount(discordResponse);
       return NextResponse.redirect(
-        `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20linked.`
+        `${process.env.NEXTAUTH_URL}/discord?success=${encodeURIComponent(
+          "Your account has been linked."
+        )}`
       );
     }
-
-    console.log(
-      "from discord/callback/route.ts: discordResponse.error",
-      discordResponse.error
-    );
-
-    const errorMessage = `There was an error linking your account. Please try again. From 1: ${discordResponse.error}`;
-
-    return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
-        errorMessage.trim()
-      )}`
+    throw new Error(
+      "There was an error linking your account. Please try again."
     );
   } catch (error) {
-    const errorMessage = `There was an error linking your account. Please try again. From 2: ${error}`;
-
+    const errorMessage = (error as Error).message;
     return NextResponse.redirect(
       `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
         errorMessage.trim()

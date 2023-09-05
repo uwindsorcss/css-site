@@ -10,17 +10,17 @@ export async function GET() {
     if (unlikeDiscordAccount) {
       revalidatePath("/discord");
       return NextResponse.redirect(
-        `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20unlinked.`
-      );
-    } else {
-      return NextResponse.redirect(
-        `${process.env.NEXTAUTH_URL}/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.`
+        `${process.env.NEXTAUTH_URL}/discord?success=${encodeURIComponent(
+          "Your account has been unlinked."
+        )}`
       );
     }
+    throw new Error("No discord account found. Please try again.");
   } catch (error) {
-    console.error("Error handling Discord callback:", error);
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.`
+      `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
+        (error as Error).message
+      ).trim()}`
     );
   }
 }
