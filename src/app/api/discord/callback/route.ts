@@ -35,12 +35,14 @@ export async function GET(req: Request) {
       );
     }
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20linked.`
+      new URL(
+        `${process.env.NEXTAUTH_URL}/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.`
+      )
     );
   } catch (error) {
     console.error("Error handling Discord callback:", error);
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?success=Your%20account%20has%20been%20linked.`
+      `${process.env.NEXTAUTH_URL}/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.`
     );
   }
 }
