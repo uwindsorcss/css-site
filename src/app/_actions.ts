@@ -29,6 +29,14 @@ export async function linkDiscordAccount(discordResponse: any) {
       },
     }).then((res) => res.json());
 
+    //check if the user is already in the server
+    const member = await getMemberFromServer(discordUser.id);
+
+    if (member.user)
+      throw new Error(
+        "It looks like you're already in the server. If you think this is a mistake, please contact a CSS admin."
+      );
+
     //translate discordResponse.expires_in to a date
     const expiresAt = new Date();
     expiresAt.setSeconds(
@@ -52,14 +60,6 @@ export async function linkDiscordAccount(discordResponse: any) {
       update: data,
       create: data,
     });
-
-    //check if the user is already in the server
-    const member = await getMemberFromServer(discordUser.id);
-
-    if (member.user)
-      throw new Error(
-        "It looks like you're already in the server. If you think this is a mistake, please contact a CSS admin."
-      );
 
     // Add the user to the server
     await fetch(
