@@ -42,8 +42,12 @@ export async function GET(req: Request) {
       discordResponse.error
     );
 
+    const errorMessage = `There was an error linking your account. Please try again. From 1: {discordResponse.error}`;
+
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?error=There%20was%20an%20error%20linking%20your%20account.%20Please%20try%20again.`
+      `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
+        errorMessage.trim()
+      )}`
     );
   } catch (error) {
     console.error("Error handling Discord callback:", error);
