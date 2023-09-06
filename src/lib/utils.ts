@@ -37,8 +37,10 @@ export const display12HourTime = (date: Date) => {
 
 export function formatDateRange(start: Date, end: Date) {
   //convert from etc to utc
-  start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
-  end = new Date(end.getTime() + end.getTimezoneOffset() * 60000);
+  const timeZoneOffset = 240 * 60000;
+
+  start = new Date(start.getTime() + timeZoneOffset);
+  end = new Date(end.getTime() + timeZoneOffset);
 
   const isSameDay = start.toDateString() === end.toDateString();
 
@@ -71,8 +73,11 @@ export function formatDateRange(start: Date, end: Date) {
 }
 
 export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
-  startDate = new Date(startDate.getTime() + startDate.getTimezoneOffset() * 60000);
-  endDate = new Date(endDate.getTime() + endDate.getTimezoneOffset() * 60000);
+  //convert from etc to utc
+  const timeZoneOffset = 240 * 60000;
+
+  startDate = new Date(startDate.getTime() + timeZoneOffset);
+  endDate = new Date(endDate.getTime() + timeZoneOffset);
 
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";

@@ -90,7 +90,7 @@ export default async function Home() {
                     <CardTitle>{event.title}</CardTitle>
                     <CardDescription className="text-sm flex flex-col items-center justify-center gap-2">
                       {event.startDate.toLocaleDateString("en-US", {
-                        weekday: "long",
+                        weekday: "short",
                         year: "numeric",
                         month: "long",
                         day: "numeric",
