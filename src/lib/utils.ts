@@ -37,10 +37,8 @@ export const display12HourTime = (date: Date) => {
 
 export function formatDateRange(start: Date, end: Date) {
   //convert from etc to utc
-  const timeZoneOffset = 240 * 60000;
-
-  start = new Date(start.getTime() + timeZoneOffset);
-  end = new Date(end.getTime() + timeZoneOffset);
+  start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
+  end = new Date(end.getTime() + end.getTimezoneOffset() * 60000);
 
   const isSameDay = start.toDateString() === end.toDateString();
 

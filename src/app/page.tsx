@@ -92,7 +92,7 @@ export default async function Home() {
                       {event.startDate.toLocaleDateString("en-US", {
                         weekday: "short",
                         year: "numeric",
-                        month: "long",
+                        month: "short",
                         day: "numeric",
                       })}
                       <span className="font-bold">
