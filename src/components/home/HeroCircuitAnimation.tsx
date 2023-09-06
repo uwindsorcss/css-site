@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 
 function HeroCircuitAnimation() {
   return (
-    <motion.div className="absolute inset-0 flex items-center justify-center overflow-hidden"
+    <motion.div
+      className="absolute inset-0 flex items-center justify-center overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 0.5 }}
-      transition={{ duration: 3 }}
-    >
+      transition={{ duration: 3 }}>
       <svg
         className="absolute h-screen transform -translate-x-1/2 -translate-y-1/2"
         style={{ top: "47%", left: "49.5%" }}
@@ -19,14 +19,16 @@ function HeroCircuitAnimation() {
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <path
           d="M349 150L73 150C70.7909 150 69 151.791 69 154L69 174"
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <g>
           <path
             d="M547 130L822 130C824.209 130 826 131.791 826 134L826 264"
@@ -34,11 +36,13 @@ function HeroCircuitAnimation() {
             strokeOpacity="0.25"
             pathLength="1"
             strokeDashoffset="0px"
-            strokeDasharray="1px 1px" />
+            strokeDasharray="1px 1px"
+          />
           <path
             d="M547 130L822 130C824.209 130 826 131.791 826 134L826 264"
             stroke="url(#blue-pulse-2)"
-            strokeWidth="1" />
+            strokeWidth="1"
+          />
         </g>
         <g>
           <path
@@ -47,12 +51,14 @@ function HeroCircuitAnimation() {
             strokeOpacity="0.25"
             pathLength="1"
             strokeDashoffset="0px"
-            strokeDasharray="1px 1px" />
+            strokeDasharray="1px 1px"
+          />
           <path
             d="M349 130L5.00002 130C2.79088 130 1.00001 131.791 1.00001 134L1.00001 264"
             stroke="url(#blue-pulse-1)"
             strokeLinecap="round"
-            strokeWidth="1" />
+            strokeWidth="1"
+          />
         </g>
         <g>
           <path
@@ -61,12 +67,14 @@ function HeroCircuitAnimation() {
             strokeOpacity="0.25"
             pathLength="1"
             strokeDashoffset="0px"
-            strokeDasharray="1px 1px" />
+            strokeDasharray="1px 1px"
+          />
           <path
             d="M547 150L633 150C635.209 150 637 151.791 637 154L637 236C637 238.209 635.209 240 633 240L488 240C485.791 240 484 241.791 484 244L484 264"
             stroke="url(#orange-pulse-1)"
             strokeLinecap="round"
-            strokeWidth="1" />
+            strokeWidth="1"
+          />
         </g>
         <g>
           <path
@@ -75,12 +83,14 @@ function HeroCircuitAnimation() {
             strokeOpacity="0.25"
             pathLength="1"
             strokeDashoffset="0px"
-            strokeDasharray="1px 1px" />
+            strokeDasharray="1px 1px"
+          />
           <path
             d="M388 184L388 194C388 196.209 386.209 198 384 198L77 198C74.7909 198 73 199.791 73 202L73 264"
             stroke="url(#orange-pulse-2)"
             strokeLinecap="round"
-            strokeWidth="1" />
+            strokeWidth="1"
+          />
         </g>
         <path
           d="M412 96L412 0"
@@ -88,7 +98,8 @@ function HeroCircuitAnimation() {
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <g>
           <path
             d="M412 263.5L412 184"
@@ -102,7 +113,8 @@ function HeroCircuitAnimation() {
             d="M412 263.5L412 184"
             stroke="url(#blue-pulse-3)"
             strokeLinecap="round"
-            strokeWidth="1" />
+            strokeWidth="1"
+          />
         </g>
         <g>
           <path
@@ -111,11 +123,13 @@ function HeroCircuitAnimation() {
             strokeOpacity="0.25"
             pathLength="1"
             strokeDashoffset="0px"
-            strokeDasharray="1px 1px" />
+            strokeDasharray="1px 1px"
+          />
           <path
             d="M508 96L508 88C508 85.7909 509.791 84 512 84L886 84C888.209 84 890 85.7909 890 88L890 264"
             stroke="url(#orange-pulse-3)"
-            strokeWidth="1" />
+            strokeWidth="1"
+          />
         </g>
         <path
           d="M436 96L436 0"
@@ -123,7 +137,8 @@ function HeroCircuitAnimation() {
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <path
           d="M436 214L436 184"
           stroke="var(--circuit-background)"
@@ -138,7 +153,8 @@ function HeroCircuitAnimation() {
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <path
           d="M460 239L460 184"
           stroke="var(--circuit-background)"
@@ -153,27 +169,25 @@ function HeroCircuitAnimation() {
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <path
           d="M484 184L484 210C484 212.209 485.791 214 488 214L560 214"
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
+          strokeDasharray="1px 1px"
+        />
         <path
           d="M508 184L508 193C508 195.209 509.791 197 512 197L560 197"
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           pathLength="1"
           strokeDashoffset="0px"
-          strokeDasharray="1px 1px" />
-        <circle
-          cx="460"
-          cy="64"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+          strokeDasharray="1px 1px"
+        />
+        <circle cx="460" cy="64" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="460"
           cy="64"
@@ -181,12 +195,7 @@ function HeroCircuitAnimation() {
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           opacity="0.4"></circle>
-        <circle
-          cx="308"
-          cy="64"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+        <circle cx="308" cy="64" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="308"
           cy="64"
@@ -194,12 +203,7 @@ function HeroCircuitAnimation() {
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           opacity="0.4"></circle>
-        <circle
-          cx="69"
-          cy="173"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+        <circle cx="69" cy="173" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="69"
           cy="173"
@@ -207,12 +211,7 @@ function HeroCircuitAnimation() {
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           opacity="0.4"></circle>
-        <circle
-          cx="436"
-          cy="214"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+        <circle cx="436" cy="214" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="436"
           cy="214"
@@ -220,12 +219,7 @@ function HeroCircuitAnimation() {
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           opacity="0.4"></circle>
-        <circle
-          cx="460"
-          cy="240"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+        <circle cx="460" cy="240" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="460"
           cy="240"
@@ -233,12 +227,7 @@ function HeroCircuitAnimation() {
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           opacity="0.4"></circle>
-        <circle
-          cx="560"
-          cy="214"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+        <circle cx="560" cy="214" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="560"
           cy="214"
@@ -246,12 +235,7 @@ function HeroCircuitAnimation() {
           stroke="var(--circuit-background)"
           strokeOpacity="0.25"
           opacity="0.4"></circle>
-        <circle
-          cx="560"
-          cy="197"
-          fill="var(--circuit-background)"
-          r="4"
-          opacity="0.4"></circle>
+        <circle cx="560" cy="197" fill="var(--circuit-background)" r="4" opacity="0.4"></circle>
         <circle
           cx="560"
           cy="197"

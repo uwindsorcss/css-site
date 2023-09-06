@@ -33,9 +33,7 @@ export default async function GalleryPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {events.length === 0 && (
           <div className="col-span-full text-center">
-            <span className="text-lg text-muted-foreground font-semibold">
-              No events to show
-            </span>
+            <span className="text-lg text-muted-foreground font-semibold">No events to show</span>
           </div>
         )}
         {events.map((event, i) => {
@@ -46,9 +44,7 @@ export default async function GalleryPage() {
               href={`/gallery/${event.slug}`}>
               <Image
                 className="rounded-md"
-                src={
-                  event.thumbnailImage?.url ?? "/images/placeholder/480x360.png"
-                }
+                src={event.thumbnailImage?.url ?? "/images/placeholder/480x360.png"}
                 alt={`Thumbnail for ${event.title}`}
                 width={480}
                 height={360}

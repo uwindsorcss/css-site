@@ -18,8 +18,7 @@ export async function linkDiscordAccount(discordResponse: any) {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user.id)
-      throw new Error("Error while linking account. Session not found.");
+    if (!session?.user.id) throw new Error("Error while linking account. Session not found.");
 
     const accessToken = discordResponse.access_token;
 
@@ -31,9 +30,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
     //translate discordResponse.expires_in to a date
     const expiresAt = new Date();
-    expiresAt.setSeconds(
-      expiresAt.getSeconds() + discordResponse.expires_in - 60
-    );
+    expiresAt.setSeconds(expiresAt.getSeconds() + discordResponse.expires_in - 60);
 
     const data = {
       discordId: discordUser.id,
@@ -89,8 +86,7 @@ export async function unlinkDiscordAccount() {
   try {
     const session = await getServerSession(authOptions);
 
-    if (!session?.user.id)
-      throw new Error("Error while unlinking account. Session not found.");
+    if (!session?.user.id) throw new Error("Error while unlinking account. Session not found.");
 
     const discordAccount = await prisma.discordAccount.findUnique({
       where: {
@@ -213,15 +209,12 @@ export async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
   let avatarUrl = "/images/discord-avatar.png";
 
   if (discordAccount.updatedAt.getTime() < Date.now() - 300000) {
-    const res = await fetch(
-      `${DISCORD_API_ENDPOINT}/users/${discordAccount.discordId}`,
-      {
-        next: { revalidate: 300 },
-        headers: {
-          Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
-        },
-      }
-    );
+    const res = await fetch(`${DISCORD_API_ENDPOINT}/users/${discordAccount.discordId}`, {
+      next: { revalidate: 300 },
+      headers: {
+        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+      },
+    });
 
     if (res.ok) {
       const data = await res.json();
@@ -244,10 +237,7 @@ export async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
 }
 
 async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
-  return await fetch(
-    `https://cdn.discordapp.com/avatars/${discordId}/${avatarId}.png`,
-    {
-      next: { revalidate: 300 },
-    }
-  ).then((res) => res.url);
+  return await fetch(`https://cdn.discordapp.com/avatars/${discordId}/${avatarId}.png`, {
+    next: { revalidate: 300 },
+  }).then((res) => res.url);
 }

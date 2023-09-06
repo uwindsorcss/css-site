@@ -2,18 +2,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import DiscordAuthButton from "@/components/discord/DiscordAuthButton";
 import { prisma } from "@/lib/db";
 import { getServerSession } from "next-auth/next";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
@@ -84,9 +74,7 @@ export default async function DiscordPage() {
             discordAccount && discordAccount !== null ? (
               <>
                 {discordContent.cardInfo.linkedAccountText}
-                <DiscordAccount
-                  account={discordAccount}
-                />
+                <DiscordAccount account={discordAccount} />
               </>
             ) : (
               discordContent.cardInfo.linkingAccountText
@@ -117,10 +105,7 @@ export default async function DiscordPage() {
       line.replace(linkRegex, (match, linkText, linkUrl, index) => {
         const beforeText = line.substring(lastIndex, index);
 
-        if (beforeText)
-          parts.push(
-            <span key={`${lineIndex}-before-${index}`}>{beforeText}</span>
-          );
+        if (beforeText) parts.push(<span key={`${lineIndex}-before-${index}`}>{beforeText}</span>);
 
         parts.push(
           <a
@@ -138,14 +123,9 @@ export default async function DiscordPage() {
       });
 
       if (lastIndex < line.length)
-        parts.push(
-          <span key={`${lineIndex}-remaining`}>
-            {line.substring(lastIndex)}
-          </span>
-        );
+        parts.push(<span key={`${lineIndex}-remaining`}>{line.substring(lastIndex)}</span>);
 
-      if (lineIndex < lines.length - 1)
-        parts.push(<br key={`line-break-${lineIndex}`} />);
+      if (lineIndex < lines.length - 1) parts.push(<br key={`line-break-${lineIndex}`} />);
     });
 
     return <span>{parts}</span>;

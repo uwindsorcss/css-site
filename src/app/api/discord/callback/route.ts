@@ -18,16 +18,13 @@ export async function GET(req: Request) {
     params.append("scope", "guilds.join identify");
 
     // Exchange the authorization code for an access token from Discord
-    const discordResponse = await fetch(
-      `${DISCORD_API_ENDPOINT}/oauth2/token`,
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded",
-        },
-        body: params,
-      }
-    ).then((res) => res.json());
+    const discordResponse = await fetch(`${DISCORD_API_ENDPOINT}/oauth2/token`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      body: params,
+    }).then((res) => res.json());
 
     if (!discordResponse.error && discordResponse.access_token) {
       await linkDiscordAccount(discordResponse);
@@ -37,15 +34,11 @@ export async function GET(req: Request) {
         )}`
       );
     }
-    throw new Error(
-      "There was an error linking your account. Please try again."
-    );
+    throw new Error("There was an error linking your account. Please try again.");
   } catch (error) {
     const errorMessage = (error as Error).message;
     return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(
-        errorMessage.trim()
-      )}`
+      `${process.env.NEXTAUTH_URL}/discord?error=${encodeURIComponent(errorMessage.trim())}`
     );
   }
 }

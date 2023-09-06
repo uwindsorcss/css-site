@@ -11,7 +11,7 @@ import { prisma } from "@/lib/db";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { getEventRelativeTime } from "@/lib/utils";
 import Post from "@/components/newsletter/Post";
-import content from './content.json';
+import content from "./content.json";
 
 export default async function Home() {
   const { memberCount } = await getMemberCount();
@@ -39,9 +39,7 @@ export default async function Home() {
         <h1 className="text-3xl md:text-5xl lg:text-6xl text-center font-black">
           {content.hero.subheading}
         </h1>
-        <h3 className="text-lg text-center mb-4">
-          {content.hero.description}
-        </h3>
+        <h3 className="text-lg text-center mb-4">{content.hero.description}</h3>
         <Button variant="discord" asChild>
           <Link href="/discord">
             <SiDiscord className="w-5 h-5 mr-2" />
@@ -65,23 +63,31 @@ export default async function Home() {
         </Button>
       </Section>
 
-      <Section heading={areAllEventsInPast ? content.events.recentEventsHeading : content.events.upcomingEventsHeading}
-        subheading={areAllEventsInPast ? content.events.recentEventsSubheading : content.events.upcomingEventsSubheading}>
+      <Section
+        heading={
+          areAllEventsInPast
+            ? content.events.recentEventsHeading
+            : content.events.upcomingEventsHeading
+        }
+        subheading={
+          areAllEventsInPast
+            ? content.events.recentEventsSubheading
+            : content.events.upcomingEventsSubheading
+        }>
         <div className="flex flex-wrap gap-5 justify-center w-full">
           {upcomingEvents === null || upcomingEvents.length === 0 ? (
             <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-              <CardTitle>
-                {content.events.noEventsHeading}
-              </CardTitle>
+              <CardTitle>{content.events.noEventsHeading}</CardTitle>
             </Card>
           ) : (
             <>
               {upcomingEvents.map((event) => (
-                <Link href={`/events/${event.id}`} key={event.id} className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
+                <Link
+                  href={`/events/${event.id}`}
+                  key={event.id}
+                  className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
                   <Card className="flex flex-col items-center justify-center gap-2 text-center w-full h-full px-2 py-10 md:p-20">
-                    <CardTitle>
-                      {event.title}
-                    </CardTitle>
+                    <CardTitle>{event.title}</CardTitle>
                     <CardDescription className="text-sm flex flex-col items-center justify-center gap-2">
                       {event.startDate.toLocaleDateString("en-US", {
                         weekday: "long",
@@ -104,13 +110,13 @@ export default async function Home() {
         </Button>
       </Section>
 
-      <Section heading={content.newsletters.featuredNewslettersHeading} subheading={content.newsletters.subheadingSubheading}>
+      <Section
+        heading={content.newsletters.featuredNewslettersHeading}
+        subheading={content.newsletters.subheadingSubheading}>
         <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
           {featuredNewsletters === null || featuredNewsletters.length === 0 ? (
             <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-              <CardTitle>
-                {content.newsletters.noNewslettersHeading}
-              </CardTitle>
+              <CardTitle>{content.newsletters.noNewslettersHeading}</CardTitle>
             </Card>
           ) : (
             <>
@@ -132,10 +138,7 @@ export default async function Home() {
           </h2>
           <span className="inline-block text-md md:text-lg lg:text-xl font-medium mb-2">
             {content.connectWithStudents.text1}
-            <MemberCount
-              count={memberCount}
-              className="font-black md:mx-1"
-            />
+            <MemberCount count={memberCount} className="font-black md:mx-1" />
             {content.connectWithStudents.text2}
           </span>
           <Button variant="secondary" asChild>

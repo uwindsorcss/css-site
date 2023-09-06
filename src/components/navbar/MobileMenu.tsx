@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { RemoveScrollBar } from 'react-remove-scroll-bar';
+import { RemoveScrollBar } from "react-remove-scroll-bar";
 
 interface MobileMenuProps {
   links: Link[];
@@ -39,25 +39,15 @@ function MobileMenu({ links }: MobileMenuProps) {
                 {links.map((link, id) =>
                   link.sublinks ? (
                     <div key={id} className="border-b-2 border-border-900">
-                      <div className="text-2xl font-medium p-2 pb-4">
-                        {link.name}
-                      </div>
+                      <div className="text-2xl font-medium p-2 pb-4">{link.name}</div>
                       <div className="ml-3 mb-1">
                         {link.sublinks.map((sublink) => (
                           <Link
                             key={sublink.href}
                             className="flex flex-col p-2 hover:bg-accent hover:text-accent-foreground transition-colors"
                             href={sublink.href}
-                            target={
-                              sublink.href?.startsWith("http")
-                                ? "_blank"
-                                : "_self"
-                            }
-                            rel={
-                              sublink.href?.startsWith("http")
-                                ? "noopener noreferrer"
-                                : ""
-                            }
+                            target={sublink.href?.startsWith("http") ? "_blank" : "_self"}
+                            rel={sublink.href?.startsWith("http") ? "noopener noreferrer" : ""}
                             onClick={() => cycleOpen()}>
                             <div className="inline-flex text-sm font-medium leading-none">
                               {sublink.name}

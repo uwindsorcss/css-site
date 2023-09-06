@@ -10,10 +10,7 @@ const NavigationMenu = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
-    className={cn(
-      "relative z-10 flex max-w-max flex-1 items-center justify-center",
-      className
-    )}
+    className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
     delayDuration={10}
     {...props}>
     {children}
@@ -28,10 +25,7 @@ const NavigationMenuList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <NavigationMenuPrimitive.List
     ref={ref}
-    className={cn(
-      "group flex flex-1 list-none items-center justify-center space-x-1",
-      className
-    )}
+    className={cn("group flex flex-1 list-none items-center justify-center space-x-1", className)}
     {...props}
   />
 ));
@@ -92,39 +86,35 @@ const NavigationMenuViewport = React.forwardRef<
     />
   </div>
 ));
-NavigationMenuViewport.displayName =
-  NavigationMenuPrimitive.Viewport.displayName;
+NavigationMenuViewport.displayName = NavigationMenuPrimitive.Viewport.displayName;
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          target={props.href?.startsWith("http") ? "_blank" : undefined}
-          rel="noopener noreferrer"
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}>
-          <div className="inline-flex text-sm font-medium leading-none">
-            {title}
-            {props.href?.startsWith("http") && (
-              <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
+const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
+  ({ className, title, children, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <a
+            ref={ref}
+            target={props.href?.startsWith("http") ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            className={cn(
+              "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+              className
             )}
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
+            {...props}>
+            <div className="inline-flex text-sm font-medium leading-none">
+              {title}
+              {props.href?.startsWith("http") && (
+                <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted-foreground" />
+              )}
+            </div>
+            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
+          </a>
+        </NavigationMenuLink>
+      </li>
+    );
+  }
+);
 ListItem.displayName = "ListItem";
 
 export {

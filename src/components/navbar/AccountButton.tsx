@@ -56,18 +56,14 @@ function AccountButton({ session }: { session: Session | null }) {
               alt={session.user.name}
               className="hover:brightness-90 transition-all"
             />
-            <AvatarFallback>
-              {(session.user.name?.match(/\b(\w)/g) ?? []).join("")}
-            </AvatarFallback>
+            <AvatarFallback>{(session.user.name?.match(/\b(\w)/g) ?? []).join("")}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <div className="flex items-center px-2 py-2">
             <User className="w-5 h-5" />
             <div>
-              <DropdownMenuLabel className="pb-0">
-                {session.user.name}
-              </DropdownMenuLabel>
+              <DropdownMenuLabel className="pb-0">{session.user.name}</DropdownMenuLabel>
               <div className="px-2 text-sm font-semibold text-gray-500">
                 {session?.user?.title ?? "User"}
               </div>

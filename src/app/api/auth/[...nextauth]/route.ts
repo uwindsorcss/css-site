@@ -49,7 +49,9 @@ export const authOptions: NextAuthOptions = {
         // https://docs.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0#examples
         const response = await fetch(
           `https://graph.microsoft.com/v1.0/me/photos/${240}x${240}/$value`,
-          { headers: { Authorization: `Bearer ${tokens.access_token}` } }
+          {
+            headers: { Authorization: `Bearer ${tokens.access_token}` },
+          }
         );
 
         // Confirm that profile photo was returned
@@ -100,11 +102,7 @@ export const authOptions: NextAuthOptions = {
         where: { email: user.email! },
       });
 
-      if (
-        user.title !== null &&
-        user?.title.toLowerCase().includes("student") &&
-        !userInJson
-      ) {
+      if (user.title !== null && user?.title.toLowerCase().includes("student") && !userInJson) {
         return true;
       }
       return "/?error=It seems like you are not a student, if you think this is a mistake, please contact us.";

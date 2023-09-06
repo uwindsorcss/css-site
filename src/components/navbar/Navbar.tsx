@@ -37,8 +37,7 @@ async function NavBar() {
         {
           name: "Incoming Student Guide",
           href: "https://uwindsorcss.github.io/wiki/resources/guides/first_year",
-          description:
-            "A guide for new students to help them get started with CS at UWindsor.",
+          description: "A guide for new students to help them get started with CS at UWindsor.",
         },
       ],
     },

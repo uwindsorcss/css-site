@@ -34,8 +34,8 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Unlink Discord Account</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to unlink your Discord account? This will
-              remove your Discord account from the CSS server.
+              Are you sure you want to unlink your Discord account? This will remove your Discord
+              account from the CSS server.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

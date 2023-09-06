@@ -11,16 +11,11 @@ export function formatShortenedTimeDistance(date: Date) {
   const diff = Math.abs(date.getTime() - Date.now()) / 1000;
 
   if (diff < 60) return "now";
-  if (diff < 60 * 60)
-    return `${Math.floor(diff / 60)} minute${diff < 120 ? "" : "s"} ${unit}`;
+  if (diff < 60 * 60) return `${Math.floor(diff / 60)} minute${diff < 120 ? "" : "s"} ${unit}`;
   if (diff < 60 * 60 * 24)
-    return `${Math.floor(diff / (60 * 60))} hour${
-      diff < 60 * 60 * 2 ? "" : "s"
-    } ${unit}`;
+    return `${Math.floor(diff / (60 * 60))} hour${diff < 60 * 60 * 2 ? "" : "s"} ${unit}`;
   if (diff < 60 * 60 * 24 * 7)
-    return `${Math.floor(diff / (60 * 60 * 24))} day${
-      diff < 60 * 60 * 24 * 2 ? "" : "s"
-    } ${unit}`;
+    return `${Math.floor(diff / (60 * 60 * 24))} day${diff < 60 * 60 * 24 * 2 ? "" : "s"} ${unit}`;
   if (diff < 60 * 60 * 24 * 30)
     return `${Math.floor(diff / (60 * 60 * 24 * 7))} week${
       diff < 60 * 60 * 24 * 7 * 2 ? "" : "s"
@@ -55,10 +50,9 @@ export function formatDateRange(start: Date, end: Date) {
   };
 
   if (isSameDay)
-    return `${start.toLocaleDateString(
-      undefined,
-      options
-    )} from ${display12HourTime(start)} to ${display12HourTime(end)}`;
+    return `${start.toLocaleDateString(undefined, options)} from ${display12HourTime(
+      start
+    )} to ${display12HourTime(end)}`;
 
   options = {
     weekday: "short",
@@ -70,13 +64,16 @@ export function formatDateRange(start: Date, end: Date) {
     hour12: true,
   };
 
-  return `${start.toLocaleDateString(
+  return `${start.toLocaleDateString(undefined, options)} to ${end.toLocaleDateString(
     undefined,
     options
-  )} to ${end.toLocaleDateString(undefined, options)} `;
+  )} `;
 }
 
 export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
+  startDate = new Date(startDate.getTime() + startDate.getTimezoneOffset() * 60000);
+  endDate = new Date(endDate.getTime() + endDate.getTimezoneOffset() * 60000);
+
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";
   else if (startDate > now) return formatShortenedTimeDistance(startDate);
