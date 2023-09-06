@@ -21,7 +21,7 @@ async function NavBar() {
       sublinks: [
         {
           name: "Wiki",
-          href: "https://uwindsorcss.github.io/css-wiki",
+          href: "https://uwindsorcss.github.io/wiki",
           description: "A wiki of everything CS at UWindsor.",
         },
         {
@@ -36,7 +36,7 @@ async function NavBar() {
         },
         {
           name: "Incoming Student Guide",
-          href: "https://uwindsorcss.github.io/css-wiki/resources/guides/first_year",
+          href: "https://uwindsorcss.github.io/wiki/resources/guides/first_year",
           description: "A guide for new students to help them get started with CS at UWindsor.",
         },
       ],
