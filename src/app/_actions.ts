@@ -54,6 +54,14 @@ export async function linkDiscordAccount(discordResponse: any) {
 
     if (member.user) return;
 
+    //Check the name length because the Discord API doesn't allow nicknames longer than 32 characters
+    let userName = session.user.name;
+    if (userName.length > 32) {
+      const lastSpaceIndex = userName.lastIndexOf(" ", 31);
+      if (lastSpaceIndex !== -1) userName = userName.slice(0, lastSpaceIndex);
+      else userName = userName.slice(0, 32);
+    }
+
     // Add the user to the server
     await fetch(
       `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${discordUser.id}`,
@@ -65,7 +73,7 @@ export async function linkDiscordAccount(discordResponse: any) {
         },
         body: JSON.stringify({
           access_token: accessToken,
-          nick: session.user.name,
+          nick: userName,
         }),
       }
     );
@@ -96,14 +104,6 @@ export async function unlinkDiscordAccount() {
 
     if (!discordAccount || discordAccount === null)
       throw new Error("No discord account found. Please try again.");
-
-    // Check if the user is in the server
-    const member = await getMemberFromServer(discordAccount.discordId);
-
-    if (!member.user || member.user === null)
-      throw new Error(
-        "It looks like you're not in the server. If you think this is a mistake, please contact a CSS admin."
-      );
 
     await sendDiscordDM(
       discordAccount.discordId,
