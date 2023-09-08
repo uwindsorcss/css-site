@@ -87,7 +87,6 @@ model BlackList {
 
 model Event {
   id                  Int             @id @default(autoincrement())
-  slug                String          @unique
   title               String
   description         String?
   startDate           DateTime
@@ -130,7 +129,6 @@ model ThumbnailImage {
 // Newsletter Post
 model Post {
   id        Int      @id @default(autoincrement())
-  slug      String   @unique
   title     String
   content   String   @db.Text
   author    User?    @relation(fields: [authorId], references: [id])

@@ -15,7 +15,6 @@ export default async function GalleryPage() {
     select: {
       id: true,
       title: true,
-      slug: true,
       thumbnailImage: true,
     },
     where: {
@@ -41,7 +40,7 @@ export default async function GalleryPage() {
             <Link
               key={i}
               className="bg-card flex flex-col items-center p-5 border rounded-md border-border shadow-sm hover:shadow-md hover:border-blue-950/50 hover:shadow-blue-950/20 dark:hover:border-yellow-600/50  dark:hover:shadow-yellow-600/20 hover:-translate-y-1 transition duration-300 ease-in-out transform"
-              href={`/gallery/${event.slug}`}>
+              href={`/gallery/${event.id}`}>
               <Image
                 className="rounded-md"
                 src={event.thumbnailImage?.url ?? "/images/placeholder/480x360.png"}

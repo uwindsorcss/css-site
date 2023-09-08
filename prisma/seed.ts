@@ -11,28 +11,22 @@ async function seed() {
   if (process.env.SEED === "false") return;
 
   // development data
-  if (
-    process.env.NODE_ENV === "development" &&
-    process.env.SEED_OLD_DATA === "false"
-  ) {
+  if (process.env.NODE_ENV === "development" && process.env.SEED_OLD_DATA === "false") {
     console.log("Seeding development data.");
 
-    const eventsJsonData = await fs.readFile(
-      "./prisma/developmentData/events.json",
-      "utf-8"
-    );
+    const eventsJsonData = await fs.readFile("./prisma/developmentData/events.json", "utf-8");
     data = parse(eventsJsonData);
 
     //events
     for (const eventData of data) {
       const event = await prisma.event.create({
         data: {
+          id: Number(eventData.id),
           title: eventData.title,
           description: eventData.description,
           startDate: eventData.startDate,
           endDate: eventData.endDate,
           location: eventData.location,
-          slug: eventData.slug,
           thumbnailImage: {
             create: {
               url: eventData.thumbnailUrl!,
@@ -63,7 +57,7 @@ async function seed() {
       const newsletterPost = await prisma.post.create({
         data: {
           title: newsletterPostData.title,
-          slug: newsletterPostData.slug,
+          id: newsletterPostData.id,
           content: newsletterPostData.content,
         },
       });
@@ -83,7 +77,6 @@ async function seed() {
       await prisma.post.create({
         data: {
           id: Number(post.id),
-          slug: post.id.toString(),
           title: post.title,
           content: post.content,
           createdAt: new Date(post.created_at),
@@ -96,25 +89,20 @@ async function seed() {
 
     // Events
     counter = 0;
-    const eventsJsonData = await fs.readFile(
-      "./prisma/oldData/events.json",
-      "utf-8"
-    );
+    const eventsJsonData = await fs.readFile("./prisma/oldData/events.json", "utf-8");
     data = parse(eventsJsonData);
 
     for (const event of data) {
       await prisma.event.create({
         data: {
           id: Number(event.id),
-          slug: event.id.toString(),
           title: event.title,
           description: event.description,
           startDate: new Date(event.start_date),
           endDate: new Date(event.end_date),
           location: event.location,
           capacity: event.capacity === null ? null : Number(event.capacity),
-          registrationEnabled:
-            event.registration_enabled === "t" ? true : false,
+          registrationEnabled: event.registration_enabled === "t" ? true : false,
           createdAt: new Date(event.created_at),
           updatedAt: new Date(event.updated_at),
         },
@@ -125,10 +113,7 @@ async function seed() {
 
     // Users
     counter = 0;
-    const usersJsonData = await fs.readFile(
-      "./prisma/oldData/users.json",
-      "utf-8"
-    );
+    const usersJsonData = await fs.readFile("./prisma/oldData/users.json", "utf-8");
     data = parse(usersJsonData);
 
     for (const user of data) {
@@ -154,10 +139,7 @@ async function seed() {
     data = parse(discordAccountsJsonData);
 
     for (const discordAccount of data) {
-      if (
-        discordAccount.discord_uid === null ||
-        discordAccount.user_id === null
-      ) {
+      if (discordAccount.discord_uid === null || discordAccount.user_id === null) {
         continue;
       }
 
@@ -177,10 +159,7 @@ async function seed() {
 
   //blacklist
   counter = 0;
-  const blacklistedEmailsJsonData = await fs.readFile(
-    "./prisma/blacklist.json",
-    "utf-8"
-  );
+  const blacklistedEmailsJsonData = await fs.readFile("./prisma/blacklist.json", "utf-8");
   const blacklistedEmails: any = parse(blacklistedEmailsJsonData);
   for (const email of blacklistedEmails) {
     //skip if already exists

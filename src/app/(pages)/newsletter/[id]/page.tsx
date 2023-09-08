@@ -4,13 +4,13 @@ import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
 import { formatShortenedTimeDistance } from "@/lib/utils";
 interface pageProps {
-  params: { slug: string };
+  params: { id: string };
 }
 
 export default async function Post({ params }: pageProps) {
   const post = await prisma.post.findUnique({
     where: {
-      slug: params.slug,
+      id: parseInt(params.id),
     },
     include: {
       author: true,

@@ -3,14 +3,31 @@ import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
 import { formatDateRange, getEventRelativeTime } from "@/lib/utils";
+import type { Metadata } from 'next'
+
 interface pageProps {
-  params: { slug: string };
+  params: { id: string };
+}
+
+//generate meta tags
+export async function generateMetadata(
+  { params }: pageProps
+): Promise<Metadata> {
+  const event = await prisma.event.findUnique({
+    where: {
+      id: parseInt(params.id),
+    },
+  });
+
+  return {
+    title: event?.title,
+  }
 }
 
 export default async function Post({ params }: pageProps) {
   const event = await prisma.event.findUnique({
     where: {
-      slug: params.slug,
+      id: parseInt(params.id),
     },
   });
 

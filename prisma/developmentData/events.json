@@ -5,12 +5,8 @@
     "startDate": "2023-08-28T13:00:00.000Z",
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 1",
-    "slug": "event1",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": [
-      "/images/placeholder/480x360.png",
-      "/images/placeholder/480x360.png"
-    ]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
   },
   {
     "title": "Event 2",
@@ -18,12 +14,8 @@
     "startDate": "2023-08-28T13:00:00.000Z",
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 2",
-    "slug": "event2",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": [
-      "/images/placeholder/480x360.png",
-      "/images/placeholder/480x360.png"
-    ]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
   },
   {
     "title": "Event 3",
@@ -31,12 +23,8 @@
     "startDate": "2023-08-28T13:00:00.000Z",
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 3",
-    "slug": "event3",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": [
-      "/images/placeholder/480x360.png",
-      "/images/placeholder/480x360.png"
-    ]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
   },
   {
     "title": "Event 4",
@@ -44,11 +32,7 @@
     "startDate": "2023-08-28T13:00:00.000Z",
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 4",
-    "slug": "event4",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": [
-      "/images/placeholder/480x360.png",
-      "/images/placeholder/480x360.png"
-    ]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
   }
 ]

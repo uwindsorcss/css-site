@@ -11,7 +11,7 @@ function Post({ post, currentPage }: PostProps) {
   return (
     <Link
       key={post.id}
-      href={`/newsletter/${post.slug}${currentPage ? `?page=${currentPage}` : ""}`}
+      href={`/newsletter/${post.id}${currentPage ? `?page=${currentPage}` : ""}`}
       className="flex flex-col gap-2 p-6 w-full bg-card hover:bg-gray-200 dark:hover:bg-card/50 text-card-foreground rounded-md transition-colors duration-300 border border-border">
       <div>
         <h2 className="text-2xl font-bold">{post.title}</h2>
