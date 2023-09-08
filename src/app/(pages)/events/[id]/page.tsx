@@ -37,7 +37,9 @@ export default async function Post({ params }: pageProps) {
       subheading={`${formatDateRange(event!.startDate, event!.endDate)} ● ${getEventRelativeTime(
         event!.startDate,
         event!.endDate
-      )}`}>
+      )}`}
+      subheading2={event?.location ? `Location: ${event?.location}` : undefined}
+    >
       <MarkDownView allowLinks markdown={event?.description!} />
       <BackButton href="/events" />
     </FeedView>
