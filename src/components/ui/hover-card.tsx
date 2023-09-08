@@ -9,6 +9,7 @@ const HoverCard = React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Root>
 >(({ ...props }) => <HoverCardPrimitive.Root openDelay={150} closeDelay={150} {...props} />);
+HoverCard.displayName = HoverCardPrimitive.Root.displayName;
 
 const HoverCardTrigger = HoverCardPrimitive.Trigger;
 
