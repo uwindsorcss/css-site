@@ -2,22 +2,25 @@ import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ListView from "@/components/events/ListView";
 import CalendarView from "@/components/events/CalendarView";
+import EventTabTrigger from "@/components/events/TabTrigger";
 export const metadata: Metadata = {
   title: "Events",
 };
 
 interface EventsProps {
-  searchParams: URLSearchParams & { page?: string };
+  searchParams: URLSearchParams & { page?: string; view?: string };
 }
 
 export default async function EventsPage({ searchParams }: EventsProps) {
+  const view = searchParams.view;
+
   return (
     <>
       <h1 className="text-4xl text-center font-bold">Events</h1>
-      <Tabs defaultValue="list" className="w-full max-w-3xl">
+      <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="list">List View</TabsTrigger>
-          <TabsTrigger value="calendar">Calendar View</TabsTrigger>
+          <EventTabTrigger value="list" label="List View" />
+          <EventTabTrigger value="calendar" label="Calendar View" />
         </TabsList>
         <TabsContent
           value="list"
