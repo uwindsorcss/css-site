@@ -29,54 +29,35 @@ export function formatShortenedTimeDistance(date: Date) {
   } ${unit}`;
 }
 
-export const display12HourTime = (date: Date) => {
-  return `${date.getHours() % 12 || 12}:${
-    (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
-  } ${date.getHours() >= 12 ? "PM" : "AM"}`;
-};
+export const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Toronto",
+  weekday: "short",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+
+export const timeFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Toronto",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+});
 
 export function formatDateRange(start: Date, end: Date) {
-  //convert from etc to utc
-  start = new Date(start.getTime() + start.getTimezoneOffset() * 60000);
-  end = new Date(end.getTime() + end.getTimezoneOffset() * 60000);
-
   const isSameDay = start.toDateString() === end.toDateString();
 
-  let options: any = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
-
   if (isSameDay)
-    return `${start.toLocaleDateString(undefined, options)} from ${display12HourTime(
+    return `${dateFormatter.format(start)} from ${timeFormatter.format(
       start
-    )} to ${display12HourTime(end)}`;
+    )} to ${timeFormatter.format(end)}`;
 
-  options = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  };
-
-  return `${start.toLocaleDateString(undefined, options)} to ${end.toLocaleDateString(
-    undefined,
-    options
-  )} `;
+  return `${dateFormatter.format(start)} at ${timeFormatter.format(
+    start
+  )} to ${dateFormatter.format(end)} at ${timeFormatter.format(end)}`;
 }
 
 export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
-  //convert from etc to utc
-  const timeZoneOffset = 240 * 60000;
-
-  startDate = new Date(startDate.getTime() + timeZoneOffset);
-  endDate = new Date(endDate.getTime() + timeZoneOffset);
-
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";
   else if (startDate > now) return formatShortenedTimeDistance(startDate);

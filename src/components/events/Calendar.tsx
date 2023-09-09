@@ -4,7 +4,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
 import { createRef, useEffect } from "react";
-import { display12HourTime } from "@/lib/utils";
+import { timeFormatter } from "@/lib/utils";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import Link from "next/link";
 
@@ -25,9 +25,9 @@ function Calendar({ events }: { events: any[] }) {
           <HoverCardContent className="w-auto text-xs font-medium">
             <span>{`${eventInfo.event.title} - `}</span>
             <span className="text-muted-foreground">
-              {`${display12HourTime(eventInfo.event.start)}${
-                eventInfo.event.end ? ` - ${display12HourTime(eventInfo.event.end)}` : ""
-              }`}
+              {`${timeFormatter.format(eventInfo.event.start)} - ${timeFormatter.format(
+                eventInfo.event.end
+              )}`}
             </span>
           </HoverCardContent>
         </HoverCard>
