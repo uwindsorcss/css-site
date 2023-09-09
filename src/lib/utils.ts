@@ -1,10 +1,16 @@
 import { type ClassValue, clsx } from "clsx";
-import { getServerSession } from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { twMerge } from "tailwind-merge";
+import { Role } from "@prisma/client";
 
 export async function getSession() {
   return await getServerSession(authOptions);
+}
+
+export function isModOrAdmin(session: Session) {
+  const user = session.user;
+  return user.role === Role.mod || user.role === Role.admin;
 }
 
 export function cn(...inputs: ClassValue[]) {

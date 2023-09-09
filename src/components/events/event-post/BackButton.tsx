@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft } from "lucide-react";
-import { Button } from "./button";
+import { Button } from "../../ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface BackButtonProps {
@@ -27,11 +27,9 @@ function BackButton({ href }: BackButtonProps) {
   };
 
   return (
-    <div className="flex justify-center md:justify-start w-full mt-10">
-      <Button onClick={() => goBack()}>
-        <ChevronLeft />
-      </Button>
-    </div>
+    <Button onClick={() => goBack()}>
+      <ChevronLeft />
+    </Button>
   );
 }
 

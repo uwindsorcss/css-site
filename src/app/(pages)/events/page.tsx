@@ -3,8 +3,9 @@ import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ListView from "@/components/events/list-view/ListView";
 import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
-import { getSession } from "@/lib/utils";
+import { getSession, isModOrAdmin } from "@/lib/utils";
 import NewEventTrigger from "@/components/events/create-event/CreateEventTrigger";
+import { Role } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -22,7 +23,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
     <>
       <h1 className="text-4xl text-center font-bold">Events</h1>
       <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
-        {session && <NewEventTrigger />}
+        {session && isModOrAdmin(session) && <NewEventTrigger />}
         <TabsList className="grid w-full grid-cols-2">
           <EventTabTrigger value="list" label="List View" />
           <EventTabTrigger value="calendar" label="Calendar View" />

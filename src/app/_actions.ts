@@ -3,8 +3,10 @@
 import { prisma } from "@/lib/db";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { DiscordAccount } from "@prisma/client";
+import { DiscordAccount, Role } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { getSession, isModOrAdmin } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
@@ -244,8 +246,23 @@ async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
 }
 
 export async function createEvent(event: any) {
+  const session = await getSession();
+  if (!session || !isModOrAdmin(session))
+    throw new Error("You do not have permission to create events.");
+
   await prisma.event.create({
     data: event,
   });
   revalidatePath("/events");
+}
+
+export async function deleteEvent(id: number) {
+  const session = await getSession();
+  if (!session || !isModOrAdmin(session))
+    throw new Error("You do not have permission to delete events.");
+
+  await prisma.event.delete({
+    where: { id: id },
+  });
+  redirect("/events");
 }

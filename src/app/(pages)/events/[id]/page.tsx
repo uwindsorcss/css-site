@@ -1,9 +1,10 @@
 import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
-import BackButton from "@/components/ui/back-button";
+import BackButton from "@/components/events/event-post/BackButton";
 import { prisma } from "@/lib/db";
-import { formatDateRange, getEventRelativeTime } from "@/lib/utils";
+import { formatDateRange, getEventRelativeTime, getSession, isModOrAdmin } from "@/lib/utils";
 import type { Metadata } from "next";
+import DeleteButton from "@/components/events/event-post/DeleteButton";
 
 interface pageProps {
   params: { id: string };
@@ -23,6 +24,7 @@ export async function generateMetadata({ params }: pageProps): Promise<Metadata>
 }
 
 export default async function Post({ params }: pageProps) {
+  const session = await getSession();
   const event = await prisma.event.findUnique({
     where: {
       id: parseInt(params.id),
@@ -38,7 +40,10 @@ export default async function Post({ params }: pageProps) {
       )}`}
       subheading2={event?.location ? `Location: ${event?.location}` : undefined}>
       <MarkDownView allowLinks markdown={event?.description!} />
-      <BackButton href="/events" />
+      <div className="flex justify-between w-full mt-10">
+        <BackButton href="/events" />
+        {session && isModOrAdmin(session) && <DeleteButton id={event!.id} />}
+      </div>
     </FeedView>
   );
 }
