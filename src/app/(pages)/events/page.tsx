@@ -5,7 +5,6 @@ import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
 import { getSession, isModOrAdmin } from "@/lib/utils";
 import NewEventTrigger from "@/components/events/create-event/CreateEventTrigger";
-import { Role } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Events",

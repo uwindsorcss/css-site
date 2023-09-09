@@ -1,10 +1,10 @@
 import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
-import BackButton from "@/components/events/event-post/BackButton";
+import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
 import { formatDateRange, getEventRelativeTime, getSession, isModOrAdmin } from "@/lib/utils";
 import type { Metadata } from "next";
-import DeleteButton from "@/components/events/event-post/DeleteButton";
+import DeleteEventButton from "@/components/events/event-post/DeleteEventButton";
 
 interface pageProps {
   params: { id: string };
@@ -42,7 +42,7 @@ export default async function Post({ params }: pageProps) {
       <MarkDownView allowLinks markdown={event?.description!} />
       <div className="flex justify-between w-full mt-10">
         <BackButton href="/events" />
-        {session && isModOrAdmin(session) && <DeleteButton id={event!.id} />}
+        {session && isModOrAdmin(session) && <DeleteEventButton id={event!.id} />}
       </div>
     </FeedView>
   );

@@ -4,7 +4,7 @@ import { deleteEvent } from "@/app/_actions";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 
-function DeleteButton({ id }: { id: number }) {
+function DeleteEventButton({ id }: { id: number }) {
   return (
     <Button variant="destructive" size="icon" onClick={() => deleteEvent(id)}>
       <Trash2 />
@@ -12,4 +12,4 @@ function DeleteButton({ id }: { id: number }) {
   );
 }
 
-export default DeleteButton;
+export default DeleteEventButton;

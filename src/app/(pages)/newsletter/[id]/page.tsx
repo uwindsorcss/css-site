@@ -41,7 +41,9 @@ export default async function Post({ params }: pageProps) {
         post!.createdAt
       )}`}>
       <MarkDownView allowLinks markdown={post!.content} />
-      <BackButton href="/newsletter" />
+      <div className="flex justify-center md:justify-start w-full mt-10">
+        <BackButton href="/newsletter" />
+      </div>
     </FeedView>
   );
 }
