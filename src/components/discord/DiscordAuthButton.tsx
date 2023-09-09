@@ -3,17 +3,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import ConfirmationDialog from "../ui/confirmation-dialog";
 
 interface DiscordAuthButtonProps {
   linked: boolean;
@@ -24,32 +14,17 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
 
   if (linked) {
     return (
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="full">
-            Unlink Account
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Unlink Discord Account</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to unlink your Discord account? This will remove your Discord
-              account from the CSS server.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              variant="destructive"
-              onClick={() => {
-                router.replace("/api/discord/unlink");
-              }}>
-              Unlink
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ConfirmationDialog
+        title="Unlink Discord Account"
+        description="Are you sure you want to unlink your Discord account? This will remove your Discord account from the CSS server."
+        actionButtonText="Unlink"
+        onAction={() => {
+          router.replace("/api/discord/unlink");
+        }}>
+        <Button variant="destructive" size="full">
+          Unlink Account
+        </Button>
+      </ConfirmationDialog>
     );
   } else {
     return (
