@@ -17,6 +17,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function toTitleCase(str: string) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
 export function formatShortenedTimeDistance(date: Date) {
   const isFuture = date.getTime() > Date.now();
   const unit = isFuture ? "from now" : "ago";
