@@ -13,17 +13,18 @@ function BackButton({ href }: BackButtonProps) {
   const searchParams = useSearchParams();
 
   const goBack = () => {
+    const queryParams = [];
     const page = searchParams.get("page");
+    const view = searchParams.get("view");
     const filter = searchParams.get("filter");
-    if (page && filter) {
-      router.replace(`${href}?page=${page}&filter=${filter}`);
-    } else if (page) {
-      router.replace(`${href}?page=${page}`);
-    } else if (filter) {
-      router.replace(`${href}?filter=${filter}`);
-    } else {
-      router.replace(`${href}`);
-    }
+
+    if (view) queryParams.push(`view=${view}`);
+    if (page) queryParams.push(`page=${page}`);
+    if (filter) queryParams.push(`filter=${filter}`);
+
+    const queryString = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+
+    router.replace(`${href}${queryString}`);
   };
 
   return (

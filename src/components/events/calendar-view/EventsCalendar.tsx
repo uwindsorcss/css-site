@@ -14,7 +14,7 @@ function Calendar({ events }: { events: any[] }) {
       <>
         <HoverCard>
           <HoverCardTrigger className="hidden md:block mx-auto transform hover:scale-105 transition-all duration-300 ease-in-out">
-            <Link href={`/events/${eventInfo.event.id}`} className="relative flex">
+            <Link href={`/events/${eventInfo.event.id}?view=calendar`} className="relative flex">
               <div
                 className="w-5 h-5 rounded-md bg-blue-500/50 dark:bg-amber-400/50 animate-ping opacity-40"
                 style={{ animationDuration: "3s" }}
