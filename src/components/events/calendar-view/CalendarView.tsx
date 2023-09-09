@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import Calendar from "./Calendar";
+import Calendar from "./EventsCalendar";
 
 async function CalendarView() {
   const events = await prisma.event.findMany({

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import MarkDownView from "@/components/views/MarkDownView";
 import { formatDateRange, getEventRelativeTime } from "@/lib/utils";
 import { Event } from "@prisma/client";

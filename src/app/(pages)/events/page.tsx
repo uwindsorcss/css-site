@@ -1,8 +1,11 @@
 import { Metadata } from "next";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ListView from "@/components/events/ListView";
-import CalendarView from "@/components/events/CalendarView";
+import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
+import ListView from "@/components/events/list-view/ListView";
+import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
+import { getSession } from "@/lib/utils";
+import NewEventTrigger from "@/components/events/create-event/CreateEventTrigger";
+
 export const metadata: Metadata = {
   title: "Events",
 };
@@ -13,11 +16,13 @@ interface EventsProps {
 
 export default async function EventsPage({ searchParams }: EventsProps) {
   const view = searchParams.view;
+  const session = await getSession();
 
   return (
     <>
       <h1 className="text-4xl text-center font-bold">Events</h1>
       <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
+        {session && <NewEventTrigger />}
         <TabsList className="grid w-full grid-cols-2">
           <EventTabTrigger value="list" label="List View" />
           <EventTabTrigger value="calendar" label="Calendar View" />

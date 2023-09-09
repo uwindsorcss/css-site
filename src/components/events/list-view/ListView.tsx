@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import PaginationButtons from "../ui/pagination-buttons";
+import PaginationButtons from "../../ui/pagination-buttons";
 import { redirect } from "next/navigation";
 import EventCard from "./EventCard";
 import EventsFilter from "./EventsFilter";

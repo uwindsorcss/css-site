@@ -3,7 +3,7 @@ import "./Calendar.css";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import listPlugin from "@fullcalendar/list";
-import { createRef, useEffect } from "react";
+import { createRef, useCallback, useEffect } from "react";
 import { timeFormatter } from "@/lib/utils";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import Link from "next/link";
@@ -38,10 +38,10 @@ function Calendar({ events }: { events: any[] }) {
 
   const calendarRef = createRef<FullCalendar>();
 
-  const resizeHandler = () => {
+  const resizeHandler = useCallback(() => {
     if (window.innerWidth < 768) calendarRef?.current?.getApi().changeView("listWeek");
     else calendarRef?.current?.getApi().changeView("dayGridMonth");
-  };
+  }, [calendarRef]);
 
   useEffect(() => {
     window.addEventListener("resize", resizeHandler);

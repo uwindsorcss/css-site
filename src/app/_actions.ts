@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { DiscordAccount } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
@@ -240,4 +241,11 @@ async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
   return await fetch(`https://cdn.discordapp.com/avatars/${discordId}/${avatarId}.png`, {
     next: { revalidate: 300 },
   }).then((res) => res.url);
+}
+
+export async function createEvent(event: any) {
+  await prisma.event.create({
+    data: event,
+  });
+  revalidatePath("/events");
 }

@@ -9,9 +9,7 @@ interface pageProps {
 }
 
 //generate meta tags
-export async function generateMetadata(
-  { params }: pageProps
-): Promise<Metadata> {
+export async function generateMetadata({ params }: pageProps): Promise<Metadata> {
   const post = await prisma.post.findUnique({
     where: {
       id: parseInt(params.id),
@@ -23,7 +21,7 @@ export async function generateMetadata(
 
   return {
     title: post?.title,
-  }
+  };
 }
 
 export default async function Post({ params }: pageProps) {
