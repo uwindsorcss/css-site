@@ -23,7 +23,10 @@ import { toTitleCase } from "@/lib/utils";
 
 function AccountButton({ session }: { session: Session | null }) {
   const name: string = session?.user?.name ?? "user";
-  const initials = (name?.split(" ") ?? []).slice(0, 2).map(name => name[0]).join("");
+  const initials = (name?.split(" ") ?? [])
+    .slice(0, 2)
+    .map((name) => name[0])
+    .join("");
   const role = session?.user?.role ?? "user";
   const title = session?.user?.title ?? "Student";
 

@@ -67,7 +67,9 @@ export const timeFormatter = new Intl.DateTimeFormat("en-US", {
 });
 
 export function formatDateRange(start: Date, end: Date) {
-  const isSameDay = start.toDateString() === end.toDateString();
+  const isSameDay =
+    start.toLocaleDateString("en-US", { timeZone: "America/Toronto" }) ===
+    end.toLocaleDateString("en-US", { timeZone: "America/Toronto" });
 
   if (isSameDay)
     return `${dateFormatter.format(start)} from ${timeFormatter.format(
