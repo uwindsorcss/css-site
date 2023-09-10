@@ -7,4 +7,12 @@ declare global {
     description?: string;
     sublinks?: Link[];
   }
+
+  interface EventFormData {
+    title: string;
+    description: string;
+    location?: string;
+    startDate: date;
+    endDate: date;
+  }
 }

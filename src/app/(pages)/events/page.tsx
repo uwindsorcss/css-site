@@ -4,7 +4,8 @@ import ListView from "@/components/events/list-view/ListView";
 import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
 import { getSession, isModOrAdmin } from "@/lib/utils";
-import NewEventTrigger from "@/components/events/create-event/CreateEventTrigger";
+import EventFormTrigger from "@/components/events/event-form/EventFormTrigger";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -22,7 +23,16 @@ export default async function EventsPage({ searchParams }: EventsProps) {
     <>
       <h1 className="text-4xl text-center font-bold">Events</h1>
       <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
-        {session && isModOrAdmin(session) && <NewEventTrigger />}
+        {session && isModOrAdmin(session) && (
+          <EventFormTrigger
+            title="Create Event"
+            buttonText="Create"
+            pendingButtonText="Creating...">
+            <Button size="full" className="mb-4">
+              Create Event
+            </Button>
+          </EventFormTrigger>
+        )}
         <TabsList className="grid w-full grid-cols-2">
           <EventTabTrigger value="list" label="List View" />
           <EventTabTrigger value="calendar" label="Calendar View" />

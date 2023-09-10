@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { formatDateRange, getEventRelativeTime, getSession, isModOrAdmin } from "@/lib/utils";
 import type { Metadata } from "next";
 import DeleteEventButton from "@/components/events/event-post/DeleteEventButton";
+import EditEventButton from "@/components/events/event-post/EditEventButton";
 
 interface pageProps {
   params: { id: string };
@@ -42,7 +43,12 @@ export default async function Post({ params }: pageProps) {
       <MarkDownView allowLinks markdown={event?.description!} />
       <div className="flex justify-between w-full mt-10">
         <BackButton href="/events" />
-        {session && isModOrAdmin(session) && <DeleteEventButton id={event!.id} />}
+        {session && isModOrAdmin(session) && (
+          <div className="space-x-2">
+            <EditEventButton id={event!.id} event={event!} />
+            <DeleteEventButton id={event!.id} />
+          </div>
+        )}
       </div>
     </FeedView>
   );

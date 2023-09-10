@@ -8,8 +8,9 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { DateTimePicker } from "../../ui/date-time-picker/date-time-picker";
 import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
-import { createEvent } from "@/app/_actions";
+import { createEvent, updateEvent } from "@/app/_actions";
 import { Loader2 } from "lucide-react";
+import { CalendarDateTime } from "@internationalized/date";
 
 const FormSchema = z.object({
   title: z
@@ -49,32 +50,47 @@ const FormSchema = z.object({
   ),
 });
 
-export function CreateEventForm({ closeDialog }: { closeDialog: () => void }) {
+interface EventFormProps {
+  closeDialog: () => void;
+  id?: number;
+  initialValues?: z.infer<typeof FormSchema>;
+  buttonText: string;
+  pendingButtonText: string;
+}
+
+export function EventFormDialog({
+  closeDialog,
+  id,
+  initialValues,
+  buttonText,
+  pendingButtonText,
+}: EventFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     // @ts-ignore
     resolver: zodResolver(FormSchema),
+    defaultValues: initialValues || undefined,
   });
 
-  const pending = form.formState.isSubmitting;
+  const isPending = form.formState.isSubmitting;
+
+  function convertDate(
+    date: {
+      year: number;
+      month: number;
+      day: number;
+      hour: number;
+      minute: number;
+    },
+    adjustMonth = true
+  ): [number, number, number, number, number] {
+    return [date.year, adjustMonth ? date.month - 1 : date.month, date.day, date.hour, date.minute];
+  }
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const startDate = new Date(
-      data.startDate.year,
-      data.startDate.month - 1,
-      data.startDate.day,
-      data.startDate.hour,
-      data.startDate.minute
-    );
+    const startDate = new Date(...convertDate(data.startDate));
+    const endDate = new Date(...convertDate(data.endDate));
 
-    const endDate = new Date(
-      data.endDate.year,
-      data.endDate.month - 1,
-      data.endDate.day,
-      data.endDate.hour,
-      data.endDate.minute
-    );
-
-    const event = {
+    const event: EventFormData = {
       title: data.title,
       description: data.description,
       location: data.location,
@@ -82,7 +98,9 @@ export function CreateEventForm({ closeDialog }: { closeDialog: () => void }) {
       endDate,
     };
 
-    await createEvent(event);
+    if (id) await updateEvent(event, id);
+    else await createEvent(event);
+
     closeDialog();
   }
 
@@ -117,7 +135,16 @@ export function CreateEventForm({ closeDialog }: { closeDialog: () => void }) {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Start Date</FormLabel>
-              <DateTimePicker granularity={"minute"} onChange={field.onChange} label="Start Date" />
+              <DateTimePicker
+                value={
+                  initialValues
+                    ? new CalendarDateTime(...convertDate(field.value, false))
+                    : undefined
+                }
+                granularity={"minute"}
+                onChange={field.onChange}
+                label="Start Date"
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -128,7 +155,16 @@ export function CreateEventForm({ closeDialog }: { closeDialog: () => void }) {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>End Date</FormLabel>
-              <DateTimePicker granularity={"minute"} onChange={field.onChange} label="End Date" />
+              <DateTimePicker
+                value={
+                  initialValues
+                    ? new CalendarDateTime(...convertDate(field.value, false))
+                    : undefined
+                }
+                granularity={"minute"}
+                onChange={field.onChange}
+                label="End Date"
+              />
               <FormMessage />
             </FormItem>
           )}
@@ -144,14 +180,14 @@ export function CreateEventForm({ closeDialog }: { closeDialog: () => void }) {
             </FormItem>
           )}
         />
-        <Button size="full" type="submit" disabled={pending}>
-          {pending ? (
+        <Button size="full" type="submit" disabled={isPending}>
+          {isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating...
+              {pendingButtonText}
             </>
           ) : (
-            "Create"
+            <>{buttonText}</>
           )}
         </Button>
       </form>

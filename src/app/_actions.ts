@@ -245,7 +245,8 @@ async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
   }).then((res) => res.url);
 }
 
-export async function createEvent(event: any) {
+// Events Actions
+export async function createEvent(event: EventFormData) {
   const session = await getSession();
   if (!session || !isModOrAdmin(session))
     throw new Error("You do not have permission to create events.");
@@ -254,6 +255,18 @@ export async function createEvent(event: any) {
     data: event,
   });
   revalidatePath("/events");
+}
+
+export async function updateEvent(event: EventFormData, id: number) {
+  const session = await getSession();
+  if (!session || !isModOrAdmin(session))
+    throw new Error("You do not have permission to update events.");
+
+  await prisma.event.update({
+    where: { id },
+    data: event,
+  });
+  revalidatePath(`/events/${id}`);
 }
 
 export async function deleteEvent(id: number) {
