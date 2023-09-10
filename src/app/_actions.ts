@@ -245,7 +245,7 @@ async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
   }).then((res) => res.url);
 }
 
-// Events Actions
+// Event Actions
 export async function createEvent(event: EventFormData) {
   const session = await getSession();
   if (!session || !isModOrAdmin(session))
@@ -275,7 +275,42 @@ export async function deleteEvent(id: number) {
     throw new Error("You do not have permission to delete events.");
 
   await prisma.event.delete({
-    where: { id: id },
+    where: { id },
   });
-  redirect("/events");
+  redirect(`/events?success=${encodeURIComponent("Event deleted successfully.")}`);
+}
+
+// News Actions
+export async function createPost(post: PostFormData) {
+  const session = await getSession();
+  if (!session || !isModOrAdmin(session))
+    throw new Error("You do not have permission to create posts.");
+
+  await prisma.post.create({
+    data: post,
+  });
+  revalidatePath("/newsletter");
+}
+
+export async function updatePost(post: PostFormData, id: number) {
+  const session = await getSession();
+  if (!session || !isModOrAdmin(session))
+    throw new Error("You do not have permission to update posts.");
+
+  await prisma.post.update({
+    where: { id },
+    data: post,
+  });
+  revalidatePath(`/newsletter/${id}`);
+}
+
+export async function deletePost(id: number) {
+  const session = await getSession();
+  if (!session || !isModOrAdmin(session))
+    throw new Error("You do not have permission to delete posts.");
+
+  await prisma.post.delete({
+    where: { id },
+  });
+  redirect(`/newsletter?success=${encodeURIComponent("Post deleted successfully.")}`);
 }

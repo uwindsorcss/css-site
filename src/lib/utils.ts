@@ -13,6 +13,16 @@ export function isModOrAdmin(session: Session) {
   return user.role === Role.mod || user.role === Role.admin;
 }
 
+export function isAdmin(session: Session) {
+  const user = session.user;
+  return user.role === Role.admin;
+}
+
+export function isMod(session: Session) {
+  const user = session.user;
+  return user.role === Role.mod;
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

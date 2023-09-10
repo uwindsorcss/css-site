@@ -1,15 +1,13 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import EventFormTrigger from "../event-form/EventFormTrigger";
 import { Event } from "@prisma/client";
+import { EventFormDialog } from "../EventFormDialog";
 
 function EditEventButton({ id, event }: { id: number; event: Event }) {
   const values = {
-    title: event.title,
-    description: event.description,
-    location: event.location,
+    title: event.title || "",
+    description: event.description || "",
+    location: event.location || "",
     startDate: {
       year: event.startDate.getFullYear(),
       month: event.startDate.getMonth() + 1,
@@ -27,16 +25,15 @@ function EditEventButton({ id, event }: { id: number; event: Event }) {
   };
 
   return (
-    <EventFormTrigger
-      title="Edit Event"
+    <EventFormDialog
       id={id}
       initialValues={values}
-      buttonText="Update"
-      pendingButtonText="Updating...">
-      <Button>
-        <Pencil className="w-5 h-5" />
-      </Button>
-    </EventFormTrigger>
+      triggerButton={
+        <Button>
+          <Pencil className="w-5 h-5" />
+        </Button>
+      }
+    />
   );
 }
 

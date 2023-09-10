@@ -15,4 +15,9 @@ declare global {
     startDate: date;
     endDate: date;
   }
+
+  interface PostFormData {
+    title: string;
+    content: string;
+  }
 }

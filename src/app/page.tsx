@@ -10,7 +10,7 @@ import { getMemberCount } from "@/app/_actions";
 import { prisma } from "@/lib/db";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { getEventRelativeTime } from "@/lib/utils";
-import Post from "@/components/newsletter/Post";
+import Post from "@/components/newsletter/newsletter-post/Post";
 import content from "./content.json";
 
 export default async function Home() {

@@ -1,7 +1,10 @@
 import { prisma } from "@/lib/db";
 import { Metadata } from "next";
 import PaginationButtons from "@/components/ui/pagination-buttons";
-import Post from "@/components/newsletter/Post";
+import Post from "@/components/newsletter/newsletter-post/Post";
+import { PostFormDialog } from "@/components/newsletter/PostFormDialog";
+import { Button } from "@/components/ui/button";
+import { getSession, isModOrAdmin } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Newsletter",
@@ -12,6 +15,7 @@ interface NewsletterPageProps {
 }
 
 export default async function NewsletterPage({ searchParams }: NewsletterPageProps) {
+  const session = await getSession();
   const page = searchParams.page;
   const currentPage = parseInt(page ?? "1");
   const postsPerPage = 10;
@@ -31,6 +35,9 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
     <>
       <h1 className="text-4xl text-center font-bold">News</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
+        {session && isModOrAdmin(session) && (
+          <PostFormDialog triggerButton={<Button size="full">Create Post</Button>} />
+        )}
         {posts.map((post) => (
           <Post key={post.id} post={post} currentPage={currentPage} />
         ))}

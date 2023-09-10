@@ -2,8 +2,10 @@ import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
-import { formatShortenedTimeDistance } from "@/lib/utils";
+import { formatShortenedTimeDistance, getSession, isModOrAdmin } from "@/lib/utils";
 import { Metadata } from "next";
+import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
+import DeletePostButton from "@/components/newsletter/newsletter-post/DeletePostButton";
 interface pageProps {
   params: { id: string };
 }
@@ -25,6 +27,7 @@ export async function generateMetadata({ params }: pageProps): Promise<Metadata>
 }
 
 export default async function Post({ params }: pageProps) {
+  const session = await getSession();
   const post = await prisma.post.findUnique({
     where: {
       id: parseInt(params.id),
@@ -41,8 +44,14 @@ export default async function Post({ params }: pageProps) {
         post!.createdAt
       )}`}>
       <MarkDownView allowLinks markdown={post!.content} />
-      <div className="flex justify-center md:justify-start w-full mt-10">
+      <div className="flex justify-between w-full mt-10">
         <BackButton href="/newsletter" />
+        {session && isModOrAdmin(session) && (
+          <div className="space-x-2">
+            <EditPostButton id={post!.id} post={post!} />
+            <DeletePostButton id={post!.id} />
+          </div>
+        )}
       </div>
     </FeedView>
   );
