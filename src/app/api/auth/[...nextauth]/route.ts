@@ -78,7 +78,6 @@ export const authOptions: NextAuthOptions = {
           await prisma.user.update({
             where: { email: profile.email },
             data: {
-              name: profile.name,
               title: jobTitle,
               image: image ?? null,
             },
