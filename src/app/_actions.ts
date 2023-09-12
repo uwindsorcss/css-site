@@ -287,7 +287,11 @@ export async function createPost(post: PostFormData) {
     throw new Error("You do not have permission to create posts.");
 
   await prisma.post.create({
-    data: post,
+    data: {
+      title: post.title,
+      author: post.isTeam ? undefined : { connect: { id: session.user.id } },
+      content: post.content,
+    },
   });
   revalidatePath("/newsletter");
 }
@@ -299,7 +303,11 @@ export async function updatePost(post: PostFormData, id: number) {
 
   await prisma.post.update({
     where: { id },
-    data: post,
+    data: {
+      title: post.title,
+      author: post.isTeam ? undefined : { connect: { id: session.user.id } },
+      content: post.content,
+    },
   });
   revalidatePath(`/newsletter/${id}`);
 }

@@ -9,6 +9,7 @@ import { Textarea } from "../ui/textarea";
 import { createPost, updatePost } from "@/app/_actions";
 import { FormDialog } from "../FormDialog";
 import { useState } from "react";
+import { Checkbox } from "../ui/checkbox";
 
 const FormSchema = z.object({
   title: z
@@ -16,6 +17,7 @@ const FormSchema = z.object({
       required_error: "A title is required.",
     })
     .nonempty(),
+  isTeam: z.boolean().optional(),
   content: z
     .string({
       required_error: "The content is required.",
@@ -35,15 +37,20 @@ export function PostFormDialog({ triggerButton, id, initialValues }: PostFormPro
   const form = useForm<z.infer<typeof FormSchema>>({
     // @ts-ignore
     resolver: zodResolver(FormSchema),
-    defaultValues: initialValues || undefined,
+    defaultValues: initialValues || {
+      title: "",
+      isTeam: false,
+      content: "",
+    },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const post: PostFormData = {
       title: data.title,
+      isTeam: data.isTeam,
       content: data.content,
     };
-
+    
     if (id) await updatePost(post, id);
     else await createPost(post);
 
@@ -68,6 +75,23 @@ export function PostFormDialog({ triggerButton, id, initialValues }: PostFormPro
           <FormItem>
             <FormLabel>Title</FormLabel>
             <Input {...field} />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="isTeam"
+        render={({ field }) => (
+          <FormItem>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                defaultChecked={field.value || false}
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+              <FormLabel>Post as a team</FormLabel>
+            </div>
             <FormMessage />
           </FormItem>
         )}

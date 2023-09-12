@@ -18,6 +18,7 @@ declare global {
 
   interface PostFormData {
     title: string;
+    isTeam: boolean | undefined;
     content: string;
   }
 }
