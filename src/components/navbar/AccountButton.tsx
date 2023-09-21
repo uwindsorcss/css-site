@@ -2,7 +2,7 @@
 import { signIn, signOut } from "next-auth/react";
 import React, { useEffect } from "react";
 import { Button } from "../ui/button";
-import { LogIn, LogOut, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import {
   DropdownMenu,
@@ -98,9 +98,16 @@ function AccountButton({ session }: { session: Session | null }) {
     );
 
   return (
-    <Button size="icon" variant={"outline"} onClick={() => signIn("azure-ad")}>
-      <LogIn className="w-4 h-4" />
-    </Button>
+    <>
+      <Button className="flex md:hidden" size="icon" variant={"outline"} onClick={() => signIn("azure-ad")}>
+        <User className="w-4 h-4" />
+      </Button>
+      <Button className="hidden md:flex" variant={"outline"} onClick={() => signIn("azure-ad")}>
+        <User className="w-4 h-4 mr-2" />
+        <span>Sign In</span>
+      </Button>
+
+    </>
   );
 }
 
