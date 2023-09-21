@@ -68,7 +68,9 @@ export default async function Post({ params }: pageProps) {
               <DeleteEventButton id={event!.id} />
             </>
           )}
-          <ViewRegisteredUsersButton session={session} eventID={event!.id} />
+          {event?.registrationEnabled && (
+            <ViewRegisteredUsersButton session={session} eventID={event!.id} />
+          )}
           {session && event?.registrationEnabled && (
             <RegistrationButton
               eventID={parseInt(params.id)}
