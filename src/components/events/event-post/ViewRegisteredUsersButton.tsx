@@ -55,7 +55,7 @@ export default async function ViewRegisteredUsersButton({
     return (
       <Dialog>
         <DialogTrigger asChild>{usersCountComponent}</DialogTrigger>
-        <DialogContent className={"overflow-y-auto"}>
+        <DialogContent className={"max-h-[80vh] overflow-y-auto"}>
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
           </DialogHeader>
