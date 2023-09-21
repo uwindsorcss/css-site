@@ -17,6 +17,7 @@ interface ConfirmationDialogProps {
   children: React.ReactNode;
   title: string;
   description: string;
+  variant?: "destructive" | "default";
   isPending?: boolean;
   actionButtonText: string;
   pendingButtonText?: string;
@@ -27,6 +28,7 @@ function ConfirmationDialog({
   children,
   title,
   description,
+  variant,
   actionButtonText,
   pendingButtonText = "Loading...",
   isPending = false,
@@ -42,7 +44,7 @@ function ConfirmationDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" onClick={onAction} disabled={isPending}>
+          <AlertDialogAction variant={variant} onClick={onAction} disabled={isPending}>
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />

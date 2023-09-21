@@ -6,6 +6,7 @@ import { formatDateRange, getEventRelativeTime, getSession, isModOrAdmin } from 
 import type { Metadata } from "next";
 import DeleteEventButton from "@/components/events/event-post/DeleteEventButton";
 import EditEventButton from "@/components/events/event-post/EditEventButton";
+import RegistrationButton from "@/components/events/event-post/RegistrationButton";
 
 interface pageProps {
   params: { id: string };
@@ -26,9 +27,17 @@ export async function generateMetadata({ params }: pageProps): Promise<Metadata>
 
 export default async function Post({ params }: pageProps) {
   const session = await getSession();
+  const userID = session?.user.id;
   const event = await prisma.event.findUnique({
     where: {
       id: parseInt(params.id),
+    },
+  });
+
+  const registered = await prisma.eventRegistration.findFirst({
+    where: {
+      userId: userID,
+      eventId: event?.id,
     },
   });
 
@@ -43,12 +52,15 @@ export default async function Post({ params }: pageProps) {
       <MarkDownView allowLinks markdown={event?.description!} />
       <div className="flex justify-between w-full mt-10">
         <BackButton href="/events" />
-        {session && isModOrAdmin(session) && (
-          <div className="space-x-2">
-            <EditEventButton id={event!.id} event={event!} />
-            <DeleteEventButton id={event!.id} />
-          </div>
-        )}
+        <div className="space-x-2">
+          {session && isModOrAdmin(session) && (
+            <>
+              <EditEventButton id={event!.id} event={event!} />
+              <DeleteEventButton id={event!.id} />
+            </>
+          )}
+          <RegistrationButton eventID={parseInt(params.id)} userID={userID} registered={registered !== null} />
+        </div>
       </div>
     </FeedView>
   );

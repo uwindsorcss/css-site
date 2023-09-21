@@ -50,21 +50,22 @@ enum Role {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  name           String?
-  email          String?          @unique
-  role           Role             @default(user)
-  title          String?
-  image          String?
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  account        Account?
-  sessions       Session[]
-  discordAccount DiscordAccount?
-  Event          Event[]
-  EventImage     EventImage[]
-  ThumbnailImage ThumbnailImage[]
-  Post           Post[]
+  id                Int                 @id @default(autoincrement())
+  name              String?
+  email             String?             @unique
+  role              Role                @default(user)
+  title             String?
+  image             String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  account           Account?
+  sessions          Session[]
+  discordAccount    DiscordAccount?
+  Event             Event[]
+  EventImage        EventImage[]
+  ThumbnailImage    ThumbnailImage[]
+  Post              Post[]
+  EventRegistration EventRegistration[]
 }
 
 model DiscordAccount {
@@ -86,20 +87,30 @@ model BlackList {
 }
 
 model Event {
-  id                  Int             @id @default(autoincrement())
+  id                  Int                 @id @default(autoincrement())
   title               String
   description         String?
   startDate           DateTime
   endDate             DateTime
   location            String?
   capacity            Int?
-  registrationEnabled Boolean         @default(false)
+  registrationEnabled Boolean             @default(false)
   thumbnailImage      ThumbnailImage?
   eventImages         EventImage[]
-  author              User?           @relation(fields: [authorId], references: [id])
+  author              User?               @relation(fields: [authorId], references: [id])
   authorId            Int?
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @updatedAt
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  EventRegistration   EventRegistration[]
+}
+
+model EventRegistration {
+  id        Int      @id @default(autoincrement())
+  event     Event    @relation(fields: [eventId], references: [id])
+  eventId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  timestamp DateTime @default(now())
 }
 
 // Event Images for gallery

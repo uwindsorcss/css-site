@@ -280,6 +280,32 @@ export async function deleteEvent(id: number) {
   redirect(`/events?success=${encodeURIComponent("Event deleted successfully.")}`);
 }
 
+export async function registerForEvent(eventId: number, userId: number) {
+  const session = await getSession();
+  if (!session) throw new Error("You must be logged in to register for events.");
+
+  await prisma.eventRegistration.create({
+    data: {
+      event: { connect: { id: eventId } },
+      user: { connect: { id: userId } },
+    },
+  });
+  redirect(`/events/${eventId}?success=${encodeURIComponent("You've registered successfully.")}`);
+}
+
+export async function unregisterForEvent(eventId: number, userId: number) {
+  const session = await getSession();
+  if (!session) throw new Error("You must be logged in to unregister for events.");
+
+  await prisma.eventRegistration.deleteMany({
+    where: {
+      eventId,
+      userId,
+    },
+  });
+  redirect(`/events/${eventId}?success=${encodeURIComponent("You've unregistered successfully.")}`);
+}
+
 // News Actions
 export async function createPost(post: PostFormData) {
   const session = await getSession();

@@ -29,13 +29,13 @@ async function ListView({ searchParams }: EventsListViewProps) {
       startDate:
         filter === "Past"
           ? {
-              lte: new Date(),
-            }
+            lte: new Date(),
+          }
           : filter === "Upcoming"
-          ? {
+            ? {
               gt: new Date(),
             }
-          : undefined,
+            : undefined,
     },
   });
 
