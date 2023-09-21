@@ -16,13 +16,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDate, formatShortenedTimeDistance } from "@/lib/utils";
+import { formatDate, formatShortenedTimeDistance, isModOrAdmin } from "@/lib/utils";
+import { Session } from "next-auth";
 
 interface RegistrationButtonProps {
+  session: Session | null;
   eventID: number;
 }
 
-export default async function ViewRegisteredUsersButton({ eventID }: RegistrationButtonProps) {
+export default async function ViewRegisteredUsersButton({
+  session,
+  eventID,
+}: RegistrationButtonProps) {
   const event = await prisma.event.findUnique({
     where: {
       id: eventID,
@@ -39,43 +44,49 @@ export default async function ViewRegisteredUsersButton({ eventID }: Registratio
   const count = event?.EventRegistration.length;
   const title = `Registered Users (${count})`;
 
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>
-          <User className="w-5 h-5 mr-1" />{" "}
-          {`${count}${event?.capacity !== null ? `/${event?.capacity}` : ""}`}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className={"overflow-y-auto"}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        {count === 0 ? (
-          <h2 className="text-center text-muted-foreground text-sm mt-8">No users registered</h2>
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Registered At</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {event?.EventRegistration.map((registration) => (
-                <TableRow key={registration.id}>
-                  <TableCell>{registration.user.name}</TableCell>
-                  <TableCell>
-                    {`${formatDate(registration.timestamp)} (${formatShortenedTimeDistance(
-                      registration.timestamp
-                    )})`}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </DialogContent>
-    </Dialog>
+  const usersCountComponent = (
+    <Button>
+      <User className="w-5 h-5 mr-1" />{" "}
+      {`${count}${event?.capacity !== null ? `/${event?.capacity}` : ""}`}
+    </Button>
   );
+
+  if (session && session !== null && isModOrAdmin(session)) {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>{usersCountComponent}</DialogTrigger>
+        <DialogContent className={"overflow-y-auto"}>
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+          </DialogHeader>
+          {count === 0 ? (
+            <h2 className="text-center text-muted-foreground text-sm mt-8">No users registered</h2>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Registered At</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {event?.EventRegistration.map((registration) => (
+                  <TableRow key={registration.id}>
+                    <TableCell>{registration.user.name}</TableCell>
+                    <TableCell>
+                      {`${formatDate(registration.timestamp)} (${formatShortenedTimeDistance(
+                        registration.timestamp
+                      )})`}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </DialogContent>
+      </Dialog>
+    );
+  } else {
+    return <>{usersCountComponent}</>;
+  }
 }
