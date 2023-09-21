@@ -59,7 +59,9 @@ export default async function Post({ params }: pageProps) {
               <DeleteEventButton id={event!.id} />
             </>
           )}
-          <RegistrationButton eventID={parseInt(params.id)} userID={userID} registered={registered !== null} />
+          {
+            session && <RegistrationButton eventID={parseInt(params.id)} userID={userID} registered={registered !== null} />
+          }
         </div>
       </div>
     </FeedView>
