@@ -50,7 +50,7 @@ export function PostFormDialog({ triggerButton, id, initialValues }: PostFormPro
       isTeam: data.isTeam,
       content: data.content,
     };
-    
+
     if (id) await updatePost(post, id);
     else await createPost(post);
 

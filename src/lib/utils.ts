@@ -91,6 +91,10 @@ export function formatDateRange(start: Date, end: Date) {
   )} to ${dateFormatter.format(end)} at ${timeFormatter.format(end)}`;
 }
 
+export function formatDate(date: Date) {
+  return dateFormatter.format(date);
+}
+
 export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";

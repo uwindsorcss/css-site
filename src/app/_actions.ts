@@ -284,6 +284,20 @@ export async function registerForEvent(eventId: number, userId: number) {
   const session = await getSession();
   if (!session) throw new Error("You must be logged in to register for events.");
 
+  const event = await prisma.event.findUnique({ where: { id: eventId } });
+  if (!event) throw new Error("Event not found.");
+
+  if (!event.registrationEnabled) throw new Error("Event is not open for registration.");
+
+  const registrations = await prisma.eventRegistration.count({
+    where: {
+      eventId,
+    },
+  });
+
+  if (event.capacity !== null && registrations >= event.capacity)
+    throw new Error("Event is full. Please try again later.");
+
   await prisma.eventRegistration.create({
     data: {
       event: { connect: { id: eventId } },

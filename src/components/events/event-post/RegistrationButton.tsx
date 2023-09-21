@@ -2,54 +2,63 @@
 
 import { registerForEvent, unregisterForEvent } from "@/app/_actions";
 import { Button } from "@/components/ui/button";
-import { Clipboard, ClipboardX } from "lucide-react";
+import { Clipboard, ClipboardX, CircleSlash } from "lucide-react";
 import ConfirmationDialog from "@/components/ui/confirmation-dialog";
 import { useState } from "react";
 
 interface RegistrationButtonProps {
-    registered: boolean;
-    userID: number;
-    eventID: number;
+  full: boolean;
+  registered: boolean;
+  userID: number;
+  eventID: number;
 }
 
-function RegistrationButton({ registered, userID, eventID }: RegistrationButtonProps) {
-    const [isRegistering, setIsRegistering] = useState(false);
+function RegistrationButton({ full, registered, userID, eventID }: RegistrationButtonProps) {
+  const [isRegistering, setIsRegistering] = useState(false);
 
-    return (
-        <ConfirmationDialog
-            title={registered ? "Unregister" : "Register"}
-            description={
-                registered
-                    ? "Are you sure you want to unregister from this event?"
-                    : "Are you sure you want to register for this event?"
-            }
-            actionButtonText="Confirm"
-            pendingButtonText={
-                registered ? "Unregistering..." : "Registering..."
-            }
-            isPending={isRegistering}
-            variant={registered ? "destructive" : "default"}
-            onAction={async () => {
-                setIsRegistering(true);
-                if (registered) await unregisterForEvent(eventID, userID);
-                else await registerForEvent(eventID, userID);
-                setIsRegistering(false);
-            }}>
-            <Button variant={registered ? "destructive" : "discord"}>
-                {registered ? (
-                    <>
-                        <ClipboardX className="w-5 h-5 mr-1" /> Unregister
-                    </>
-                )
-                    : (
-                        <>
-                            <Clipboard className="w-5 h-5 mr-1" /> Register
-                        </>
-                    )
-                }
-            </Button>
-        </ConfirmationDialog>
-    );
+  return (
+    <ConfirmationDialog
+      title={registered ? "Unregister" : "Register"}
+      description={
+        registered
+          ? "Are you sure you want to unregister from this event?"
+          : "Are you sure you want to register for this event?"
+      }
+      actionButtonText="Confirm"
+      pendingButtonText={registered ? "Unregistering..." : "Registering..."}
+      isPending={isRegistering}
+      variant={registered ? "destructive" : "default"}
+      onAction={async () => {
+        if (!full || registered) {
+          setIsRegistering(true);
+          if (registered) await unregisterForEvent(eventID, userID);
+          else await registerForEvent(eventID, userID);
+          setIsRegistering(false);
+        }
+      }}>
+      <Button
+        variant={registered || full ? "destructive" : "discord"}
+        disabled={full && !registered}>
+        {registered ? (
+          <>
+            <ClipboardX className="w-5 h-5 mr-1" /> Unregister
+          </>
+        ) : (
+          <>
+            {full ? (
+              <>
+                <CircleSlash className="w-5 h-5 mr-1" /> At Capacity
+              </>
+            ) : (
+              <>
+                <Clipboard className="w-5 h-5 mr-1" /> Register
+              </>
+            )}
+          </>
+        )}
+      </Button>
+    </ConfirmationDialog>
+  );
 }
 
 export default RegistrationButton;
