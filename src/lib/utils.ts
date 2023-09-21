@@ -23,6 +23,11 @@ export function isMod(session: Session) {
   return user.role === Role.mod;
 }
 
+export function isUndergradStudent(session: Session) {
+  const user = session.user;
+  return user.title === "Undergrad Student";
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

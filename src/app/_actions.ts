@@ -5,7 +5,7 @@ import { authOptions } from "./api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { DiscordAccount, Role } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { getSession, isModOrAdmin } from "@/lib/utils";
+import { getSession, isModOrAdmin, isUndergradStudent } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
@@ -288,6 +288,8 @@ export async function registerForEvent(eventId: number, userId: number) {
   if (!event) throw new Error("Event not found.");
 
   if (!event.registrationEnabled) throw new Error("Event is not open for registration.");
+
+  if(!isUndergradStudent(session)) throw new Error("You must be an undergraduate student to register for events.");
 
   const registrations = await prisma.eventRegistration.count({
     where: {

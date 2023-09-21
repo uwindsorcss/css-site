@@ -2,7 +2,7 @@ import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
-import { formatDateRange, getEventRelativeTime, getSession, isModOrAdmin } from "@/lib/utils";
+import { formatDateRange, getEventRelativeTime, getSession, isModOrAdmin, isUndergradStudent } from "@/lib/utils";
 import type { Metadata } from "next";
 import DeleteEventButton from "@/components/events/event-post/DeleteEventButton";
 import EditEventButton from "@/components/events/event-post/EditEventButton";
@@ -71,7 +71,7 @@ export default async function Post({ params }: pageProps) {
           {event?.registrationEnabled && (
             <ViewRegisteredUsersButton session={session} eventID={event!.id} />
           )}
-          {session && event?.registrationEnabled && (
+          {session && event?.registrationEnabled && isUndergradStudent(session) && (
             <RegistrationButton
               eventID={parseInt(params.id)}
               userID={userID}
