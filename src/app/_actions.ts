@@ -369,7 +369,7 @@ export async function deletePost(id: number) {
 // Suggestion Actions
 export async function createSuggestion(suggestion: SuggestionFormData) {
   const session = await getSession();
-  if (!session) throw new Error("You must be logged in to create suggestions.");
+  if (!session) return { error: "You must be logged in to submit suggestions." };
 
   //check to see if the user has already submitted a suggestion in the past hour
   const suggestions = await prisma.suggestion.count({
@@ -381,10 +381,7 @@ export async function createSuggestion(suggestion: SuggestionFormData) {
     },
   });
 
-  if (suggestions > 0)
-    throw new Error(
-      "You have already submitted a suggestion in the last hour. Please try again later."
-    );
+  if (suggestions > 0) return { error: "You can only submit one suggestion per hour." };
 
   await fetch(`${process.env.DISCORD_SUGGESTION_WEBHOOK_URL}`, {
     method: "POST",
@@ -413,5 +410,5 @@ export async function createSuggestion(suggestion: SuggestionFormData) {
     },
   });
 
-  return "Suggestion submitted successfully.";
+  return { success: "Suggestion submitted successfully." };
 }

@@ -25,14 +25,17 @@ export function useAsyncFeedback() {
   async function handleAsyncAction(callback: (...args: any[]) => Promise<any>, ...args: any[]) {
     try {
       const result = await callback(...args);
-      if (typeof result === "string") addParam(false, result);
-      return true;
+
+        if (result.error) {
+            addParam(true, result.error);
+            return false;
+        } else if (result.success) {
+            addParam(false, result.success);
+            return true;
+        }
+
     } catch (error) {
-      const errorObject = error as Error;
-      const message =
-        errorObject.message.replace("error: ", "").charAt(0).toUpperCase() +
-        errorObject.message.slice(1);
-      addParam(true, message);
+        console.log(error);
     }
     return false;
   }
