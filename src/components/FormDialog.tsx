@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { UseFormReturn } from "react-hook-form";
 import clsx from "clsx";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 interface FormDialogProps {
   children: React.ReactNode;
@@ -20,6 +21,7 @@ interface FormDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   title: string;
+  description?: string;
   buttonText: string;
   pendingButtonText: string;
   contentClassName?: string;
@@ -33,6 +35,7 @@ export function FormDialog({
   isOpen,
   setIsOpen,
   title,
+  description,
   buttonText,
   pendingButtonText,
   contentClassName,
@@ -45,6 +48,11 @@ export function FormDialog({
         className={clsx("max-h-[80vh] overflow-y-auto min-h-[70vh]", contentClassName)}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
+          {description && (
+            <DialogDescription className="text-sm text-muted-foreground">
+              {description}
+            </DialogDescription>
+          )}
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmitAction)} className="space-y-4">

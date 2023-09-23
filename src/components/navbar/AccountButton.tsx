@@ -1,6 +1,6 @@
 "use client";
 import { signIn, signOut } from "next-auth/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import { LogOut, User } from "lucide-react";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
@@ -15,11 +15,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Session } from "next-auth";
 import Link from "next/link";
-import { useToast } from "../ui/use-toast";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Role } from "@prisma/client";
 import { toTitleCase } from "@/lib/utils";
+import { SuggestionDialog } from "../SuggestionDialog";
 
 function AccountButton({ session }: { session: Session | null }) {
   const name: string = session?.user?.name ?? "user";
@@ -29,32 +28,6 @@ function AccountButton({ session }: { session: Session | null }) {
     .join("");
   const role = session?.user?.role ?? "user";
   const title = session?.user?.title ?? "Student";
-
-  const { toast } = useToast();
-  const searchParams = useSearchParams();
-  const path = usePathname();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (searchParams.get("error") !== null) {
-      const error = searchParams.get("error")?.replace(/([A-Z])/g, " $1");
-      toast({
-        title: "Error",
-        description: error ?? "",
-        variant: "destructive",
-      });
-      router.replace(path);
-      router.refresh();
-    } else if (searchParams.get("success") !== null) {
-      toast({
-        title: "Success",
-        description: searchParams.get("success") ?? "",
-        variant: "success",
-      });
-      router.replace(path);
-      router.refresh();
-    }
-  }, [searchParams, path, router, toast]);
 
   if (session)
     return (
@@ -87,6 +60,9 @@ function AccountButton({ session }: { session: Session | null }) {
                 <span>Discord Account</span>
               </Link>
             </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <SuggestionDialog />
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
@@ -99,14 +75,17 @@ function AccountButton({ session }: { session: Session | null }) {
 
   return (
     <>
-      <Button className="flex md:hidden" size="icon" variant={"outline"} onClick={() => signIn("azure-ad")}>
+      <Button
+        className="flex md:hidden"
+        size="icon"
+        variant={"outline"}
+        onClick={() => signIn("azure-ad")}>
         <User className="w-4 h-4" />
       </Button>
       <Button className="hidden md:flex" variant={"outline"} onClick={() => signIn("azure-ad")}>
         <User className="w-4 h-4 mr-2" />
         <span>Sign In</span>
       </Button>
-
     </>
   );
 }

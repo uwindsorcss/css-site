@@ -289,7 +289,8 @@ export async function registerForEvent(eventId: number, userId: number) {
 
   if (!event.registrationEnabled) throw new Error("Event is not open for registration.");
 
-  if(!isUndergradStudent(session)) throw new Error("You must be an undergraduate student to register for events.");
+  if (!isUndergradStudent(session))
+    throw new Error("You must be an undergraduate student to register for events.");
 
   const registrations = await prisma.eventRegistration.count({
     where: {
@@ -363,4 +364,54 @@ export async function deletePost(id: number) {
     where: { id },
   });
   redirect(`/newsletter?success=${encodeURIComponent("Post deleted successfully.")}`);
+}
+
+// Suggestion Actions
+export async function createSuggestion(suggestion: SuggestionFormData) {
+  const session = await getSession();
+  if (!session) throw new Error("You must be logged in to create suggestions.");
+
+  //check to see if the user has already submitted a suggestion in the past hour
+  const suggestions = await prisma.suggestion.count({
+    where: {
+      authorId: session.user.id,
+      createdAt: {
+        gte: new Date(Date.now() - 3600000),
+      },
+    },
+  });
+
+  if (suggestions > 0)
+    throw new Error(
+      "You have already submitted a suggestion in the last hour. Please try again later."
+    );
+
+  await fetch(`${process.env.DISCORD_SUGGESTION_WEBHOOK_URL}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      embeds: [
+        {
+          title: suggestion.title,
+          description: suggestion.suggestion,
+          color: "3447003",
+          footer: {
+            text: `Submitted by ${session.user.name} (${session.user.email})`,
+          },
+        },
+      ],
+    }),
+  });
+
+  await prisma.suggestion.create({
+    data: {
+      title: suggestion.title,
+      suggestion: suggestion.suggestion,
+      author: { connect: { id: session.user.id } },
+    },
+  });
+
+  return "Suggestion submitted successfully.";
 }

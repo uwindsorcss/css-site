@@ -42,6 +42,7 @@ DISCORD_CLIENT_SECRET="your-discord-client-secret"
 DISCORD_BOT_TOKEN="your-discord-bot-token"
 DISCORD_GUILD_ID="your-discord-guild-id"
 DISCORD_CALLBACK_URL="http://localhost:3000/api/discord/callback"
+DISCORD_SUGGESTION_WEBHOOK_URL="your-discord-suggestion-webhook-url"
 
 # The following variables are required for the database
 POSTGRES_PASSWORD="your-postgres-password"

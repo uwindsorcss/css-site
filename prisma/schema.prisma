@@ -66,6 +66,7 @@ model User {
   ThumbnailImage    ThumbnailImage[]
   Post              Post[]
   EventRegistration EventRegistration[]
+  Suggestion        Suggestion[]
 }
 
 model DiscordAccount {
@@ -146,4 +147,14 @@ model Post {
   authorId  Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+//Suggestions
+model Suggestion {
+  id         Int      @id @default(autoincrement())
+  title      String
+  suggestion String   @db.Text
+  author     User?    @relation(fields: [authorId], references: [id])
+  authorId   Int?
+  createdAt  DateTime @default(now())
 }

@@ -21,4 +21,9 @@ declare global {
     isTeam: boolean | undefined;
     content: string;
   }
+
+  interface SuggestionFormData {
+    title: string;
+    suggestion: string;
+  }
 }
