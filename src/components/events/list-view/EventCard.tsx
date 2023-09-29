@@ -9,6 +9,16 @@ interface EventCardProps {
   currentPage: number;
   filter?: string;
 }
+function checkNew(createdAt: Date) {
+  const currentDate = new Date();
+  const millisecondsIn3Days = 3 * 24 * 60 * 60 * 1000;
+  const timeDifference = Math.abs(createdAt.getTime() - currentDate.getTime());
+  if (timeDifference <= millisecondsIn3Days) {
+    return "float-right m-5";
+  }
+  return "hidden";
+
+}
 
 function EventCard({ event, currentPage, filter }: EventCardProps) {
   return (
@@ -16,8 +26,9 @@ function EventCard({ event, currentPage, filter }: EventCardProps) {
       <Link
         key={event.id}
         href={`/events/${event.id}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`}>
+        <img className={checkNew(event.createdAt)} width="80" height="80" src="/New.png" alt="" />
         <CardHeader>
-          <CardTitle>{event.title}</CardTitle>
+          <CardTitle >{event.title} </CardTitle>
           <CardDescription className="font-medium mb-2">
             {formatDateRange(event.startDate, event.endDate)} (
             {getEventRelativeTime(event.startDate, event.endDate)})
