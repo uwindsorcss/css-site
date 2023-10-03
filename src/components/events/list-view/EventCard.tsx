@@ -9,24 +9,28 @@ interface EventCardProps {
   currentPage: number;
   filter?: string;
 }
-function checkNew(createdAt: Date) {
-  const currentDate = new Date();
-  const millisecondsIn3Days = 3 * 24 * 60 * 60 * 1000;
-  const timeDifference = Math.abs(createdAt.getTime() - currentDate.getTime());
-  if (timeDifference <= millisecondsIn3Days) {
-    return "float-right m-5";
-  }
-  return "hidden";
-
-}
 
 function EventCard({ event, currentPage, filter }: EventCardProps) {
+  function checkNew(createdAt: Date) {
+    const currentDate = new Date();
+    const currentUtcDate = new Date(currentDate.toUTCString());
+    const millisecondsIn3Days = 7 * 24 * 60 * 60 * 1000;
+    const timeDifference = Math.abs(createdAt.getTime() - currentUtcDate.getTime());
+    if (timeDifference <= millisecondsIn3Days) {
+      return true
+    }
+    return false
+  
+  }
+  
   return (
     <Card className="hover:bg-gray-200 dark:hover:bg-card/50 transition-colors duration-300">
       <Link
         key={event.id}
         href={`/events/${event.id}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`}>
-        <img className={checkNew(event.createdAt)} width="80" height="80" src="/New.png" alt="" />
+          {checkNew(event.createdAt) ?(
+            <div className="float-right m-5 p-2 rounded-full bg-cyan-600 text-white">NEW</div>
+          ):null}
         <CardHeader>
           <CardTitle >{event.title} </CardTitle>
           <CardDescription className="font-medium mb-2">
