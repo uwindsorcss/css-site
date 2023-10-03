@@ -14,7 +14,7 @@ function EventCard({ event, currentPage, filter }: EventCardProps) {
   function checkNew(createdAt: Date) {
     const currentDate = new Date();
     const currentUtcDate = new Date(currentDate.toUTCString());
-    const millisecondsIn3Days = 7 * 24 * 60 * 60 * 1000;
+    const millisecondsIn3Days = 3 * 24 * 60 * 60 * 1000;
     const timeDifference = Math.abs(createdAt.getTime() - currentUtcDate.getTime());
     if (timeDifference <= millisecondsIn3Days) {
       return true
