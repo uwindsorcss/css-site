@@ -11,7 +11,6 @@ interface EventCardProps {
 }
 
 function EventCard({ event, currentPage, filter }: EventCardProps) {
-
   function checkNew(createdAt: Date) {
     const currentDate = new Date();
     const currentUtcDate = new Date(currentDate.toUTCString());

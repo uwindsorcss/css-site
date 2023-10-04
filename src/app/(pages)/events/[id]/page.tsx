@@ -77,7 +77,7 @@ export default async function Post({ params }: pageProps) {
           {event?.registrationEnabled && (
             <ViewRegisteredUsersButton session={session} eventID={event!.id} />
           )}
-          {session && event?.registrationEnabled && isUndergradStudent(session) && (
+          {(!session || (session && isUndergradStudent(session))) && (
             <RegistrationButton
               eventID={parseInt(params.id)}
               userID={userID}

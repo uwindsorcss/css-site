@@ -26,16 +26,15 @@ export function useAsyncFeedback() {
     try {
       const result = await callback(...args);
 
-        if (result.error) {
-            addParam(true, result.error);
-            return false;
-        } else if (result.success) {
-            addParam(false, result.success);
-            return true;
-        }
-
+      if (result.error) {
+        addParam(true, result.error);
+        return false;
+      } else if (result.success) {
+        addParam(false, result.success);
+        return true;
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
     return false;
   }
