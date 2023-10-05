@@ -10,11 +10,12 @@ import { signIn } from "next-auth/react";
 interface RegistrationButtonProps {
   full: boolean;
   registered: boolean;
+  notAllowed?: boolean;
   userID: number;
   eventID: number;
 }
 
-function RegistrationButton({ full, registered, userID, eventID }: RegistrationButtonProps) {
+function RegistrationButton({ full, registered, notAllowed, userID, eventID }: RegistrationButtonProps) {
   const [isRegistering, setIsRegistering] = useState(false);
 
   if (!userID)
@@ -22,6 +23,14 @@ function RegistrationButton({ full, registered, userID, eventID }: RegistrationB
       <Button onClick={() => signIn("azure-ad")}>
         <Clipboard className="w-4 h-4 mr-2" />
         <span>Sign In to Register</span>
+      </Button>
+    );
+
+  if (notAllowed)
+    return (
+      <Button disabled>
+        <Clipboard className="w-4 h-4 mr-2" />
+        <span>Not Allowed</span>
       </Button>
     );
 
