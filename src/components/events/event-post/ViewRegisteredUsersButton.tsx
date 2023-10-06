@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table";
 import { formatDate, formatShortenedTimeDistance, isModOrAdmin } from "@/lib/utils";
 import { Session } from "next-auth";
+import CopyListButton from "./CopyListButton";
 
 interface RegistrationButtonProps {
   session: Session | null;
@@ -51,13 +52,30 @@ export default async function ViewRegisteredUsersButton({
     </Button>
   );
 
+  const getUsersList = () => {
+    let list = "";
+    event?.EventRegistration.forEach((registration, index, array) => {
+      list += `${registration.user.name} <${registration.user.email}>`;
+      if (index < array.length - 1) {
+        list += ",\n";
+      }
+    });
+    return list;
+  };
+
+
   if (session && session !== null && isModOrAdmin(session)) {
     return (
       <Dialog>
         <DialogTrigger asChild>{usersCountComponent}</DialogTrigger>
         <DialogContent className={"max-h-[80vh] overflow-y-auto w-full max-w-[700px]"}>
           <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className="flex items-center text-xl">
+              {title}
+              {count !== 0 && (
+                <CopyListButton list={getUsersList()} />
+              )}
+            </DialogTitle>
           </DialogHeader>
           {count === 0 ? (
             <h2 className="text-center text-muted-foreground text-sm mt-8">No users registered</h2>
