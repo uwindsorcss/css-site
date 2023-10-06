@@ -31,12 +31,12 @@ export async function generateMetadata({ params }: pageProps): Promise<Metadata>
     title: event?.title,
     description: event?.description,
     openGraph: {
-      title: event?.title,
-      description: event?.description ?? "",
+      title: `${event?.title} | Computer Science Society`,
+      description: event?.description?.substring(0, 200) ?? "",
     },
     twitter: {
-      title: event?.title,
-      description: event?.description ?? "",
+      title: `${event?.title} | Computer Science Society`,
+      description: event?.description?.substring(0, 200) ?? "",
     },
   };
 }
