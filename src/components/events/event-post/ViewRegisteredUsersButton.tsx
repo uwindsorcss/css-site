@@ -16,7 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDate, formatShortenedTimeDistance, isModOrAdmin } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { formatShortDate, formatShortenedTimeDistance, isModOrAdmin } from "@/lib/utils";
 import { Session } from "next-auth";
 import CopyListButton from "./CopyListButton";
 
@@ -63,7 +64,6 @@ export default async function ViewRegisteredUsersButton({
     return list;
   };
 
-
   if (session && session !== null && isModOrAdmin(session)) {
     return (
       <Dialog>
@@ -72,32 +72,42 @@ export default async function ViewRegisteredUsersButton({
           <DialogHeader>
             <DialogTitle className="flex items-center text-xl">
               {title}
-              {count !== 0 && (
-                <CopyListButton list={getUsersList()} />
-              )}
+              {count !== 0 && <CopyListButton list={getUsersList()} />}
             </DialogTitle>
           </DialogHeader>
           {count === 0 ? (
             <h2 className="text-center text-muted-foreground text-sm mt-8">No users registered</h2>
           ) : (
             <Table>
-              <TableHeader>
+              <TableHeader className="sticky top-0 bg-background">
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Registered At</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {event?.EventRegistration.map((registration) => (
-                  <TableRow key={registration.id}>
-                    <TableCell>{registration.user.name}</TableCell>
-                    <TableCell>
-                      {`${formatDate(registration.timestamp)} (${formatShortenedTimeDistance(
-                        registration.timestamp
-                      )})`}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                <TooltipProvider>
+                  {event?.EventRegistration.map((registration) => (
+                    <TableRow key={registration.id}>
+                      <TableCell>
+                        <Tooltip>
+                          <TooltipTrigger>{registration.user.name}</TooltipTrigger>
+                          <TooltipContent>{registration.user.email}</TooltipContent>
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            {`${formatShortDate(registration.timestamp)}`}
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {`${formatShortenedTimeDistance(registration.timestamp)}`}
+                          </TooltipContent>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TooltipProvider>
               </TableBody>
             </Table>
           )}

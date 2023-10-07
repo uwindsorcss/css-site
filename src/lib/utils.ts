@@ -74,6 +74,15 @@ export const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Toronto",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+});
+
 export const timeFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Toronto",
   hour: "numeric",
@@ -98,6 +107,10 @@ export function formatDateRange(start: Date, end: Date) {
 
 export function formatDate(date: Date) {
   return dateFormatter.format(date);
+}
+
+export function formatShortDate(date: Date) {
+  return shortDateFormatter.format(date);
 }
 
 export const getEventRelativeTime = (startDate: Date, endDate: Date) => {

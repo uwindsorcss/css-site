@@ -75,8 +75,7 @@ export default async function Post({ params }: pageProps) {
       )}`}
       subheadingIcon={<CalendarDays className="w-4 h-4 mr-1" />}
       subheading2={event?.location ? `Location: ${event?.location}` : undefined}
-      subheading2Icon={event?.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}
-    >
+      subheading2Icon={event?.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}>
       <MarkDownView allowLinks markdown={event?.description!} />
       <div className="flex justify-between w-full mt-10 flex-wrap gap-2">
         <BackButton href="/events" />
@@ -95,9 +94,7 @@ export default async function Post({ params }: pageProps) {
             notAllowed={userID && !isUndergradStudent(session)}
             userID={userID}
             registered={registered !== null}
-            full={
-              event?.capacity !== null && event?._count?.EventRegistration === event?.capacity
-            }
+            full={event?.capacity !== null && event?._count?.EventRegistration === event?.capacity}
           />
         </div>
       </div>

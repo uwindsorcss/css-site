@@ -15,7 +15,13 @@ interface RegistrationButtonProps {
   eventID: number;
 }
 
-function RegistrationButton({ full, registered, notAllowed, userID, eventID }: RegistrationButtonProps) {
+function RegistrationButton({
+  full,
+  registered,
+  notAllowed,
+  userID,
+  eventID,
+}: RegistrationButtonProps) {
   const [isRegistering, setIsRegistering] = useState(false);
 
   if (!userID)
