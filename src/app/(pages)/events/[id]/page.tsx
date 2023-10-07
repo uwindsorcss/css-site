@@ -14,6 +14,7 @@ import DeleteEventButton from "@/components/events/event-post/DeleteEventButton"
 import EditEventButton from "@/components/events/event-post/EditEventButton";
 import RegistrationButton from "@/components/events/event-post/RegistrationButton";
 import ViewRegisteredUsersButton from "@/components/events/event-post/ViewRegisteredUsersButton";
+import { CalendarDays, MapPin } from "lucide-react";
 
 interface pageProps {
   params: { id: string };
@@ -72,7 +73,10 @@ export default async function Post({ params }: pageProps) {
         event!.startDate,
         event!.endDate
       )}`}
-      subheading2={event?.location ? `Location: ${event?.location}` : undefined}>
+      subheadingIcon={<CalendarDays className="w-4 h-4 mr-1" />}
+      subheading2={event?.location ? `Location: ${event?.location}` : undefined}
+      subheading2Icon={event?.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}
+    >
       <MarkDownView allowLinks markdown={event?.description!} />
       <div className="flex justify-between w-full mt-10 flex-wrap gap-2">
         <BackButton href="/events" />
