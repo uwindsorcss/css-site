@@ -11,6 +11,8 @@ declare global {
   interface EventFormData {
     title: string;
     description: string;
+    registrable: boolean;
+    capacity?: number;
     location?: string;
     startDate: date;
     endDate: date;

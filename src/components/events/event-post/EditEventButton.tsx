@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { Event } from "@prisma/client";
 import { EventFormDialog } from "../EventFormDialog";
+import { Event } from "@prisma/client";
 
 function EditEventButton({ id, event }: { id: number; event: Event }) {
   const values = {
     title: event.title || "",
     description: event.description || "",
     location: event.location || "",
+    registrable: event.registrationEnabled || false,
+    capacity: event.capacity || 0,
     startDate: {
       year: event.startDate.getFullYear(),
       month: event.startDate.getMonth() + 1,

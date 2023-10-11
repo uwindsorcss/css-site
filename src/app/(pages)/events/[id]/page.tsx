@@ -89,13 +89,17 @@ export default async function Post({ params }: pageProps) {
           {event?.registrationEnabled && (
             <ViewRegisteredUsersButton session={session} eventID={event!.id} />
           )}
-          <RegistrationButton
-            eventID={parseInt(params.id)}
-            notAllowed={userID && !isUndergradStudent(session)}
-            userID={userID}
-            registered={registered !== null}
-            full={event?.capacity !== null && event?._count?.EventRegistration === event?.capacity}
-          />
+          {event?.registrationEnabled && (
+            <RegistrationButton
+              eventID={parseInt(params.id)}
+              notAllowed={userID && !isUndergradStudent(session)}
+              userID={userID}
+              registered={registered !== null}
+              full={
+                event?.capacity !== null && event?._count?.EventRegistration === event?.capacity
+              }
+            />
+          )}
         </div>
       </div>
     </FeedView>

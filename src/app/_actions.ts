@@ -252,7 +252,15 @@ export async function createEvent(event: EventFormData) {
     throw new Error("You do not have permission to create events.");
 
   await prisma.event.create({
-    data: event,
+    data: {
+      title: event.title,
+      description: event.description,
+      registrationEnabled: event.registrable,
+      capacity: event.capacity,
+      location: event.location,
+      startDate: event.startDate,
+      endDate: event.endDate,
+    },
   });
   revalidatePath("/events");
 }
@@ -264,7 +272,15 @@ export async function updateEvent(event: EventFormData, id: number) {
 
   await prisma.event.update({
     where: { id },
-    data: event,
+    data: {
+      title: event.title,
+      description: event.description,
+      registrationEnabled: event.registrable,
+      capacity: event.capacity,
+      location: event.location,
+      startDate: event.startDate,
+      endDate: event.endDate,
+    },
   });
   revalidatePath(`/events/${id}`);
 }

@@ -16,13 +16,13 @@ const FormSchema = z.object({
     .string({
       required_error: "A title is required.",
     })
-    .nonempty(),
+    .min(1),
   isTeam: z.boolean().optional(),
   content: z
     .string({
       required_error: "The content is required.",
     })
-    .nonempty(),
+    .min(1),
 });
 
 interface PostFormProps {

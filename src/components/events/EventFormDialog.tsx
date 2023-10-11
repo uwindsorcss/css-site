@@ -11,18 +11,21 @@ import { createEvent, updateEvent } from "@/app/_actions";
 import { CalendarDateTime } from "@internationalized/date";
 import { FormDialog } from "../FormDialog";
 import { useState } from "react";
+import { Checkbox } from "../ui/checkbox";
 
 const FormSchema = z.object({
   title: z
     .string({
       required_error: "A title is required.",
     })
-    .nonempty(),
+    .min(1),
   description: z
     .string({
       required_error: "A description is required.",
     })
-    .nonempty(),
+    .min(1),
+  registrable: z.boolean().default(false),
+  capacity: z.coerce.number().min(0).optional(),
   location: z.string().optional(),
   startDate: z.object(
     {
@@ -85,6 +88,8 @@ export function EventFormDialog({ triggerButton, id, initialValues }: EventFormP
     const event: EventFormData = {
       title: data.title,
       description: data.description,
+      registrable: data.registrable,
+      capacity: data.capacity,
       location: data.location,
       startDate,
       endDate,
@@ -120,11 +125,11 @@ export function EventFormDialog({ triggerButton, id, initialValues }: EventFormP
       />
       <FormField
         control={form.control}
-        name="location"
+        name="description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Location</FormLabel>
-            <Input {...field} />
+            <FormLabel>Description</FormLabel>
+            <Textarea className="h-40" {...field} />
             <FormMessage />
           </FormItem>
         )}
@@ -167,11 +172,39 @@ export function EventFormDialog({ triggerButton, id, initialValues }: EventFormP
       />
       <FormField
         control={form.control}
-        name="description"
+        name="location"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Description</FormLabel>
-            <Textarea className="h-[300px]" {...field} />
+            <FormLabel>Location</FormLabel>
+            <Input {...field} />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="capacity"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Capacity</FormLabel>
+            <Input type="number" {...field} />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="registrable"
+        render={({ field }) => (
+          <FormItem>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                defaultChecked={field.value || false}
+                checked={field.value}
+                onCheckedChange={field.onChange}
+              />
+              <FormLabel>Registrable</FormLabel>
+            </div>
             <FormMessage />
           </FormItem>
         )}
