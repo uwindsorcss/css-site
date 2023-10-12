@@ -24,8 +24,8 @@ declare global {
     content: string;
   }
 
-  interface SuggestionFormData {
-    title: string;
-    suggestion: string;
+  interface feedbackFormData {
+    subject: string;
+    feedback: string;
   }
 }

@@ -18,7 +18,6 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Role } from "@prisma/client";
 import { toTitleCase } from "@/lib/utils";
-import { SuggestionDialog } from "../SuggestionDialog";
 
 function AccountButton({ session }: { session: Session | null }) {
   const name: string = session?.user?.name ?? "user";
@@ -59,9 +58,6 @@ function AccountButton({ session }: { session: Session | null }) {
                 <SiDiscord className="w-4 h-4 mr-3" />
                 <span>Discord Account</span>
               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <SuggestionDialog />
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

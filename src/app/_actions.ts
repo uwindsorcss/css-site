@@ -382,22 +382,21 @@ export async function deletePost(id: number) {
   redirect(`/newsletter?success=${encodeURIComponent("Post deleted successfully.")}`);
 }
 
-// Suggestion Actions
-export async function createSuggestion(suggestion: SuggestionFormData) {
+// Feedback Action
+export async function submitFeedback(feedback: feedbackFormData) {
   const session = await getSession();
-  if (!session) return { error: "You must be logged in to submit suggestions." };
+  if (!session) return { error: "You must be logged in to submit feedback." };
 
-  //check to see if the user has already submitted a suggestion in the past hour
-  const suggestions = await prisma.suggestion.count({
+  const todayFeedbackTotal = await prisma.feedback.count({
     where: {
-      authorId: session.user.id,
       createdAt: {
-        gte: new Date(Date.now() - 3600000),
+        gte: new Date(new Date().setHours(0, 0, 0, 0)),
+        lte: new Date(new Date().setHours(23, 59, 59, 999)),
       },
     },
   });
 
-  if (suggestions > 0) return { error: "You can only submit one suggestion per hour." };
+  if (todayFeedbackTotal > 25) return { error: "Feedback submissions are currently closed." };
 
   await fetch(`${process.env.DISCORD_SUGGESTION_WEBHOOK_URL}`, {
     method: "POST",
@@ -407,8 +406,8 @@ export async function createSuggestion(suggestion: SuggestionFormData) {
     body: JSON.stringify({
       embeds: [
         {
-          title: suggestion.title,
-          description: suggestion.suggestion,
+          title: feedback.subject,
+          description: feedback.feedback,
           color: "3447003",
           footer: {
             text: `Submitted by ${session.user.name} (${session.user.email})`,
@@ -418,13 +417,12 @@ export async function createSuggestion(suggestion: SuggestionFormData) {
     }),
   });
 
-  await prisma.suggestion.create({
+  await prisma.feedback.create({
     data: {
-      title: suggestion.title,
-      suggestion: suggestion.suggestion,
-      author: { connect: { id: session.user.id } },
+      subject: feedback.subject,
+      feedback: feedback.feedback,
     },
   });
 
-  return { success: "Suggestion submitted successfully." };
+  return { success: "Feedback submitted successfully." };
 }

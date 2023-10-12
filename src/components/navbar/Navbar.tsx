@@ -14,6 +14,7 @@ async function NavBar() {
     { name: "About", href: "/about" },
     { name: "Events", href: "/events" },
     { name: "Newsletter", href: "/newsletter" },
+    { name: "Feedback", href: "/feedback" },
     { name: "Discord", href: "/discord" },
     {
       name: "Resources",

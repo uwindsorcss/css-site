@@ -13,7 +13,8 @@ import { FormDialog } from "../FormDialog";
 import { useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 
-const FormSchema = z.object({
+type EventSchema = z.infer<typeof eventSchema>;
+const eventSchema = z.object({
   title: z
     .string({
       required_error: "A title is required.",
@@ -55,14 +56,13 @@ const FormSchema = z.object({
 
 interface EventFormProps {
   id?: number;
-  initialValues?: z.infer<typeof FormSchema>;
+  initialValues?: EventSchema;
   triggerButton: React.ReactNode;
 }
 
 export function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    // @ts-ignore
-    resolver: zodResolver(FormSchema),
+  const form = useForm<EventSchema>({
+    resolver: zodResolver(eventSchema),
     defaultValues: initialValues || undefined,
   });
 
@@ -81,7 +81,7 @@ export function EventFormDialog({ triggerButton, id, initialValues }: EventFormP
     return [date.year, adjustMonth ? date.month - 1 : date.month, date.day, date.hour, date.minute];
   }
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: EventSchema) {
     const startDate = new Date(...convertDate(data.startDate));
     const endDate = new Date(...convertDate(data.endDate));
 

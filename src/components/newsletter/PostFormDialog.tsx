@@ -11,7 +11,8 @@ import { FormDialog } from "../FormDialog";
 import { useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 
-const FormSchema = z.object({
+type PostSchema = z.infer<typeof postSchema>;
+const postSchema = z.object({
   title: z
     .string({
       required_error: "A title is required.",
@@ -27,16 +28,15 @@ const FormSchema = z.object({
 
 interface PostFormProps {
   id?: number;
-  initialValues?: z.infer<typeof FormSchema>;
+  initialValues?: PostSchema;
   triggerButton: React.ReactNode;
 }
 
 export function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    // @ts-ignore
-    resolver: zodResolver(FormSchema),
+  const form = useForm<PostSchema>({
+    resolver: zodResolver(postSchema),
     defaultValues: initialValues || {
       title: "",
       isTeam: false,
@@ -44,7 +44,7 @@ export function PostFormDialog({ triggerButton, id, initialValues }: PostFormPro
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: PostSchema) {
     const post: PostFormData = {
       title: data.title,
       isTeam: data.isTeam,
