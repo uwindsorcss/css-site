@@ -409,9 +409,6 @@ export async function submitFeedback(feedback: feedbackFormData) {
           title: feedback.subject,
           description: feedback.feedback,
           color: "3447003",
-          footer: {
-            text: `Submitted by ${session.user.name} (${session.user.email})`,
-          },
         },
       ],
     }),
