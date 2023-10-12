@@ -1,7 +1,5 @@
 # CSS Site
 
-## Under Construction 🚧
-
 ## Development Setup
 
 ### Prerequisites
