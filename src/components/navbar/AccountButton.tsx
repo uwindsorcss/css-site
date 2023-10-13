@@ -17,7 +17,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Role } from "@prisma/client";
-import { toTitleCase } from "@/lib/utils";
+import { camelCaseToTitleCase } from "@/lib/utils";
 
 function AccountButton({ session }: { session: Session | null }) {
   const name: string = session?.user?.name ?? "user";
@@ -47,7 +47,7 @@ function AccountButton({ session }: { session: Session | null }) {
             <div>
               <DropdownMenuLabel className="pb-0">{name}</DropdownMenuLabel>
               <div className="px-2 text-sm font-semibold text-gray-500">
-                {role !== Role.user ? toTitleCase(role) : title}
+                {role !== Role.user ? camelCaseToTitleCase(role) : title}
               </div>
             </div>
           </div>

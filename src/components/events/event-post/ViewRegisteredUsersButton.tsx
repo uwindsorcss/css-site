@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { formatShortDate, formatShortenedTimeDistance, isModOrAdmin } from "@/lib/utils";
+import { formatShortDate, formatTimeDifference, isModOrAdmin } from "@/lib/utils";
 import { Session } from "next-auth";
 import CopyListButton from "./CopyListButton";
 
@@ -101,7 +101,7 @@ export default async function ViewRegisteredUsersButton({
                             {`${formatShortDate(registration.timestamp)}`}
                           </TooltipTrigger>
                           <TooltipContent>
-                            {`${formatShortenedTimeDistance(registration.timestamp)}`}
+                            {`${formatTimeDifference(registration.timestamp)}`}
                           </TooltipContent>
                         </Tooltip>
                       </TableCell>

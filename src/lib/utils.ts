@@ -32,38 +32,42 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function toTitleCase(str: string) {
-  return str
-    .toLowerCase()
-    .split(" ")
-    .map(function (word) {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(" ");
+export function camelCaseToTitleCase(s: string) {
+  const result = s.replace(/([A-Z])/g, " $1");
+  return result.charAt(0).toUpperCase() + result.slice(1);
 }
 
-export function formatShortenedTimeDistance(date: Date) {
+export function formatTimeDifference(date: Date) {
   const isFuture = date.getTime() > Date.now();
-  const unit = isFuture ? "from now" : "ago";
   const diff = Math.abs(date.getTime() - Date.now()) / 1000;
 
   if (diff < 60) return "now";
-  if (diff < 60 * 60) return `${Math.floor(diff / 60)} minute${diff < 120 ? "" : "s"} ${unit}`;
-  if (diff < 60 * 60 * 24)
-    return `${Math.floor(diff / (60 * 60))} hour${diff < 60 * 60 * 2 ? "" : "s"} ${unit}`;
-  if (diff < 60 * 60 * 24 * 7)
-    return `${Math.floor(diff / (60 * 60 * 24))} day${diff < 60 * 60 * 24 * 2 ? "" : "s"} ${unit}`;
-  if (diff < 60 * 60 * 24 * 30)
-    return `${Math.floor(diff / (60 * 60 * 24 * 7))} week${
-      diff < 60 * 60 * 24 * 7 * 2 ? "" : "s"
-    } ${unit}`;
-  if (diff < 60 * 60 * 24 * 365)
-    return `${Math.floor(diff / (60 * 60 * 24 * 30))} month${
-      diff < 60 * 60 * 24 * 30 * 2 ? "" : "s"
-    } ${unit}`;
-  return `${Math.floor(diff / (60 * 60 * 24 * 365))} year${
-    diff < 60 * 60 * 24 * 365 * 2 ? "" : "s"
-  } ${unit}`;
+
+  const SECOND = 1;
+  const MINUTE = 60 * SECOND;
+  const HOUR = 60 * MINUTE;
+  const DAY = 24 * HOUR;
+  const WEEK = 7 * DAY;
+  const MONTH = 30 * DAY;
+  const YEAR = 365 * DAY;
+
+  const timeUnits = [
+    { label: "minute", value: MINUTE, max: HOUR },
+    { label: "hour", value: HOUR, max: DAY },
+    { label: "day", value: DAY, max: WEEK },
+    { label: "week", value: WEEK, max: MONTH },
+    { label: "month", value: MONTH, max: YEAR },
+    { label: "year", value: YEAR, max: Infinity },
+  ];
+
+  for (const { label, value, max } of timeUnits) {
+    if (diff < max) {
+      const count = Math.floor(diff / value);
+      return isFuture
+        ? `In ${count} ${label}${count === 1 ? "" : "s"}`
+        : `${count} ${label}${count === 1 ? "" : "s"} ago`;
+    }
+  }
 }
 
 export const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -116,6 +120,6 @@ export function formatShortDate(date: Date) {
 export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";
-  else if (startDate > now) return formatShortenedTimeDistance(startDate);
-  return formatShortenedTimeDistance(endDate);
+  else if (startDate > now) return formatTimeDifference(startDate);
+  return formatTimeDifference(endDate);
 };

@@ -1,4 +1,4 @@
-import { formatShortenedTimeDistance } from "@/lib/utils";
+import { formatTimeDifference } from "@/lib/utils";
 import Link from "next/link";
 import MarkDownView from "@/components/views/MarkDownView";
 
@@ -16,7 +16,7 @@ function Post({ post, currentPage }: PostProps) {
       <div>
         <h2 className="text-2xl font-bold">{post.title}</h2>
         <span className="text-sm font-medium text-muted-foreground mb-2">
-          {post.author?.name ?? "CSS Team"} ● {formatShortenedTimeDistance(post.createdAt)}
+          {post.author?.name ?? "CSS Team"} ● {formatTimeDifference(post.createdAt)}
         </span>
       </div>
       <MarkDownView

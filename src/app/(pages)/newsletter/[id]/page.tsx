@@ -2,7 +2,7 @@ import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
-import { formatShortenedTimeDistance, getSession, isModOrAdmin } from "@/lib/utils";
+import { formatTimeDifference, getSession, isModOrAdmin } from "@/lib/utils";
 import { Metadata } from "next";
 import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
 import DeletePostButton from "@/components/newsletter/newsletter-post/DeletePostButton";
@@ -40,9 +40,7 @@ export default async function Post({ params }: pageProps) {
   return (
     <FeedView
       heading={post?.title}
-      subheading={`${post?.author?.name ?? "CSS Team"} ● ${formatShortenedTimeDistance(
-        post!.createdAt
-      )}`}>
+      subheading={`${post?.author?.name ?? "CSS Team"} ● ${formatTimeDifference(post!.createdAt)}`}>
       <MarkDownView allowLinks markdown={post!.content} />
       <div className="flex justify-between w-full mt-10">
         <BackButton href="/newsletter" />
