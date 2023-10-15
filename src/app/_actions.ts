@@ -1,9 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/db";
-import { authOptions } from "./api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { DiscordAccount, Role } from "@prisma/client";
+import { DiscordAccount } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { getSession, isModOrAdmin, isUndergradStudent } from "@/lib/utils";
 import { redirect } from "next/navigation";
@@ -19,7 +17,7 @@ const discordEmbed = {
 
 export async function linkDiscordAccount(discordResponse: any) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
 
     if (!session?.user.id) throw new Error("Error while linking account. Session not found.");
 
@@ -95,7 +93,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
 export async function unlinkDiscordAccount() {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
 
     if (!session?.user.id) throw new Error("Error while unlinking account. Session not found.");
 

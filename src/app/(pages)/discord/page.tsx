@@ -1,7 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import DiscordAuthButton from "@/components/discord/DiscordAuthButton";
 import { prisma } from "@/lib/db";
-import { getServerSession } from "next-auth/next";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
@@ -13,13 +11,14 @@ import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
 import { Metadata } from "next";
 import DiscordAccount from "@/components/discord/DiscordAccount";
+import { getSession } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Discord",
 };
 
 export default async function DiscordPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   const discordAccount = await prisma.discordAccount.findFirst({
     where: { userId: session?.user?.id },
   });
