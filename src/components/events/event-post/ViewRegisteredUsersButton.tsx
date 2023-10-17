@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { formatShortDate, formatTimeDifference, isModOrAdmin } from "@/lib/utils";
+import { canEditEvent, formatShortDate, formatTimeDifference } from "@/lib/utils";
 import { Session } from "next-auth";
 import CopyListButton from "./CopyListButton";
 
@@ -64,7 +64,7 @@ export default async function ViewRegisteredUsersButton({
     return list;
   };
 
-  if (session && session !== null && isModOrAdmin(session)) {
+  if (session && session !== null && canEditEvent(session)) {
     return (
       <Dialog>
         <DialogTrigger asChild>{usersCountComponent}</DialogTrigger>

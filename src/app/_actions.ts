@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/db";
 import { DiscordAccount } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { getSession, isModOrAdmin, isUndergradStudent } from "@/lib/utils";
+import { canEditEvent, getSession, isModOrAdmin, isUndergradStudent } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
@@ -246,7 +246,7 @@ async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
 // Event Actions
 export async function createEvent(event: EventFormData) {
   const session = await getSession();
-  if (!session || !isModOrAdmin(session))
+  if (!session || !canEditEvent(session))
     throw new Error("You do not have permission to create events.");
 
   await prisma.event.create({
@@ -265,7 +265,7 @@ export async function createEvent(event: EventFormData) {
 
 export async function updateEvent(event: EventFormData, id: number) {
   const session = await getSession();
-  if (!session || !isModOrAdmin(session))
+  if (!session || !canEditEvent(session))
     throw new Error("You do not have permission to update events.");
 
   await prisma.event.update({
@@ -285,7 +285,7 @@ export async function updateEvent(event: EventFormData, id: number) {
 
 export async function deleteEvent(id: number) {
   const session = await getSession();
-  if (!session || !isModOrAdmin(session))
+  if (!session || !canEditEvent(session))
     throw new Error("You do not have permission to delete events.");
 
   await prisma.event.delete({

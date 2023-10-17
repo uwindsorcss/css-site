@@ -3,10 +3,10 @@ import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import { prisma } from "@/lib/db";
 import {
+  canEditEvent,
   formatDateRange,
   getEventRelativeTime,
   getSession,
-  isModOrAdmin,
   isUndergradStudent,
 } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -80,7 +80,7 @@ export default async function Post({ params }: pageProps) {
       <div className="flex justify-between w-full mt-10 flex-wrap gap-2">
         <BackButton href="/events" />
         <div className="flex flex-wrap gap-2">
-          {session && isModOrAdmin(session) && (
+          {session && canEditEvent(session) && (
             <>
               <EditEventButton id={event!.id} event={event!} />
               <DeleteEventButton id={event!.id} />

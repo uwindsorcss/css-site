@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ListView from "@/components/events/list-view/ListView";
 import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
-import { getSession, isModOrAdmin } from "@/lib/utils";
+import { canEditEvent, getSession } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { EventFormDialog } from "@/components/events/EventFormDialog";
 
@@ -23,7 +23,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
     <>
       <h1 className="text-4xl text-center font-bold">Events</h1>
       <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
-        {session && isModOrAdmin(session) && (
+        {session && canEditEvent(session) && (
           <EventFormDialog
             triggerButton={
               <Button size="full" className="mb-4">

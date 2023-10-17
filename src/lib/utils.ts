@@ -23,6 +23,16 @@ export function isMod(session: Session) {
   return user.role === Role.mod;
 }
 
+export function isEventEditor(session: Session) {
+  const user = session.user;
+  return user.role === Role.eventEditor;
+}
+
+export function canEditEvent(session: Session) {
+  const user = session.user;
+  return user.role === Role.eventEditor || user.role === Role.mod || user.role === Role.admin;
+}
+
 export function isUndergradStudent(session: Session) {
   const user = session.user;
   return user.title === "Undergrad Student";

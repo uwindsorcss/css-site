@@ -47,6 +47,7 @@ enum Role {
   user
   mod
   admin
+  eventEditor
 }
 
 model User {
