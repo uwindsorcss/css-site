@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import IconCard from "@/components/home/IconCard";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
-import { GraduationCap, Code2, Users, FerrisWheel } from "lucide-react";
+import { GraduationCap, Code2, Users, FerrisWheel, CalendarDays } from "lucide-react";
 import { getMemberCount } from "@/app/_actions";
 import { prisma } from "@/lib/db";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
@@ -88,13 +88,16 @@ export default async function Home() {
                   className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
                   <Card className="flex flex-col items-center justify-center gap-2 text-center w-full h-full px-2 py-10 md:p-20">
                     <CardTitle>{event.title}</CardTitle>
-                    <CardDescription className="text-sm flex flex-col items-center justify-center gap-2">
-                      {event.startDate.toLocaleDateString("en-US", {
-                        weekday: "short",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                    <CardDescription className="text-sm flex flex-col items-center justify-center gap-1">
+                      <span className="flex items-center justify-center">
+                        <CalendarDays className="w-4 h-4 mr-1" />
+                        {event.startDate.toLocaleDateString("en-US", {
+                          weekday: "short",
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
                       <span className="font-bold">
                         {getEventRelativeTime(event.startDate, event.endDate)}
                       </span>
