@@ -26,7 +26,7 @@ export default async function DiscordPage() {
   const { memberCount, onlineCount } = await getMemberCount();
 
   return (
-    <div className="mt-48">
+    <div className="mx-auto flex flex-col items-center justify-center min-h-screen gap-10 px-4 md:px-8 py-32 max-w-7xl">
       <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
         <div className="flex justify-end">
           <HoverCard>
