@@ -76,7 +76,7 @@ export default async function ViewRegisteredUsersButton({
             </DialogTitle>
           </DialogHeader>
           {count === 0 ? (
-            <h2 className="text-center text-muted-foreground text-sm mt-8">No users registered</h2>
+            <h2 className="text-center text-muted-foreground text-sm m-20">No Users Registered</h2>
           ) : (
             <Table>
               <TableHeader className="sticky top-0 bg-background">
