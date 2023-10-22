@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { EventFormDialog } from "../EventFormDialog";
 import { Event } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { EventFormDialog } from "@/components/events/EventFormDialog";
 
-function EditEventButton({ id, event }: { id: number; event: Event }) {
-  const values = {
+function transformEventToFormValues(event: Event) {
+  return {
     title: event.title || "",
     description: event.description || "",
     location: event.location || "",
@@ -25,11 +25,15 @@ function EditEventButton({ id, event }: { id: number; event: Event }) {
       minute: event.endDate.getMinutes(),
     },
   };
+}
+
+function EditEventButton({ id, event }: { id: number; event: Event }) {
+  const initialValues = transformEventToFormValues(event);
 
   return (
     <EventFormDialog
       id={id}
-      initialValues={values}
+      initialValues={initialValues}
       triggerButton={
         <Button>
           <Pencil className="w-5 h-5" />

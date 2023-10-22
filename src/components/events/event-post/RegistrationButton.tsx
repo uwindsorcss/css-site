@@ -11,14 +11,14 @@ interface RegistrationButtonProps {
   full: boolean;
   registered: boolean;
   notAllowed?: boolean;
-  userID: number;
+  userID: number | null;
   eventID: number;
 }
 
 function RegistrationButton({
   full,
   registered,
-  notAllowed,
+  notAllowed = false,
   userID,
   eventID,
 }: RegistrationButtonProps) {

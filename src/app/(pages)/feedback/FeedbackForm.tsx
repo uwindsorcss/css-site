@@ -16,13 +16,19 @@ import content from "./content.json";
 
 type FeedbackSchema = z.infer<typeof feedbackSchema>;
 const feedbackSchema = z.object({
-  subject: z.string({
-    required_error: content.feedbackSchema.subject.required_error,
-  }).min(1).max(120, content.feedbackSchema.subject.max_error),
-  
-  feedback: z.string({
-    required_error: content.feedbackSchema.feedback.required_error,
-  }).min(60, content.feedbackSchema.feedback.min_error).max(1200, content.feedbackSchema.feedback.max_error),
+  subject: z
+    .string({
+      required_error: content.feedbackSchema.subject.required_error,
+    })
+    .min(1)
+    .max(120, content.feedbackSchema.subject.max_error),
+
+  feedback: z
+    .string({
+      required_error: content.feedbackSchema.feedback.required_error,
+    })
+    .min(60, content.feedbackSchema.feedback.min_error)
+    .max(1200, content.feedbackSchema.feedback.max_error),
 });
 
 export default function FeedbackForm({ authenticated }: { authenticated: boolean }) {
