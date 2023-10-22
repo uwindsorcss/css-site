@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { submitFeedback } from "@/lib/actions";
-import { useAsyncFeedback } from "@/lib/useAsyncFeedback";
+import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 import { Heart, Loader2 } from "lucide-react";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";

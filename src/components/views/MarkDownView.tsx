@@ -26,8 +26,7 @@ const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown
         },
         // @ts-ignore
         anika: Anika,
-      }}
-    >
+      }}>
       {markdown}
     </ReactMarkdown>
   );
