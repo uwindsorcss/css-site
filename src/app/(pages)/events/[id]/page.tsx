@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     where: { id: eventId },
   });
 
-  if (!event) return {};
+  if (!event) return { title: "Event Not Found" };
 
   const descriptionSnippet = event.description?.substring(0, 200) ?? "";
 
