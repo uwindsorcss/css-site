@@ -1,0 +1,29 @@
+{
+    "feedbackSchema": {
+      "subject": {
+        "required_error": "A subject line is required.",
+        "max_error": "The subject line must be at most 120 characters."
+      },
+      "feedback": {
+        "required_error": "The feedback field is required.",
+        "min_error": "The feedback field must be at least 60 characters.",
+        "max_error": "The feedback field must be at most 1200 characters."
+      }
+    },
+    "feedbackSuccessMessage": {
+      "title": "Thank you for your feedback!",
+      "subtitle": "We appreciate your input."
+    },
+    "feedbackPrompt": {
+      "paragraph": "We're dedicated to improving our community and value your input. If you have any feedback or suggestions in any aspect, please don't hesitate to share them with us. ",
+      "strong": "Your feedback is anonymous, and sign-in is required to prevent spam. ",
+      "note": "If you would like a response from us, please leave your email in the suggestion box."
+    },
+    "labels": {
+      "subject": "Subject",
+      "feedback": "Feedback",
+      "submit": "Submit",
+      "submitting": "Submitting..."
+    }
+  }
+  
