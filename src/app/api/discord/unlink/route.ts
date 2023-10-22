@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { unlinkDiscordAccount } from "@/app/_actions";
+import { unlinkDiscordAccount } from "@/lib/actions";
 import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";

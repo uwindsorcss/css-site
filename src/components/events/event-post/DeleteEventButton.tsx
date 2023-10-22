@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteEvent } from "@/app/_actions";
+import { deleteEvent } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import ConfirmationDialog from "@/components/ui/confirmation-dialog";

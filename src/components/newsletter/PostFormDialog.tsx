@@ -6,8 +6,8 @@ import * as z from "zod";
 import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { createPost, updatePost } from "@/app/_actions";
-import { FormDialog } from "../FormDialog";
+import { createPost, updatePost } from "@/lib/actions";
+import { FormDialog } from "../form/FormDialog";
 import { useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 

@@ -6,7 +6,7 @@ import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import SignInButton from "@/components/discord/SignInButton";
-import { getMemberCount } from "@/app/_actions";
+import { getMemberCount } from "@/lib/actions";
 import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
 import { Metadata } from "next";

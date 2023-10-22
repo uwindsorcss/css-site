@@ -1,6 +1,6 @@
 "use client";
 
-import { registerForEvent, unregisterForEvent } from "@/app/_actions";
+import { registerForEvent, unregisterForEvent } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Clipboard, ClipboardX, CircleSlash } from "lucide-react";
 import ConfirmationDialog from "@/components/ui/confirmation-dialog";

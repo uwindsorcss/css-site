@@ -6,7 +6,7 @@ import IconCard from "@/components/home/IconCard";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { GraduationCap, Code2, Users, FerrisWheel, CalendarDays } from "lucide-react";
-import { getMemberCount } from "@/app/_actions";
+import { getMemberCount } from "@/lib/actions";
 import { prisma } from "@/lib/db";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { getEventRelativeTime } from "@/lib/utils";

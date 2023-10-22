@@ -7,9 +7,9 @@ import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/for
 import { DateTimePicker } from "../ui/date-time-picker/date-time-picker";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { createEvent, updateEvent } from "@/app/_actions";
+import { createEvent, updateEvent } from "@/lib/actions";
 import { CalendarDateTime } from "@internationalized/date";
-import { FormDialog } from "../FormDialog";
+import { FormDialog } from "../form/FormDialog";
 import { useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 

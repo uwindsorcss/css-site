@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { linkDiscordAccount } from "@/app/_actions";
+import { linkDiscordAccount } from "@/lib/actions";
 
 export const dynamic = "force-dynamic";
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";

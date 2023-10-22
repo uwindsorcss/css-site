@@ -1,6 +1,6 @@
 "use client";
 
-import { deletePost } from "@/app/_actions";
+import { deletePost } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import ConfirmationDialog from "@/components/ui/confirmation-dialog";
