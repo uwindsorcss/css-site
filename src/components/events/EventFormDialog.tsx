@@ -197,13 +197,16 @@ export function EventFormDialog({ triggerButton, id, initialValues }: EventFormP
         name="registrable"
         render={({ field }) => (
           <FormItem>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mt-6 mb-2">
               <Checkbox
+                size="medium"
                 defaultChecked={field.value || false}
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
-              <FormLabel>Registrable</FormLabel>
+              <FormLabel onClick={() => field.onChange(!field.value)} className="cursor-pointer">
+                Allow Registration
+              </FormLabel>
             </div>
             <FormMessage />
           </FormItem>
