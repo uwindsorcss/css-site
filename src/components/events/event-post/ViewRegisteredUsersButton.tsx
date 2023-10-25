@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { User } from "lucide-react";
+import { Clipboard, User } from "lucide-react";
 import { prisma } from "@/lib/db";
 import {
   Dialog,
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { canEditEvent, formatShortDate, formatTimeDifference } from "@/lib/utils";
-import CopyListButton from "./CopyListButton";
+import CopyButton from "@/components/ui/copy-button";
 import { Session } from "next-auth";
 
 interface RegistrationButtonProps {
@@ -61,7 +61,16 @@ export default async function ViewRegisteredUsersButton({
         <DialogHeader>
           <DialogTitle className="flex items-center text-xl">
             {title}
-            {count !== 0 && <CopyListButton list={generateUserList()} />}
+            {count !== 0 && (
+              <CopyButton
+                string={generateUserList()}
+                size="sm"
+                variant="ghost"
+                className="ml-2 text-muted-foreground"
+                label="Copy List"
+                Icon={<Clipboard className="w-5 h-5" />}
+              />
+            )}
           </DialogTitle>
         </DialogHeader>
         {count === 0 ? (

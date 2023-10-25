@@ -21,7 +21,7 @@ async function seed() {
     for (const eventData of data) {
       const event = await prisma.event.create({
         data: {
-          id: Number(eventData.id),
+          id: eventData.id,
           title: eventData.title,
           description: eventData.description,
           startDate: eventData.startDate,

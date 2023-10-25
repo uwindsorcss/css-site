@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { CalendarDays, MapPin } from "lucide-react";
+import { CalendarDays, Link, MapPin } from "lucide-react";
 import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
@@ -15,6 +15,7 @@ import {
   getSession,
   isUndergradStudent,
 } from "@/lib/utils";
+import CopyButton from "@/components/ui/copy-button";
 
 interface PageProps {
   params: { id: string };
@@ -78,7 +79,7 @@ export default async function Post({ params }: PageProps) {
         event.startDate,
         event.endDate
       )}`}
-      subheadingIcon={<CalendarDays className="w-4 h-4 mr-1" />}
+      subheadingIcon={<CalendarDays className="w-4 h-4" />}
       subheading2={event.location ? `Location: ${event.location}` : undefined}
       subheading2Icon={event.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}>
       <MarkDownView allowLinks markdown={event.description || ""} />
@@ -93,6 +94,11 @@ export default async function Post({ params }: PageProps) {
           )}
           {event.registrationEnabled && (
             <>
+              <CopyButton
+                string={`${process.env.NEXTAUTH_URL}/events/${event.id}`}
+                label="Copy Link"
+                Icon={<Link className="w-5 h-5 mr-1" />}
+              />
               <ViewRegisteredUsersButton session={session} eventID={event.id} />
               <RegistrationButton
                 eventID={eventId}
