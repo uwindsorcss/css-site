@@ -1,7 +1,7 @@
 import DiscordAuthButton from "@/components/discord/DiscordAuthButton";
 import { prisma } from "@/lib/db";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
@@ -29,18 +29,18 @@ export default async function DiscordPage() {
     <div className="mx-auto flex flex-col items-center justify-center min-h-screen gap-10 px-4 md:px-8 py-32 max-w-7xl">
       <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
         <div className="flex justify-end">
-          <HoverCard>
-            <HoverCardTrigger asChild>
-              <HelpCircle className="text-muted-foreground" />
-            </HoverCardTrigger>
-            <HoverCardContent className="w-80">
+          <Popover>
+            <PopoverTrigger asChild>
+              <HelpCircle className="text-muted-foreground hover:cursor-pointer" />
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
               <div className="flex justify-between space-x-4">
                 <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
                   {parseTextWithLinks(discordContent.hoverCardText)}
                 </div>
               </div>
-            </HoverCardContent>
-          </HoverCard>
+            </PopoverContent>
+          </Popover>
         </div>
         <CardHeader className="p-4">
           <div className="flex items-center justify-center gap-2 mb-2">
