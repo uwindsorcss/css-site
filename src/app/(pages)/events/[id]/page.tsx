@@ -79,7 +79,7 @@ export default async function Post({ params }: PageProps) {
         event.startDate,
         event.endDate
       )}`}
-      subheadingIcon={<CalendarDays className="w-4 h-4" />}
+      subheadingIcon={<CalendarDays className="w-4 h-4 mr-1" />}
       subheading2={event.location ? `Location: ${event.location}` : undefined}
       subheading2Icon={event.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}>
       <MarkDownView allowLinks markdown={event.description || ""} />
