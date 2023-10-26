@@ -40,7 +40,7 @@ async function ListView({ searchParams }: EventsListViewProps) {
   });
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-1 gap-6">
       <EventsFilter filter={filter} />
       {events === null || events.length === 0 ? (
         <h2 className="text-2xl text-center font-bold mt-10">No events found</h2>

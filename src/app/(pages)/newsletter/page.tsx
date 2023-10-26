@@ -34,7 +34,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
   return (
     <>
       <h1 className="text-4xl text-center font-bold">News</h1>
-      <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
+      <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
         {session && isModOrAdmin(session) && (
           <PostFormDialog triggerButton={<Button size="full">Create Post</Button>} />
         )}
