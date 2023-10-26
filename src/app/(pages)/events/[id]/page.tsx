@@ -19,6 +19,7 @@ import CopyButton from "@/components/ui/copy-button";
 
 interface PageProps {
   params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function Post({ params }: PageProps) {
+export default async function Post({ params, searchParams }: PageProps) {
   const session = await getSession();
   const userID = session?.user.id;
 
@@ -84,7 +85,7 @@ export default async function Post({ params }: PageProps) {
       subheading2Icon={event.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}>
       <MarkDownView allowLinks markdown={event.description || ""} />
       <div className="flex justify-between w-full mt-10 flex-wrap gap-2">
-        <BackButton href="/events" />
+        <BackButton href="/events" searchParams={searchParams} />
         <div className="flex flex-wrap gap-2">
           {session && canEditEvent(session) && (
             <>

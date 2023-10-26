@@ -1,36 +1,20 @@
-"use client";
-
 import { ChevronLeft } from "lucide-react";
-import { Button } from "./button";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { buttonVariants } from "./button";
 
 interface BackButtonProps {
   href: string;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-function BackButton({ href }: BackButtonProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const goBack = () => {
-    const queryParams = [];
-    const page = searchParams.get("page");
-    const view = searchParams.get("view");
-    const filter = searchParams.get("filter");
-
-    if (view) queryParams.push(`view=${view}`);
-    if (page) queryParams.push(`page=${page}`);
-    if (filter) queryParams.push(`filter=${filter}`);
-
-    const queryString = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
-
-    router.replace(`${href}${queryString}`);
-  };
+function BackButton({ href, searchParams }: BackButtonProps) {
+  const params = new URLSearchParams(searchParams as Record<string, string>);
+  const queryStr = params.toString() ? `?${params}` : "";
 
   return (
-    <Button onClick={() => goBack()}>
+    <Link href={`${href}${queryStr}`} className={buttonVariants()}>
       <ChevronLeft />
-    </Button>
+    </Link>
   );
 }
 

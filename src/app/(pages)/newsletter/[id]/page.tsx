@@ -9,6 +9,7 @@ import { formatTimeDifference, getSession, isModOrAdmin } from "@/lib/utils";
 
 interface PageProps {
   params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 async function fetchPostById(id: string) {
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function Post({ params }: PageProps) {
+export default async function Post({ params, searchParams }: PageProps) {
   const session = await getSession();
   const post = await fetchPostById(params.id);
   if (!post) {
@@ -44,7 +45,7 @@ export default async function Post({ params }: PageProps) {
     <FeedView heading={post?.title} subheading={`${authorName} ● ${formattedTime}`}>
       <MarkDownView allowLinks markdown={post!.content} />
       <div className="flex justify-between w-full mt-10">
-        <BackButton href="/newsletter" />
+        <BackButton href="/newsletter" searchParams={searchParams} />
         {session && isModOrAdmin(session) && (
           <div className="space-x-2">
             <EditPostButton id={post!.id} post={post!} />
