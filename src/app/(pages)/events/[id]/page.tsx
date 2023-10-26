@@ -93,13 +93,13 @@ export default async function Post({ params, searchParams }: PageProps) {
               <DeleteEventButton id={event.id} />
             </>
           )}
+          <CopyButton
+            string={`${process.env.NEXTAUTH_URL}/events/${event.id}`}
+            label="Share"
+            Icon={<Link className="w-5 h-5 mr-1" />}
+          />
           {event.registrationEnabled && (
             <>
-              <CopyButton
-                string={`${process.env.NEXTAUTH_URL}/events/${event.id}`}
-                label="Copy Link"
-                Icon={<Link className="w-5 h-5 mr-1" />}
-              />
               <ViewRegisteredUsersButton session={session} eventID={event.id} />
               <RegistrationButton
                 eventID={eventId}

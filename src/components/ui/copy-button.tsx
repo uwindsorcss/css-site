@@ -29,7 +29,7 @@ function CopyButton({
 
     setTimeout(() => {
       setIsCopied(false);
-    }, 5000);
+    }, 8000);
   };
 
   return (
