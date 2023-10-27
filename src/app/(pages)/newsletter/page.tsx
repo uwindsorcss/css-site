@@ -18,7 +18,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
   const session = await getSession();
   const page = searchParams.page;
   const currentPage = parseInt(page ?? "1");
-  const postsPerPage = 10;
+  const postsPerPage = 5;
   const totalPages = Math.ceil((await prisma.post.count()) / postsPerPage);
   const posts = await prisma.post.findMany({
     skip: (currentPage - 1) * postsPerPage,

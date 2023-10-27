@@ -13,7 +13,7 @@ interface EventsListViewProps {
 
 async function ListView({ searchParams }: EventsListViewProps) {
   const { page, filter } = searchParams;
-  const eventsPerPage = 10;
+  const eventsPerPage = 5;
   const totalPages = Math.ceil((await prisma.event.count()) / eventsPerPage);
   const currentPage = Math.min(Math.max(parseInt(page ?? "1"), 1), totalPages);
 
