@@ -34,13 +34,13 @@ export default async function Home() {
   return (
     <>
       <Hero>
-        <h2 className="text-2xl md:text-3xl text-center font-bold text-blue-900 dark:text-yellow-500">
+        <h2 className="text-[1.4rem] md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-400 dark:to-purple-400">
           {content.hero.heading}
         </h2>
-        <h1 className="text-3xl md:text-5xl lg:text-6xl text-center font-black">
+        <h1 className="text-[1.7rem] md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r dark:from-sky-300 dark:to-indigo-400 from-blue-600 to-indigo-600">
           {content.hero.subheading}
         </h1>
-        <h3 className="text-lg text-center mb-4">{content.hero.description}</h3>
+        <h3 className="text-[1rem] sm:text-lg dark:text-gray-300 text-gray-600 mb-4">{content.hero.description}</h3>
         <Button variant="discord" asChild>
           <Link href="/discord">
             <SiDiscord className="w-5 h-5 mr-2" />
@@ -49,7 +49,7 @@ export default async function Home() {
         </Button>
       </Hero>
       <Section heading={content.aboutUs.heading} subheading={content.aboutUs.subheading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {content.aboutUs.cards.map((card, index) => (
             <IconCard
               key={index}

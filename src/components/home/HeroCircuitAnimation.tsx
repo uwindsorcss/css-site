@@ -7,7 +7,7 @@ function HeroCircuitAnimation() {
       className="absolute inset-0 flex items-center justify-center overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 0.5 }}
-      transition={{ duration: 3 }}>
+      transition={{ duration: 2 }}>
       <svg
         className="absolute h-screen transform -translate-x-1/2 -translate-y-1/2"
         style={{ top: "47%", left: "49.5%" }}

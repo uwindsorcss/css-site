@@ -1,4 +1,3 @@
-@import "./constants.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +9,7 @@ body {
 
 @layer base {
   :root {
-    --background: 220 5% 95%;
+    --background: 0 5% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 216 10% 94.4%;
@@ -49,16 +48,7 @@ body {
     --radius: 0.5rem;
 
     --circuit-background: #b8b8b8;
-    --hero-background: radial-gradient(
-      ellipse at center 30%,
-      rgb(255, 232, 157),
-      rgb(255, 202, 153)
-    );
-    --hero-background-mask: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.3),
-      transparent 95%
-    );
+    --hero-background: linear-gradient(to bottom, rgb(215, 220, 255) 0%, rgb(234, 239, 255) 50%, transparent 100%);
   }
 
   .dark {
@@ -100,17 +90,7 @@ body {
     --ring: 212.7 26.8% 83.9%;
 
     --circuit-background: #000;
-    --hero-background: var(--noise),
-      radial-gradient(
-        ellipse at center 30%,
-        rgba(67, 50, 255, 0.8),
-        rgba(114, 83, 238, 0.8)
-      );
-    --hero-background-mask: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.38),
-      transparent 95%
-    );
+    --hero-background: linear-gradient(to bottom, rgba(81, 73, 196, 0.55) 0%, rgba(33, 39, 80, 0.8) 50%, transparent 100%);
   }
 }
 

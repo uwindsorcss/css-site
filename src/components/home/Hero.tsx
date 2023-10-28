@@ -10,7 +10,7 @@ function Hero({ children }: HeroProps) {
   return (
     <div className={clsx(styles.hero, "relative bg-background")}>
       <HeroCircuitAnimation />
-      <section className="flex flex-col items-center justify-center min-h-screen gap-8 relative z-10 p-5">
+      <section className="flex flex-col items-center justify-center min-h-screen gap-5 sm:gap-8 relative z-10 p-5 text-center">
         {children}
       </section>
     </div>

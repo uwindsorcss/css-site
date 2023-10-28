@@ -6,6 +6,4 @@
   width: 100%;
   background-color: var(--background);
   background: var(--hero-background);
-  -webkit-mask-image: var(--hero-background-mask);
-  mask-image: var(--hero-background-mask);
 }
