@@ -39,12 +39,12 @@ function MobileMenu({ links }: MobileMenuProps) {
                 {links.map((link, id) =>
                   link.sublinks ? (
                     <div key={id} className="border-b-2 border-border-900">
-                      <div className="text-2xl font-medium p-2 pb-4">{link.name}</div>
+                      <div className="text-xl font-medium p-2">{link.name}</div>
                       <div className="ml-3 mb-1">
                         {link.sublinks.map((sublink) => (
                           <Link
                             key={sublink.href}
-                            className="flex flex-col p-2 hover:bg-accent hover:text-accent-foreground transition-colors"
+                            className="flex flex-col py-2 hover:bg-accent hover:text-accent-foreground transition-colors"
                             href={sublink.href}
                             target={sublink.href?.startsWith("http") ? "_blank" : "_self"}
                             rel={sublink.href?.startsWith("http") ? "noopener noreferrer" : ""}
@@ -55,7 +55,7 @@ function MobileMenu({ links }: MobileMenuProps) {
                                 <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted dark:text-muted-foreground" />
                               )}
                             </div>
-                            <div className="text-muted dark:text-muted-foreground text-sm mt-2">
+                            <div className="text-muted dark:text-muted-foreground text-xs mt-1">
                               {sublink.description}
                             </div>
                           </Link>
@@ -64,7 +64,7 @@ function MobileMenu({ links }: MobileMenuProps) {
                     </div>
                   ) : (
                     <Link
-                      className="border-b-2 border-border-900 hover:bg-accent hover:text-accent-foreground transition-colors no-underline text-2xl font-medium p-2"
+                      className="border-b-2 border-border-900 hover:bg-accent hover:text-accent-foreground transition-colors no-underline text-xl font-medium p-2"
                       href={link.href}
                       key={id}
                       onClick={() => cycleOpen()}>
