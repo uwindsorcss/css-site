@@ -37,10 +37,12 @@ export default async function Home() {
         <h2 className="text-[1.4rem] md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-400 dark:to-purple-400">
           {content.hero.heading}
         </h2>
-        <h1 className="text-[1.7rem] md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r dark:from-sky-300 dark:to-indigo-400 from-blue-600 to-indigo-600">
+        <h1 className="text-[1.5rem] md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r dark:from-sky-300 dark:to-indigo-400 from-blue-600 to-indigo-600">
           {content.hero.subheading}
         </h1>
-        <h3 className="text-[1rem] sm:text-lg dark:text-gray-300 text-gray-600 mb-4">{content.hero.description}</h3>
+        <h3 className="text-[0.9rem] sm:text-lg dark:text-gray-300 text-gray-600 mb-4">
+          {content.hero.description}
+        </h3>
         <Button variant="discord" asChild>
           <Link href="/discord">
             <SiDiscord className="w-5 h-5 mr-2" />
