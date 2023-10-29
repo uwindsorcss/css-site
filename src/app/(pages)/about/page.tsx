@@ -10,9 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  // const data = prisma.plainText.findMany({
-  //   where: {id:1}
-  // })
   const markdownFile = await fs.readFile(
     path.join(process.cwd(), "src", "app", "(pages)", "about") + "/content.mdx",
     "utf8"

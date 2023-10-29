@@ -15,7 +15,7 @@ const discordEmbed = {
   color: "3447003",
 };
 
-export async function linkDiscordAccount(discordResponse: any) {
+async function linkDiscordAccount(discordResponse: any) {
   try {
     const session = await getSession();
 
@@ -91,7 +91,7 @@ export async function linkDiscordAccount(discordResponse: any) {
   }
 }
 
-export async function unlinkDiscordAccount() {
+async function unlinkDiscordAccount() {
   try {
     const session = await getSession();
 
@@ -148,7 +148,7 @@ async function getMemberFromServer(userId: string) {
   ).then((res) => res.json());
 }
 
-export async function sendDiscordDM(userID: string, message: string) {
+async function sendDiscordDM(userID: string, message: string) {
   try {
     const channel = await fetch(`${DISCORD_API_ENDPOINT}/users/@me/channels`, {
       method: "POST",
@@ -180,7 +180,7 @@ export async function sendDiscordDM(userID: string, message: string) {
   }
 }
 
-export async function getMemberCount(): Promise<{
+async function getMemberCount(): Promise<{
   memberCount: number;
   onlineCount: number;
 }> {
@@ -205,7 +205,7 @@ export async function getMemberCount(): Promise<{
   }
 }
 
-export async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
+async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
   let { username, avatar } = discordAccount;
   let avatarUrl = "/images/discord-avatar.png";
 
@@ -244,7 +244,7 @@ async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
 }
 
 // Event Actions
-export async function createEvent(event: EventFormData) {
+async function createEvent(event: EventFormData) {
   const session = await getSession();
   if (!session || !canEditEvent(session))
     throw new Error("You do not have permission to create events.");
@@ -263,7 +263,7 @@ export async function createEvent(event: EventFormData) {
   revalidatePath("/events");
 }
 
-export async function updateEvent(event: EventFormData, id: number) {
+async function updateEvent(event: EventFormData, id: number) {
   const session = await getSession();
   if (!session || !canEditEvent(session))
     throw new Error("You do not have permission to update events.");
@@ -283,7 +283,7 @@ export async function updateEvent(event: EventFormData, id: number) {
   revalidatePath(`/events/${id}`);
 }
 
-export async function deleteEvent(id: number) {
+async function deleteEvent(id: number) {
   const session = await getSession();
   if (!session || !canEditEvent(session))
     throw new Error("You do not have permission to delete events.");
@@ -294,7 +294,7 @@ export async function deleteEvent(id: number) {
   redirect(`/events?success=${encodeURIComponent("Event deleted successfully.")}`);
 }
 
-export async function registerForEvent(eventId: number, userId: number) {
+async function registerForEvent(eventId: number, userId: number) {
   const session = await getSession();
   if (!session) throw new Error("You must be logged in to register for events.");
 
@@ -324,7 +324,7 @@ export async function registerForEvent(eventId: number, userId: number) {
   redirect(`/events/${eventId}?success=${encodeURIComponent("You've registered successfully.")}`);
 }
 
-export async function unregisterForEvent(eventId: number, userId: number) {
+async function unregisterForEvent(eventId: number, userId: number) {
   const session = await getSession();
   if (!session) throw new Error("You must be logged in to unregister for events.");
 
@@ -338,7 +338,7 @@ export async function unregisterForEvent(eventId: number, userId: number) {
 }
 
 // News Actions
-export async function createPost(post: PostFormData) {
+async function createPost(post: PostFormData) {
   const session = await getSession();
   if (!session || !isModOrAdmin(session))
     throw new Error("You do not have permission to create posts.");
@@ -353,7 +353,7 @@ export async function createPost(post: PostFormData) {
   revalidatePath("/newsletter");
 }
 
-export async function updatePost(post: PostFormData, id: number) {
+async function updatePost(post: PostFormData, id: number) {
   const session = await getSession();
   if (!session || !isModOrAdmin(session))
     throw new Error("You do not have permission to update posts.");
@@ -369,7 +369,7 @@ export async function updatePost(post: PostFormData, id: number) {
   revalidatePath(`/newsletter/${id}`);
 }
 
-export async function deletePost(id: number) {
+async function deletePost(id: number) {
   const session = await getSession();
   if (!session || !isModOrAdmin(session))
     throw new Error("You do not have permission to delete posts.");
@@ -381,7 +381,7 @@ export async function deletePost(id: number) {
 }
 
 // Feedback Action
-export async function submitFeedback(feedback: feedbackFormData) {
+async function submitFeedback(feedback: feedbackFormData) {
   const session = await getSession();
   if (!session) return { error: "You must be logged in to submit feedback." };
 
@@ -421,3 +421,21 @@ export async function submitFeedback(feedback: feedbackFormData) {
 
   return { success: "Feedback submitted successfully." };
 }
+
+export {
+  linkDiscordAccount,
+  unlinkDiscordAccount,
+  getMemberFromServer,
+  sendDiscordDM,
+  getMemberCount,
+  getUpdatedDiscordAccount,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  registerForEvent,
+  unregisterForEvent,
+  createPost,
+  updatePost,
+  deletePost,
+  submitFeedback,
+};

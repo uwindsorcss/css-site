@@ -7,7 +7,7 @@
   },
   "aboutUs": {
     "heading": "About Us",
-    "subheading": "TL;DR - We're a group of Computer Science students who love to learn, code, and have fun!",
+    "subheading": "TLDR - We're a group of Computer Science students who love to learn, code, and have fun!",
     "cards": [
       {
         "heading": "Learn",
@@ -15,7 +15,7 @@
       },
       {
         "heading": "Code",
-        "description": "Enhance your programming skills through coding workshops, hackathons, and challenges."
+        "description": "Improve your programming skills through coding workshops, hackathons, and challenges."
       },
       {
         "heading": "Connect",
@@ -29,10 +29,12 @@
     "learnMoreButtonText": "Learn More"
   },
   "events": {
-    "upcomingEventsHeading": "Upcoming Events",
-    "upcomingEventsSubheading": "Check out our upcoming events and join us!",
-    "recentEventsHeading": "Recent Events",
-    "recentEventsSubheading": "We currently don't have any upcoming events. Check out our past events while we plan new ones for you!",
+    "futureEventsHeading": "Upcoming Events",
+    "futureEventsSubheading": "Check out our upcoming events and join us!",
+    "onGoingEventsHeading": "Events",
+    "onGoingEventsSubheading": "There's currently an event going on! Join us!",
+    "pastEventsHeading": "Recent Events",
+    "pastEventsSubheading": "We currently don't have any upcoming events. Check out our past events while we plan new ones for you!",
     "noEventsHeading": "No Events Found",
     "viewAllEventsButtonText": "View All Events"
   },
@@ -42,7 +44,7 @@
     "noNewslettersHeading": "No Newsletters Found",
     "viewAllNewslettersButtonText": "View All Newsletters"
   },
-  "connectWithStudents": {
+  "callToAction": {
     "heading": "Join The Community!",
     "text1": "Connect with ",
     "text2": " Students in Our Discord Server",

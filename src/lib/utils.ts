@@ -4,50 +4,57 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { twMerge } from "tailwind-merge";
 import { Role } from "@prisma/client";
 
-export async function getSession() {
+async function getSession() {
   return await getServerSession(authOptions);
 }
 
-export function isModOrAdmin(session: Session) {
+function isModOrAdmin(session: Session) {
   const user = session.user;
   return user.role === Role.mod || user.role === Role.admin;
 }
 
-export function isAdmin(session: Session) {
+function isAdmin(session: Session) {
   const user = session.user;
   return user.role === Role.admin;
 }
 
-export function isMod(session: Session) {
+function isMod(session: Session) {
   const user = session.user;
   return user.role === Role.mod;
 }
 
-export function isEventEditor(session: Session) {
+function isEventEditor(session: Session) {
   const user = session.user;
   return user.role === Role.eventEditor;
 }
 
-export function canEditEvent(session: Session) {
+function canEditEvent(session: Session) {
   const user = session.user;
   return user.role === Role.eventEditor || user.role === Role.mod || user.role === Role.admin;
 }
 
-export function isUndergradStudent(session: Session) {
+function isUndergradStudent(session: Session) {
   const user = session.user;
   return user.title === "Undergrad Student";
 }
 
-export function cn(...inputs: ClassValue[]) {
+function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function camelCaseToTitleCase(s: string) {
+function camelCaseToTitleCase(s: string) {
   const result = s.replace(/([A-Z])/g, " $1");
   return result.charAt(0).toUpperCase() + result.slice(1);
 }
 
-export function formatTimeDifference(date: Date) {
+const isDateInPast = (date: Date) => date.getTime() < Date.now();
+const isDateInFuture = (date: Date) => date.getTime() > Date.now();
+const isWithinDateRange = (start: Date, end: Date) => {
+  const now = new Date();
+  return start <= now && end >= now;
+};
+
+function formatTimeDifference(date: Date) {
   const isFuture = date.getTime() > Date.now();
   const diff = Math.abs(date.getTime() - Date.now()) / 1000;
 
@@ -80,7 +87,7 @@ export function formatTimeDifference(date: Date) {
   }
 }
 
-export const dateFormatter = new Intl.DateTimeFormat("en-US", {
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Toronto",
   weekday: "short",
   year: "numeric",
@@ -97,14 +104,14 @@ const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
   minute: "numeric",
 });
 
-export const timeFormatter = new Intl.DateTimeFormat("en-US", {
+const timeFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Toronto",
   hour: "numeric",
   minute: "numeric",
   hour12: true,
 });
 
-export function formatDateRange(start: Date, end: Date) {
+function formatDateRange(start: Date, end: Date) {
   const isSameDay =
     start.toLocaleDateString("en-US", { timeZone: "America/Toronto" }) ===
     end.toLocaleDateString("en-US", { timeZone: "America/Toronto" });
@@ -119,17 +126,38 @@ export function formatDateRange(start: Date, end: Date) {
   )} to ${dateFormatter.format(end)} at ${timeFormatter.format(end)}`;
 }
 
-export function formatDate(date: Date) {
+function formatDate(date: Date) {
   return dateFormatter.format(date);
 }
 
-export function formatShortDate(date: Date) {
+function formatShortDate(date: Date) {
   return shortDateFormatter.format(date);
 }
 
-export const getEventRelativeTime = (startDate: Date, endDate: Date) => {
+const getEventRelativeTime = (startDate: Date, endDate: Date) => {
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";
   else if (startDate > now) return formatTimeDifference(startDate);
   return formatTimeDifference(endDate);
+};
+
+export {
+  getSession,
+  isModOrAdmin,
+  isAdmin,
+  isMod,
+  isEventEditor,
+  canEditEvent,
+  isUndergradStudent,
+  cn,
+  camelCaseToTitleCase,
+  isDateInPast,
+  isDateInFuture,
+  isWithinDateRange,
+  formatTimeDifference,
+  formatDateRange,
+  formatDate,
+  formatShortDate,
+  getEventRelativeTime,
+  timeFormatter,
 };

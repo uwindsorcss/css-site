@@ -1,163 +1,36 @@
-import MemberCount from "@/components/discord/MemberCount";
-import Hero from "@/components/home/Hero";
-import Section from "@/components/home/Section";
-import { Button } from "@/components/ui/button";
-import IconCard from "@/components/home/IconCard";
-import Link from "next/link";
-import { SiDiscord } from "@icons-pack/react-simple-icons";
-import { GraduationCap, Code2, Users, FerrisWheel, CalendarDays } from "lucide-react";
 import { getMemberCount } from "@/lib/actions";
 import { prisma } from "@/lib/db";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { getEventRelativeTime } from "@/lib/utils";
-import Post from "@/components/newsletter/newsletter-post/Post";
 import content from "./content.json";
-import Image from "next/image";
+import EventsSection from "@/components/home/EventsSection";
+import NewsletterSection from "@/components/home/NewsletterSection";
+import HeroSection from "@/components/home/HeroSection";
+import AboutUsSection from "@/components/home/AboutUsSection";
+import CallToActionSection from "@/components/home/CallToActionSection";
 
 export default async function Home() {
   const { memberCount } = await getMemberCount();
-  const upcomingEvents = await prisma.event.findMany({
+
+  const featuredEvents = await prisma.event.findMany({
     take: 3,
     orderBy: {
       startDate: "desc",
     },
   });
+
   const featuredNewsletters = await prisma.post.findMany({
     take: 3,
     orderBy: {
       createdAt: "desc",
     },
   });
-  const areAllEventsInPast = upcomingEvents.every((event) => event.startDate < new Date());
-  const icons = [GraduationCap, Code2, Users, FerrisWheel];
 
   return (
     <>
-      <Hero>
-        <h2 className="text-[1.4rem] md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-400 dark:to-purple-400">
-          {content.hero.heading}
-        </h2>
-        <h1 className="text-[1.5rem] md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r dark:from-sky-300 dark:to-indigo-400 from-blue-600 to-indigo-600">
-          {content.hero.subheading}
-        </h1>
-        <h3 className="text-[0.9rem] sm:text-lg dark:text-gray-300 text-gray-600 mb-4">
-          {content.hero.description}
-        </h3>
-        <Button variant="discord" asChild>
-          <Link href="/discord">
-            <SiDiscord className="w-5 h-5 mr-2" />
-            {content.hero.buttonText}
-          </Link>
-        </Button>
-      </Hero>
-      <Section heading={content.aboutUs.heading} subheading={content.aboutUs.subheading}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {content.aboutUs.cards.map((card, index) => (
-            <IconCard
-              key={index}
-              icon={icons[index]}
-              heading={card.heading}
-              description={card.description}
-            />
-          ))}
-        </div>
-        <Button asChild>
-          <Link href="/about">{content.aboutUs.learnMoreButtonText}</Link>
-        </Button>
-      </Section>
-
-      <Section
-        heading={
-          areAllEventsInPast
-            ? content.events.recentEventsHeading
-            : content.events.upcomingEventsHeading
-        }
-        subheading={
-          areAllEventsInPast
-            ? content.events.recentEventsSubheading
-            : content.events.upcomingEventsSubheading
-        }>
-        <div className="flex flex-wrap gap-5 justify-center w-full">
-          {upcomingEvents === null || upcomingEvents.length === 0 ? (
-            <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-              <CardTitle>{content.events.noEventsHeading}</CardTitle>
-            </Card>
-          ) : (
-            <>
-              {upcomingEvents.map((event) => (
-                <Link
-                  href={`/events/${event.id}`}
-                  key={event.id}
-                  className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
-                  <Card className="flex flex-col items-center justify-center gap-2 text-center w-full h-full px-2 py-10 md:p-20">
-                    <CardTitle>{event.title}</CardTitle>
-                    <CardDescription className="text-sm flex flex-col items-center justify-center gap-1">
-                      <span className="flex items-center justify-center">
-                        <CalendarDays className="w-4 h-4 mr-1" />
-                        {event.startDate.toLocaleDateString("en-US", {
-                          weekday: "short",
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </span>
-                      <span className="font-bold">
-                        {getEventRelativeTime(event.startDate, event.endDate)}
-                      </span>
-                    </CardDescription>
-                  </Card>
-                </Link>
-              ))}
-            </>
-          )}
-        </div>
-        <Button asChild>
-          <Link href="/events">{content.events.viewAllEventsButtonText}</Link>
-        </Button>
-      </Section>
-
-      <Section
-        heading={content.newsletters.featuredNewslettersHeading}
-        subheading={content.newsletters.subheadingSubheading}>
-        <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
-          {featuredNewsletters === null || featuredNewsletters.length === 0 ? (
-            <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-              <CardTitle>{content.newsletters.noNewslettersHeading}</CardTitle>
-            </Card>
-          ) : (
-            <>
-              {featuredNewsletters.map((post) => (
-                <Post key={post.id} post={post} truncate animateOnHover />
-              ))}
-            </>
-          )}
-        </div>
-        <Button asChild>
-          <Link href="/newsletter">{content.newsletters.viewAllNewslettersButtonText}</Link>
-        </Button>
-      </Section>
-
-      <Section className="flex flex-col items-center justify-center w-full">
-        <div className="relative flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-secondary text-secondary-foreground rounded-md w-full max-w-[1000px] py-24 px-12">
-          <div className="absolute w-[100px] h-[115px] sm:w-[125px] sm:h-[150px] top-[-105px] right-[-20px] sm:top-[-140px] sm:right-[-40px]">
-            <Image src="/images/chip.png" alt="Chip" fill />
-          </div>
-          <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">
-            {content.connectWithStudents.heading}
-          </h2>
-          <span className="inline-block text-md md:text-lg lg:text-xl font-medium mb-2">
-            {content.connectWithStudents.text1}
-            <MemberCount count={memberCount} className="font-black md:mx-1" />
-            {content.connectWithStudents.text2}
-          </span>
-          <Button variant="secondary" asChild>
-            <Link href="/discord">
-              <SiDiscord className="w-5 h-5 mr-2" />
-              {content.connectWithStudents.buttonText}
-            </Link>
-          </Button>
-        </div>
-      </Section>
+      <HeroSection content={content.hero} />
+      <AboutUsSection content={content.aboutUs} />
+      <EventsSection events={featuredEvents} content={content.events} />
+      <NewsletterSection posts={featuredNewsletters} content={content.newsletters} />
+      <CallToActionSection content={content.callToAction} memberCount={memberCount} />
     </>
   );
 }
