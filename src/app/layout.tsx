@@ -9,11 +9,6 @@ import { metadataObject } from "./metadata";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = metadataObject;
-export const viewport = {
-  width: "device-width",
-  minimumScale: 1,
-  themeColor: "#0f1627",
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
