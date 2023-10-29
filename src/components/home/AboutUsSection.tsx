@@ -4,6 +4,8 @@ import IconCard from "./IconCard";
 import Section from "./Section";
 import { GraduationCap, Code2, Users, FerrisWheel } from "lucide-react";
 
+export const revalidate = 3600;
+
 interface IconCardContent {
   heading: string;
   description: string;

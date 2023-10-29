@@ -5,9 +5,9 @@ import { getEventRelativeTime, isDateInFuture, isWithinDateRange } from "@/lib/u
 import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { prisma } from "@/lib/db";
 
 interface EventsSectionProps {
-  events: Event[];
   content: {
     [key: string]: string;
   };
@@ -29,7 +29,14 @@ const getEventsContent = (events: Event[], content: any) => {
   };
 };
 
-const EventsSection = ({ events, content }: EventsSectionProps) => {
+async function EventsSection({ content }: EventsSectionProps) {
+  const events = await prisma.event.findMany({
+    take: 3,
+    orderBy: {
+      startDate: "desc",
+    },
+  });
+
   const { heading, subheading } = getEventsContent(events, content);
 
   return (
@@ -71,6 +78,6 @@ const EventsSection = ({ events, content }: EventsSectionProps) => {
       </Button>
     </Section>
   );
-};
+}
 
 export default EventsSection;

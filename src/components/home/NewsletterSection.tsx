@@ -1,18 +1,24 @@
-import { Post } from "@prisma/client";
 import Section from "./Section";
 import { Card, CardTitle } from "../ui/card";
 import PostComponent from "@/components/newsletter/newsletter-post/Post";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { prisma } from "@/lib/db";
 
 interface NewsletterSectionProps {
-  posts: Post[];
   content: {
     [key: string]: string;
   };
 }
 
-function NewsletterSection({ posts, content }: NewsletterSectionProps) {
+async function NewsletterSection({ content }: NewsletterSectionProps) {
+  const posts = await prisma.post.findMany({
+    take: 3,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <Section heading={content.featuredNewslettersHeading} subheading={content.subheadingSubheading}>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">

@@ -4,15 +4,17 @@ import MemberCount from "../discord/MemberCount";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
+import { getMemberCount } from "@/lib/actions";
 
 interface CallToActionSectionProps {
   content: {
     [key: string]: string;
   };
-  memberCount: number;
 }
 
-function CallToActionSection({ content, memberCount }: CallToActionSectionProps) {
+async function CallToActionSection({ content }: CallToActionSectionProps) {
+  const { memberCount } = await getMemberCount();
+
   return (
     <Section className="flex flex-col items-center justify-center w-full">
       <div className="relative flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-secondary text-secondary-foreground rounded-md w-full max-w-[1000px] py-24 px-12">
