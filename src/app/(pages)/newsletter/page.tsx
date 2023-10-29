@@ -1,10 +1,9 @@
 import dynamic from "next/dynamic";
-import { prisma } from "@/lib/db";
 import { Metadata } from "next";
-import PaginationButtons from "@/components/ui/pagination-buttons";
-import Post from "@/components/newsletter/newsletter-post/Post";
+import PostsFeed from "@/components/newsletter/PostsFeed";
 import { Button } from "@/components/ui/button";
 import { getSession, isModOrAdmin } from "@/lib/utils";
+import { Suspense } from "react";
 const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
 
 export const metadata: Metadata = {
@@ -18,19 +17,6 @@ interface NewsletterPageProps {
 export default async function NewsletterPage({ searchParams }: NewsletterPageProps) {
   const session = await getSession();
   const page = searchParams.page;
-  const currentPage = parseInt(page ?? "1");
-  const postsPerPage = 5;
-  const totalPages = Math.ceil((await prisma.post.count()) / postsPerPage);
-  const posts = await prisma.post.findMany({
-    skip: (currentPage - 1) * postsPerPage,
-    take: postsPerPage,
-    include: {
-      author: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
 
   return (
     <>
@@ -39,11 +25,10 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
         {session && isModOrAdmin(session) && (
           <PostFormDialog triggerButton={<Button size="full">Create Post</Button>} />
         )}
-        {posts.map((post) => (
-          <Post key={post.id} post={post} currentPage={currentPage} />
-        ))}
+        <Suspense fallback={<div>Loading...</div>}>
+          <PostsFeed currentPage={parseInt(page ?? "1")} />
+        </Suspense>
       </div>
-      <PaginationButtons href={"/newsletter"} currentPage={currentPage} totalPages={totalPages} />
     </>
   );
 }
