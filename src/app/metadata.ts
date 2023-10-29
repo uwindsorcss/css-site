@@ -5,10 +5,6 @@ export const metadataObject: Metadata = {
     template: "%s | Computer Science Society",
     default: "Computer Science Society",
   },
-  viewport: {
-    width: "device-width",
-    minimumScale: 1,
-  },
   description:
     "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
   icons: {
@@ -16,7 +12,6 @@ export const metadataObject: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: "#0f1627",
   metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
   openGraph: {
     type: "website",
