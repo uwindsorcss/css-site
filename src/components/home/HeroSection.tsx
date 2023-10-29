@@ -1,9 +1,10 @@
+import dynamic from "next/dynamic";
 import clsx from "clsx";
 import styles from "./Hero.module.css";
-import HeroCircuitAnimation from "./HeroCircuitAnimation";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
+const HeroCircuitAnimation = dynamic(() => import("./HeroCircuitAnimation"));
 
 interface HeroProps {
   content: {

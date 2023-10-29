@@ -8,7 +8,7 @@ import { timeFormatter } from "@/lib/utils";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import Link from "next/link";
 
-function Calendar({ events }: { events: any[] }) {
+function EventsCalendar({ events }: { events: any[] }) {
   function renderEventContent(eventInfo: any) {
     return (
       <>
@@ -59,4 +59,4 @@ function Calendar({ events }: { events: any[] }) {
   );
 }
 
-export default Calendar;
+export default EventsCalendar;

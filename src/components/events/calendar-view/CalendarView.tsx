@@ -1,5 +1,6 @@
+import dynamic from "next/dynamic";
 import { prisma } from "@/lib/db";
-import Calendar from "./EventsCalendar";
+const EventsCalendar = dynamic(() => import("./EventsCalendar"));
 
 async function CalendarView() {
   const events = await prisma.event.findMany({
@@ -20,7 +21,7 @@ async function CalendarView() {
     };
   });
 
-  return <Calendar events={CalendarEvents} />;
+  return <EventsCalendar events={CalendarEvents} />;
 }
 
 export default CalendarView;

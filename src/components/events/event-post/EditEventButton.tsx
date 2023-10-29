@@ -1,7 +1,8 @@
+import dynamic from "next/dynamic";
 import { Pencil } from "lucide-react";
 import { Event } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { EventFormDialog } from "@/components/events/EventFormDialog";
+const EventFormDialog = dynamic(() => import("@/components/events/EventFormDialog"));
 
 function transformEventToFormValues(event: Event) {
   return {

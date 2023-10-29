@@ -60,7 +60,7 @@ interface EventFormProps {
   triggerButton: React.ReactNode;
 }
 
-export function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
+function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
   const form = useForm<EventSchema>({
     resolver: zodResolver(eventSchema),
     defaultValues: initialValues || undefined,
@@ -215,3 +215,5 @@ export function EventFormDialog({ triggerButton, id, initialValues }: EventFormP
     </FormDialog>
   );
 }
+
+export default EventFormDialog;

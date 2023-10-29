@@ -26,71 +26,67 @@ export default async function DiscordPage() {
   const { memberCount, onlineCount } = await getMemberCount();
 
   return (
-    <div className="mx-auto flex flex-col items-center justify-center min-h-screen gap-10 px-4 md:px-8 py-32 max-w-7xl">
-      <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
-        <div className="flex justify-end">
-          <Popover>
-            <PopoverTrigger asChild>
-              <HelpCircle className="text-muted-foreground hover:cursor-pointer" />
-            </PopoverTrigger>
-            <PopoverContent className="w-80">
-              <div className="flex justify-between space-x-4">
-                <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
-                  {parseTextWithLinks(discordContent.hoverCardText)}
-                </div>
+    <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
+      <div className="flex justify-end">
+        <Popover>
+          <PopoverTrigger asChild>
+            <HelpCircle className="text-muted-foreground hover:cursor-pointer" />
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="flex justify-between space-x-4">
+              <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
+                {parseTextWithLinks(discordContent.hoverCardText)}
               </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <CardHeader className="p-4">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <CSSIcon />
-            <div className="h-10 w-px bg-border mx-2 rounded-full" />
-            <SiDiscord className="w-10 h-10" />
-          </div>
-          <CardTitle className="flex flex-col justify-center items-center gap-2">
-            <span className="text-xl font-semibold text-center">
-              {discordContent.cardInfo.title}
-            </span>
-            <div className="flex gap-4">
-              <MemberCount
-                ping
-                count={memberCount}
-                text={discordContent.cardInfo.memberCountText}
-                className="text-sm text-foreground"
-              />
-              <MemberCount
-                ping
-                count={onlineCount}
-                text={discordContent.cardInfo.onlineCountText}
-                className="text-sm text-foreground"
-              />
             </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground text-center text-sm">
-          {session ? (
-            discordAccount && discordAccount !== null ? (
-              <>
-                {discordContent.cardInfo.linkedAccountText}
-                <DiscordAccount account={discordAccount} />
-              </>
-            ) : (
-              discordContent.cardInfo.linkingAccountText
-            )
+          </PopoverContent>
+        </Popover>
+      </div>
+      <CardHeader className="p-4">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <CSSIcon />
+          <div className="h-10 w-px bg-border mx-2 rounded-full" />
+          <SiDiscord className="w-10 h-10" />
+        </div>
+        <CardTitle className="flex flex-col justify-center items-center gap-2">
+          <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
+          <div className="flex gap-4">
+            <MemberCount
+              ping
+              count={memberCount}
+              text={discordContent.cardInfo.memberCountText}
+              className="text-sm text-foreground"
+            />
+            <MemberCount
+              ping
+              count={onlineCount}
+              text={discordContent.cardInfo.onlineCountText}
+              className="text-sm text-foreground"
+            />
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground text-center text-sm">
+        {session ? (
+          discordAccount && discordAccount !== null ? (
+            <>
+              {discordContent.cardInfo.linkedAccountText}
+              <DiscordAccount account={discordAccount} />
+            </>
           ) : (
-            discordContent.cardInfo.notLoggedInText
-          )}
-        </CardContent>
-        <CardFooter className="flex w-full px-2 pb-2">
-          {session && session !== null ? (
-            <DiscordAuthButton linked={discordAccount !== null} />
-          ) : (
-            <SignInButton />
-          )}
-        </CardFooter>
-      </Card>
-    </div>
+            discordContent.cardInfo.linkingAccountText
+          )
+        ) : (
+          discordContent.cardInfo.notLoggedInText
+        )}
+      </CardContent>
+      <CardFooter className="flex w-full px-2 pb-2">
+        {session && session !== null ? (
+          <DiscordAuthButton linked={discordAccount !== null} />
+        ) : (
+          <SignInButton />
+        )}
+      </CardFooter>
+    </Card>
   );
 
   function parseTextWithLinks(text: string) {

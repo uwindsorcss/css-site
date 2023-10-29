@@ -32,7 +32,7 @@ interface PostFormProps {
   triggerButton: React.ReactNode;
 }
 
-export function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
+function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<PostSchema>({
@@ -110,3 +110,5 @@ export function PostFormDialog({ triggerButton, id, initialValues }: PostFormPro
     </FormDialog>
   );
 }
+
+export default PostFormDialog;

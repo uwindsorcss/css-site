@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import ListView from "@/components/events/list-view/ListView";
@@ -5,7 +6,8 @@ import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
 import { canEditEvent, getSession } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { EventFormDialog } from "@/components/events/EventFormDialog";
+import { Suspense } from "react";
+const EventFormDialog = dynamic(() => import("@/components/events/EventFormDialog"));
 
 export const metadata: Metadata = {
   title: "Events",
@@ -39,10 +41,14 @@ export default async function EventsPage({ searchParams }: EventsProps) {
         <TabsContent
           value="list"
           className="grid grid-cols-1 gap-4 break-words max-w-3xl w-full mx-auto">
-          <ListView searchParams={searchParams} />
+          <Suspense fallback={<div className="text-center">Loading...</div>}>
+            <ListView searchParams={searchParams} />
+          </Suspense>
         </TabsContent>
         <TabsContent value="calendar">
-          <CalendarView />
+          <Suspense fallback={<div className="text-center">Loading...</div>}>
+            <CalendarView />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </>

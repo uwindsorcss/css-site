@@ -1,7 +1,8 @@
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { Post } from "@prisma/client";
-import { PostFormDialog } from "../PostFormDialog";
+const PostFormDialog = dynamic(() => import("../PostFormDialog"));
 
 function EditPostButton({ id, post }: { id: number; post: Post }) {
   const values = {

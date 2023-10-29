@@ -1,10 +1,11 @@
+import dynamic from "next/dynamic";
 import { prisma } from "@/lib/db";
 import { Metadata } from "next";
 import PaginationButtons from "@/components/ui/pagination-buttons";
 import Post from "@/components/newsletter/newsletter-post/Post";
-import { PostFormDialog } from "@/components/newsletter/PostFormDialog";
 import { Button } from "@/components/ui/button";
 import { getSession, isModOrAdmin } from "@/lib/utils";
+const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
 
 export const metadata: Metadata = {
   title: "Newsletter",
