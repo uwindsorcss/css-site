@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Section from "./Section";
-import MemberCount from "../discord/MemberCount";
+import MemberCount from "../discord/DiscordMemberCount";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";

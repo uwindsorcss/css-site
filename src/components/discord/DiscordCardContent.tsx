@@ -19,28 +19,24 @@ async function ServerCardContent({ cardInfo }: ServerCardContentProps) {
     where: { userId: session?.user?.id },
   });
 
+  const DiscordAccountInfo = () => {
+    if (!session) return <>{cardInfo.notLoggedInText}</>;
+    if (!discordAccount) return <>{cardInfo.linkingAccountText}</>;
+    return (
+      <>
+        {cardInfo.linkedAccountText}
+        <DiscordAccount account={discordAccount} />
+      </>
+    );
+  };
+
   return (
     <>
       <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground text-center text-sm">
-        {session ? (
-          discordAccount && discordAccount !== null ? (
-            <>
-              {cardInfo.linkedAccountText}
-              <DiscordAccount account={discordAccount} />
-            </>
-          ) : (
-            cardInfo.linkingAccountText
-          )
-        ) : (
-          cardInfo.notLoggedInText
-        )}
+        <DiscordAccountInfo />
       </CardContent>
       <CardFooter className="flex w-full px-2 pb-2">
-        {session && session !== null ? (
-          <DiscordAuthButton linked={discordAccount !== null} />
-        ) : (
-          <SignInButton />
-        )}
+        {session ? <DiscordAuthButton linked={!!discordAccount} /> : <SignInButton />}
       </CardFooter>
     </>
   );

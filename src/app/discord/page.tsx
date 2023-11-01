@@ -5,9 +5,9 @@ import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import discordContent from "./content.json";
 import { Metadata } from "next";
-import ServerMemberCounts from "@/components/discord/ServerMemberCounts";
+import ServerMemberCounts from "@/components/discord/DiscordMemberCounts";
 import { Suspense } from "react";
-import ServerCardContent from "@/components/discord/ServerCardContent";
+import ServerCardContent from "@/components/discord/DiscordCardContent";
 
 export const metadata: Metadata = {
   title: "Discord",

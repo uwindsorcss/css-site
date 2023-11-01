@@ -1,5 +1,5 @@
 import { getMemberCount } from "@/lib/actions";
-import MemberCount from "./MemberCount";
+import MemberCount from "./DiscordMemberCount";
 
 interface ServerMemberCountsProps {
   cardInfo: {
