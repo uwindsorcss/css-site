@@ -48,7 +48,12 @@ body {
     --radius: 0.5rem;
 
     --circuit-background: #b8b8b8;
-    --hero-background: linear-gradient(to bottom, rgb(215, 220, 255) 0%, rgb(234, 239, 255) 50%, transparent 100%);
+    --hero-background: linear-gradient(
+      to bottom,
+      rgb(215, 220, 255) 0%,
+      rgb(234, 239, 255) 50%,
+      transparent 100%
+    );
   }
 
   .dark {
@@ -90,7 +95,12 @@ body {
     --ring: 212.7 26.8% 83.9%;
 
     --circuit-background: #000;
-    --hero-background: linear-gradient(to bottom, rgba(81, 73, 196, 0.55) 0%, rgba(33, 39, 80, 0.8) 50%, transparent 100%);
+    --hero-background: linear-gradient(
+      to bottom,
+      rgba(81, 73, 196, 0.55) 0%,
+      rgba(33, 39, 80, 0.8) 50%,
+      transparent 100%
+    );
   }
 }
 
@@ -100,5 +110,14 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .loading-skeleton {
+    @apply bg-primary rounded-md relative border-border border isolate overflow-hidden;
+    @apply before:absolute before:inset-0;
+    @apply before:-translate-x-full before:animate-shimmer before:animate-[shimmer_2s_infinite];
+    @apply before:bg-gradient-to-r before:from-transparent before:via-rose-100/10 before:to-transparent;
   }
 }

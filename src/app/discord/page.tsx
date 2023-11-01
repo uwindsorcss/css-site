@@ -1,30 +1,19 @@
-import DiscordAuthButton from "@/components/discord/DiscordAuthButton";
-import { prisma } from "@/lib/db";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
-import SignInButton from "@/components/discord/SignInButton";
-import { getMemberCount } from "@/lib/actions";
-import MemberCount from "@/components/discord/MemberCount";
 import discordContent from "./content.json";
 import { Metadata } from "next";
-import DiscordAccount from "@/components/discord/DiscordAccount";
-import { getSession } from "@/lib/utils";
+import ServerMemberCounts from "@/components/discord/ServerMemberCounts";
+import { Suspense } from "react";
+import ServerCardContent from "@/components/discord/ServerCardContent";
 
 export const metadata: Metadata = {
   title: "Discord",
 };
 
-export default async function DiscordPage() {
-  const session = await getSession();
-  const discordAccount = await prisma.discordAccount.findFirst({
-    where: { userId: session?.user?.id },
-  });
-
-  const { memberCount, onlineCount } = await getMemberCount();
-
+export default function DiscordPage() {
   return (
     <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
       <div className="flex justify-end">
@@ -50,79 +39,57 @@ export default async function DiscordPage() {
         <CardTitle className="flex flex-col justify-center items-center gap-2">
           <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
           <div className="flex gap-4">
-            <MemberCount
-              ping
-              count={memberCount}
-              text={discordContent.cardInfo.memberCountText}
-              className="text-sm text-foreground"
-            />
-            <MemberCount
-              ping
-              count={onlineCount}
-              text={discordContent.cardInfo.onlineCountText}
-              className="text-sm text-foreground"
-            />
+            <Suspense fallback={<MemberCountSkeleton />}>
+              <ServerMemberCounts cardInfo={discordContent.cardInfo} />
+            </Suspense>
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground text-center text-sm">
-        {session ? (
-          discordAccount && discordAccount !== null ? (
-            <>
-              {discordContent.cardInfo.linkedAccountText}
-              <DiscordAccount account={discordAccount} />
-            </>
-          ) : (
-            discordContent.cardInfo.linkingAccountText
-          )
-        ) : (
-          discordContent.cardInfo.notLoggedInText
-        )}
-      </CardContent>
-      <CardFooter className="flex w-full px-2 pb-2">
-        {session && session !== null ? (
-          <DiscordAuthButton linked={discordAccount !== null} />
-        ) : (
-          <SignInButton />
-        )}
-      </CardFooter>
+      <ServerCardContent cardInfo={discordContent.cardInfo} />
     </Card>
   );
+}
 
-  function parseTextWithLinks(text: string) {
-    const linkRegex = /\[([^[]+)]\(([^)]+)\)/g;
-    const lines = text.split("\n");
-    const parts: JSX.Element[] = [];
+const MemberCountSkeleton = () => (
+  <div className="flex gap-4 items-center justify-center">
+    <div className="w-20 h-5 loading-skeleton" />
+    <div className="w-20 h-5 loading-skeleton" />
+  </div>
+);
 
-    lines.forEach((line, lineIndex) => {
-      let lastIndex = 0;
+function parseTextWithLinks(text: string) {
+  const linkRegex = /\[([^[]+)]\(([^)]+)\)/g;
+  const lines = text.split("\n");
+  const parts: JSX.Element[] = [];
 
-      line.replace(linkRegex, (match, linkText, linkUrl, index) => {
-        const beforeText = line.substring(lastIndex, index);
+  lines.forEach((line, lineIndex) => {
+    let lastIndex = 0;
 
-        if (beforeText) parts.push(<span key={`${lineIndex}-before-${index}`}>{beforeText}</span>);
+    line.replace(linkRegex, (match, linkText, linkUrl, index) => {
+      const beforeText = line.substring(lastIndex, index);
 
-        parts.push(
-          <a
-            key={`${lineIndex}-${index}`}
-            href={linkUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline text-foreground">
-            {linkText}
-          </a>
-        );
+      if (beforeText) parts.push(<span key={`${lineIndex}-before-${index}`}>{beforeText}</span>);
 
-        lastIndex = index + match.length;
-        return match;
-      });
+      parts.push(
+        <a
+          key={`${lineIndex}-${index}`}
+          href={linkUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline text-foreground">
+          {linkText}
+        </a>
+      );
 
-      if (lastIndex < line.length)
-        parts.push(<span key={`${lineIndex}-remaining`}>{line.substring(lastIndex)}</span>);
-
-      if (lineIndex < lines.length - 1) parts.push(<br key={`line-break-${lineIndex}`} />);
+      lastIndex = index + match.length;
+      return match;
     });
 
-    return <span>{parts}</span>;
-  }
+    if (lastIndex < line.length)
+      parts.push(<span key={`${lineIndex}-remaining`}>{line.substring(lastIndex)}</span>);
+
+    if (lineIndex < lines.length - 1) parts.push(<br key={`line-break-${lineIndex}`} />);
+  });
+
+  return <span>{parts}</span>;
 }
