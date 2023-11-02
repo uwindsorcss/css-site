@@ -25,10 +25,14 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
         {session && isModOrAdmin(session) && (
           <PostFormDialog triggerButton={<Button size="full">Create Post</Button>} />
         )}
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={postsSkeleton}>
           <PostsFeed currentPage={parseInt(page ?? "1")} />
         </Suspense>
       </div>
     </>
   );
 }
+
+const postsSkeleton = Array.from({ length: 3 }, (_, i) => (
+  <div key={i} className="w-full h-60 bg-card rounded-md border border-border loading-skeleton" />
+));
