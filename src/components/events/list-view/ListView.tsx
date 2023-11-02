@@ -15,7 +15,7 @@ async function ListView({ searchParams }: EventsListViewProps) {
   return (
     <div className="grid grid-cols-1 gap-6">
       <EventsFilter filter={filter} />
-      <Suspense fallback={<div className="text-center">Loading...</div>}>
+      <Suspense fallback={eventsSkeleton}>
         <EventsFeed page={page} filter={filter} />
       </Suspense>
     </div>
@@ -23,3 +23,7 @@ async function ListView({ searchParams }: EventsListViewProps) {
 }
 
 export default ListView;
+
+const eventsSkeleton = Array.from({ length: 3 }, (_, i) => (
+  <div key={i} className="w-full h-60 bg-card rounded-md border border-border loading-skeleton" />
+));

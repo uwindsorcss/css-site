@@ -41,9 +41,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
         <TabsContent
           value="list"
           className="grid grid-cols-1 gap-4 break-words max-w-3xl w-full mx-auto">
-          <Suspense fallback={<div className="text-center">Loading...</div>}>
-            <ListView searchParams={searchParams} />
-          </Suspense>
+          <ListView searchParams={searchParams} />
         </TabsContent>
         <TabsContent value="calendar">
           <Suspense fallback={<div className="text-center">Loading...</div>}>
