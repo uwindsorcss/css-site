@@ -6,7 +6,7 @@ import { GraduationCap, Code2, Users, FerrisWheel } from "lucide-react";
 
 export const revalidate = 3600;
 
-interface IconCardContent {
+interface Card {
   heading: string;
   description: string;
 }
@@ -15,8 +15,8 @@ interface AboutUsSectionProps {
   content: {
     heading: string;
     subheading: string;
-    cards: IconCardContent[];
-    learnMoreButtonText: string;
+    cards: Card[];
+    buttonText: string;
   };
 }
 
@@ -35,7 +35,7 @@ function AboutUsSection({ content }: AboutUsSectionProps) {
         ))}
       </div>
       <Button asChild>
-        <Link href="/about">{content.learnMoreButtonText}</Link>
+        <Link href="/about">{content.buttonText}</Link>
       </Button>
     </Section>
   );

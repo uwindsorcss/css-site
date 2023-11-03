@@ -15,7 +15,7 @@ export default async function Home() {
         <EventsSection content={content.events} />
       </Suspense>
       <Suspense fallback={<div className="text-center">Loading...</div>}>
-        <NewsletterSection content={content.newsletters} />
+        <NewsletterSection content={content.newsletter} />
       </Suspense>
       <CallToActionSection content={content.callToAction} />
     </>

@@ -9,23 +9,32 @@ import { prisma } from "@/lib/db";
 
 interface EventsSectionProps {
   content: {
-    [key: string]: string;
+    heading: EventsHeadings;
+    subheading: EventsHeadings;
+    buttonText: string;
   };
 }
 
-const getEventsContent = (events: Event[], content: any) => {
-  let state;
+interface EventsHeadings {
+  futureEvents: string;
+  onGoingEvents: string;
+  pastEvents: string;
+  noEvents?: string;
+}
+
+const getEventsContent = (events: Event[], content: EventsSectionProps["content"]) => {
+  let state: keyof EventsHeadings;
   if (events.some((event) => isWithinDateRange(event.startDate, event.endDate))) {
-    state = "onGoing";
+    state = "onGoingEvents";
   } else if (events.some((event) => isDateInFuture(event.startDate))) {
-    state = "future";
+    state = "futureEvents";
   } else {
-    state = "past";
+    state = "pastEvents";
   }
 
   return {
-    heading: content[`${state}EventsHeading`],
-    subheading: content[`${state}EventsSubheading`],
+    heading: content.heading[state],
+    subheading: content.subheading[state],
   };
 };
 
@@ -44,7 +53,7 @@ async function EventsSection({ content }: EventsSectionProps) {
       <div className="flex flex-wrap gap-5 justify-center w-full">
         {!events.length ? (
           <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-            <CardTitle>{content.noEventsHeading}</CardTitle>
+            <CardTitle>{content.heading.noEvents}</CardTitle>
           </Card>
         ) : (
           events.map((event) => (
@@ -74,7 +83,7 @@ async function EventsSection({ content }: EventsSectionProps) {
         )}
       </div>
       <Button>
-        <Link href="/events">{content.viewAllEventsButtonText}</Link>
+        <Link href="/events">{content.buttonText}</Link>
       </Button>
     </Section>
   );

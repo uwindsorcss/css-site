@@ -1,9 +1,9 @@
 {
   "hero": {
-    "heading": "University of Windsor",
-    "subheading": "Computer Science Society",
-    "description": "A student-run organization that aims to provide a community for Computer Science students.",
-    "buttonText": "Join Our Discord"
+    "preHeading": "University of Windsor",
+    "heading": "Computer Science Society",
+    "description": "A student-run organization committed to provide a community for Computer Science students.",
+    "buttonText": "Discord Server"
   },
   "aboutUs": {
     "heading": "About Us",
@@ -11,43 +11,51 @@
     "cards": [
       {
         "heading": "Learn",
-        "description": "Join a passionate community of learners dedicated to exploring the world of technology beyond the classroom."
+        "description": "Join a passionate community of students dedicated to exploring the world of technology beyond the classroom."
       },
       {
         "heading": "Code",
-        "description": "Improve your programming skills through coding workshops, hackathons, and challenges."
+        "description": "Improve your programming skills through our coding workshops, hackathons, and challenges."
       },
       {
         "heading": "Connect",
-        "description": "Expand your network by connecting with students, professors, and tech professionals."
+        "description": "Expand your network and meet other students, professors, and tech professionals."
       },
       {
         "heading": "Enjoy",
-        "description": "Balance work and play with our diverse range of fun events, from game nights to movie nights."
+        "description": "Balance work and fun with our diverse range of fun events, from game nights to movie nights."
       }
     ],
-    "learnMoreButtonText": "Learn More"
+    "buttonText": "Learn More"
   },
   "events": {
-    "futureEventsHeading": "Upcoming Events",
-    "futureEventsSubheading": "Check out our upcoming events and join us!",
-    "onGoingEventsHeading": "Events",
-    "onGoingEventsSubheading": "There's currently an event going on! Join us!",
-    "pastEventsHeading": "Recent Events",
-    "pastEventsSubheading": "We currently don't have any upcoming events. Check out our past events while we plan new ones for you!",
-    "noEventsHeading": "No Events Found",
-    "viewAllEventsButtonText": "View All Events"
+    "heading": {
+      "futureEvents": "Upcoming Events",
+      "onGoingEvents": "On-Going Events",
+      "pastEvents": "Recent Events",
+      "noEvents": "No Events Found"
+    },
+    "subheading": {
+      "futureEvents": "Join us at our upcoming events!",
+      "onGoingEvents": "There's currently an event going on! Join us!",
+      "pastEvents": "We currently don't have any upcoming events. Check out our past events while we plan new ones for you!"
+    },
+    "buttonText": "View All Events"
   },
-  "newsletters": {
-    "featuredNewslettersHeading": "Featured Newsletters",
-    "subheadingSubheading": "Discover the latest insights and updates in our newsletters.",
-    "noNewslettersHeading": "No Newsletters Found",
-    "viewAllNewslettersButtonText": "View All Newsletters"
+  "newsletter": {
+    "heading": {
+      "featuredNewsletters": "Featured Newsletters",
+      "noNewsletters": "No Newsletters Found"
+    },
+    "subheading": "Discover the latest insights and updates in our newsletters.",
+    "buttonText": "View All Newsletters"
   },
   "callToAction": {
-    "heading": "Join The Community!",
-    "text1": "Connect with ",
-    "text2": " Students in Our Discord Server",
+    "heading": "Join Our Community",
+    "count": {
+      "prefix": "Connect with ",
+      "suffix": " Students in Our Discord Server!"
+    },
     "buttonText": "Link Your Account"
   }
 }

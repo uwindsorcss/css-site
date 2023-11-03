@@ -8,8 +8,15 @@ import { getMemberCount } from "@/lib/actions";
 
 interface CallToActionSectionProps {
   content: {
-    [key: string]: string;
+    heading: string;
+    count: Count;
+    buttonText: string;
   };
+}
+
+interface Count {
+  prefix: string;
+  suffix: string;
 }
 
 async function CallToActionSection({ content }: CallToActionSectionProps) {
@@ -23,9 +30,9 @@ async function CallToActionSection({ content }: CallToActionSectionProps) {
         </div>
         <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">{content.heading}</h2>
         <span className="inline-block text-md md:text-lg lg:text-xl font-medium mb-2">
-          {content.text1}
+          {content.count.prefix}
           <MemberCount count={memberCount} className="font-black md:mx-1" />
-          {content.text2}
+          {content.count.suffix}
         </span>
         <Button variant="secondary" asChild>
           <Link href="/discord">

@@ -7,8 +7,15 @@ import { prisma } from "@/lib/db";
 
 interface NewsletterSectionProps {
   content: {
-    [key: string]: string;
+    heading: NewsletterHeading;
+    subheading: string;
+    buttonText: string;
   };
+}
+
+interface NewsletterHeading {
+  featuredNewsletters: string;
+  noNewsletters: string;
 }
 
 async function NewsletterSection({ content }: NewsletterSectionProps) {
@@ -20,11 +27,11 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
   });
 
   return (
-    <Section heading={content.featuredNewslettersHeading} subheading={content.subheadingSubheading}>
+    <Section heading={content.heading.featuredNewsletters} subheading={content.subheading}>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
         {posts === null || posts.length === 0 ? (
           <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
-            <CardTitle>{content.noNewslettersHeading}</CardTitle>
+            <CardTitle>{content.heading.noNewsletters}</CardTitle>
           </Card>
         ) : (
           <>
@@ -35,7 +42,7 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
         )}
       </div>
       <Button asChild>
-        <Link href="/newsletter">{content.viewAllNewslettersButtonText}</Link>
+        <Link href="/newsletter">{content.buttonText}</Link>
       </Button>
     </Section>
   );

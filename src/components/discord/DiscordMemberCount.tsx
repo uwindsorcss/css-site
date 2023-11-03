@@ -23,7 +23,7 @@ function MemberCount({ count = 0, ping = false, text, className }: MemberCountPr
         ease: "easeOut",
         delay: 0.2,
         onUpdate(value) {
-          node.textContent = value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          node.textContent = value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
       });
     }
@@ -39,7 +39,7 @@ function MemberCount({ count = 0, ping = false, text, className }: MemberCountPr
           />
         </div>
       )}
-      <span ref={nodeRef} style={{ width: nodeRef.current?.offsetWidth + 3 }}>
+      <span ref={nodeRef} style={{ width: nodeRef.current?.offsetWidth + 4 }}>
         {count}
       </span>
       {text}
