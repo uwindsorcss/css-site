@@ -1,14 +1,14 @@
 import { getMemberCount } from "@/lib/actions";
 import MemberCount from "./DiscordMemberCount";
 
-interface ServerMemberCountsProps {
+interface DiscordMemberCountsProps {
   cardInfo: {
     memberCountText: string;
     onlineCountText: string;
   };
 }
 
-async function ServerMemberCounts({ cardInfo }: ServerMemberCountsProps) {
+async function DiscordMemberCounts({ cardInfo }: DiscordMemberCountsProps) {
   const { memberCount, onlineCount } = await getMemberCount();
   return (
     <>
@@ -28,4 +28,4 @@ async function ServerMemberCounts({ cardInfo }: ServerMemberCountsProps) {
   );
 }
 
-export default ServerMemberCounts;
+export default DiscordMemberCounts;

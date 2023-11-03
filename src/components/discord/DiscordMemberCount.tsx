@@ -20,8 +20,10 @@ function MemberCount({ count = 0, ping = false, text, className }: MemberCountPr
     if (inView) {
       animate(0, count, {
         duration: 2,
+        ease: "easeOut",
+        delay: 0.2,
         onUpdate(value) {
-          node.textContent = value.toFixed(0);
+          node.textContent = value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         },
       });
     }
@@ -37,7 +39,7 @@ function MemberCount({ count = 0, ping = false, text, className }: MemberCountPr
           />
         </div>
       )}
-      <span ref={nodeRef} style={{ width: nodeRef.current?.offsetWidth }}>
+      <span ref={nodeRef} style={{ width: nodeRef.current?.offsetWidth + 3 }}>
         {count}
       </span>
       {text}

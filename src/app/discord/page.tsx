@@ -5,7 +5,7 @@ import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import discordContent from "./content.json";
 import { Metadata } from "next";
-import ServerMemberCounts from "@/components/discord/DiscordMemberCounts";
+import DiscordMemberCounts from "@/components/discord/DiscordMemberCounts";
 import { Suspense } from "react";
 import ServerCardContent from "@/components/discord/DiscordCardContent";
 
@@ -38,9 +38,9 @@ export default function DiscordPage() {
         </div>
         <CardTitle className="flex flex-col justify-center items-center gap-2">
           <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
-          <div className="flex gap-4">
+          <div className="flex gap-5">
             <Suspense fallback={<MemberCountSkeleton />}>
-              <ServerMemberCounts cardInfo={discordContent.cardInfo} />
+              <DiscordMemberCounts cardInfo={discordContent.cardInfo} />
             </Suspense>
           </div>
         </CardTitle>
