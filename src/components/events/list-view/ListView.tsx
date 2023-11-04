@@ -25,5 +25,5 @@ async function ListView({ searchParams }: EventsListViewProps) {
 export default ListView;
 
 const eventsSkeleton = Array.from({ length: 3 }, (_, i) => (
-  <div key={i} className="w-full h-60 bg-card rounded-md border border-border loading-skeleton" />
+  <div key={i} className="w-full h-60 bg-card rounded-md border border-border skeleton-card" />
 ));

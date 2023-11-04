@@ -114,10 +114,14 @@ body {
 }
 
 @layer utilities {
-  .loading-skeleton {
-    @apply bg-primary rounded-md relative border-border border isolate overflow-hidden;
+  .skeleton {
+    @apply bg-primary rounded-md relative isolate overflow-hidden;
     @apply before:absolute before:inset-0;
     @apply before:-translate-x-full before:animate-shimmer before:animate-[shimmer_2s_infinite];
     @apply before:bg-gradient-to-r before:from-transparent before:via-rose-100/10 before:to-transparent;
+  }
+
+  .skeleton-card {
+    @apply skeleton border-border border;
   }
 }

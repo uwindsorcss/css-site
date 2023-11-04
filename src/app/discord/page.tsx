@@ -52,8 +52,8 @@ export default function DiscordPage() {
 
 const MemberCountSkeleton = () => (
   <div className="flex gap-4 items-center justify-center">
-    <div className="w-20 h-5 loading-skeleton" />
-    <div className="w-20 h-5 loading-skeleton" />
+    <div className="w-20 h-5 skeleton-card" />
+    <div className="w-20 h-5 skeleton-card" />
   </div>
 );
 

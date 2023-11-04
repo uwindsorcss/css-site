@@ -34,5 +34,5 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
 }
 
 const postsSkeleton = Array.from({ length: 3 }, (_, i) => (
-  <div key={i} className="w-full h-60 bg-card rounded-md border border-border loading-skeleton" />
+  <div key={i} className="w-full h-60 bg-card rounded-md border border-border skeleton-card" />
 ));
