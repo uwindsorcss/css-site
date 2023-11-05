@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Section from "./Section";
-import MemberCount from "../discord/DiscordMemberCount";
+import AnimatedNumber from "../ui/animated-number";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
@@ -31,7 +31,9 @@ async function CallToActionSection({ content }: CallToActionSectionProps) {
         <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">{content.heading}</h2>
         <span className="inline-block text-md md:text-lg lg:text-xl font-medium mb-2">
           {content.count.prefix}
-          <MemberCount count={memberCount} className="font-black md:mx-1" />
+          <span className="font-black md:mx-1 min-w-[4rem]">
+            <AnimatedNumber value={memberCount} />
+          </span>
           {content.count.suffix}
         </span>
         <Button variant="secondary" asChild>
