@@ -6,56 +6,11 @@ import CSSIcon from "@/components/discord/CSSIcon";
 import discordContent from "./content.json";
 import { Metadata } from "next";
 import DiscordMemberCounts from "@/components/discord/DiscordMemberCounts";
-import { Suspense } from "react";
 import ServerCardContent from "@/components/discord/DiscordCardContent";
 
 export const metadata: Metadata = {
   title: "Discord",
 };
-
-export default function DiscordPage() {
-  return (
-    <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
-      <div className="flex justify-end">
-        <Popover>
-          <PopoverTrigger asChild>
-            <HelpCircle className="text-muted-foreground hover:cursor-pointer" />
-          </PopoverTrigger>
-          <PopoverContent className="w-80">
-            <div className="flex justify-between space-x-4">
-              <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
-                {parseTextWithLinks(discordContent.hoverCardText)}
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-      </div>
-      <CardHeader className="p-4">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <CSSIcon />
-          <div className="h-10 w-px bg-border mx-2 rounded-full" />
-          <SiDiscord className="w-10 h-10" />
-        </div>
-        <CardTitle className="flex flex-col justify-center items-center gap-2">
-          <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
-          <div className="flex gap-5">
-            <Suspense fallback={<MemberCountSkeleton />}>
-              <DiscordMemberCounts cardInfo={discordContent.cardInfo} />
-            </Suspense>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <ServerCardContent cardInfo={discordContent.cardInfo} />
-    </Card>
-  );
-}
-
-const MemberCountSkeleton = () => (
-  <div className="flex gap-4 items-center justify-center">
-    <div className="w-20 h-5 skeleton-card" />
-    <div className="w-20 h-5 skeleton-card" />
-  </div>
-);
 
 function parseTextWithLinks(text: string) {
   const linkRegex = /\[([^[]+)]\(([^)]+)\)/g;
@@ -93,3 +48,40 @@ function parseTextWithLinks(text: string) {
 
   return <span>{parts}</span>;
 }
+
+async function DiscordPage() {
+  return (
+    <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3 m-3">
+      <div className="flex justify-end">
+        <Popover>
+          <PopoverTrigger asChild>
+            <HelpCircle className="text-muted-foreground hover:cursor-pointer" />
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="flex justify-between space-x-4">
+              <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
+                {parseTextWithLinks(discordContent.hoverCardText)}
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+      <CardHeader className="p-4">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <CSSIcon />
+          <div className="h-10 w-px bg-border mx-2 rounded-full" />
+          <SiDiscord className="w-10 h-10" />
+        </div>
+        <CardTitle className="flex flex-col justify-center items-center gap-2">
+          <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
+          <div className="flex gap-5">
+            <DiscordMemberCounts cardInfo={discordContent.cardInfo} />
+          </div>
+        </CardTitle>
+      </CardHeader>
+      <ServerCardContent cardInfo={discordContent.cardInfo} />
+    </Card>
+  );
+}
+
+export default DiscordPage;
