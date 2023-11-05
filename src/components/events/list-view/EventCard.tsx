@@ -21,7 +21,7 @@ function EventCard({ event, currentPage, filter }: EventCardProps) {
   }
 
   return (
-    <Card className="hover:bg-gray-200 dark:hover:bg-card/50 transition-colors duration-300">
+    <Card className="hover:bg-gray-200 dark:hover:bg-[#192236] transition-colors duration-300">
       <Link
         key={event.id}
         href={`/events/${event.id}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`}>

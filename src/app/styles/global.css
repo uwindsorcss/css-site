@@ -9,98 +9,63 @@ body {
 
 @layer base {
   :root {
-    --background: 0 5% 98%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 216 10% 94.4%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 220 3% 99%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 45% 15%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 222.2 45% 15%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 216 10% 88%;
-    --muted-foreground: 215.4 16.3% 35%;
-
-    --accent: 210 20% 90%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --success: 120 33% 49%;
-    --success-foreground: 210 40% 98%;
-
-    --primary-button: 218 40% 13%;
-    --primary-button-foreground: 210 40% 98%;
-
-    --secondary-button: 218 40% 25%;
-    --secondary-button-foreground: 210 40% 98%;
-
-    --border: 210 20% 75%;
-    --input: 214.3 10% 35%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-
+    --background: #ffffff;
+    --foreground: #030817;
+    --primary: #141a2f;
+    --primary-foreground: #f8fafc;
+    --secondary: #263351;
+    --secondary-foreground: #dbe9f6;
+    --card: #f9fafb;
+    --card-foreground: #030817;
+    --popover: #fcfcfd;
+    --popover-foreground: #020817;
+    --muted: #dde0e3;
+    --muted-foreground: #4a5769;
+    --accent: #e0e6eb;
+    --accent-foreground: #0f1729;
+    --destructive: #ef4444;
+    --destructive-foreground: #f8fafc;
+    --success: #54a654;
+    --success-foreground: #f8fafc;
+    --primary-button: var(--secondary);
+    --primary-button-foreground: #f8fafc;
+    --secondary-button: #36496a;
+    --secondary-button-foreground: #fcfcfd;
+    --border: #b3bfcc;
+    --input: #4f5761;
+    --ring: #030817;
     --circuit-background: #b8b8b8;
-    --hero-background: linear-gradient(
-      to bottom,
-      rgb(215, 220, 255) 0%,
-      rgb(234, 239, 255) 50%,
-      transparent 100%
-    );
+
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 30% 6%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 50% 9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 50% 9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 222.2 45% 10.5%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 43 98% 66%;
-    --secondary-foreground: 47 90% 16%;
-
-    --muted: 217.2 32.6% 22%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 22%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 65% 50%;
-    --destructive-foreground: 210 40% 98%;
-
-    --success: 120 33% 38%;
-    --success-foreground: 210 40% 98%;
-
-    --primary-button: 222.2 45% 16%;
-    --primary-button-foreground: 210 40% 98%;
-
-    --secondary-button: 43 100% 75%;
-    --secondary-button-foreground: 47 90% 16%;
-
-    --border: 217.2 32.6% 22%;
-    --input: 217.2 32.6% 22%;
-    --ring: 212.7 26.8% 83.9%;
-
+    --background: #0e1321;
+    --foreground: #f7fafc;
+    --primary: #141a2f;
+    --primary-foreground: #f8fafc;
+    --secondary: #ffd260;
+    --secondary-foreground: #504416;
+    --card: #141b2d;
+    --card-foreground: #f8fafc;
+    --popover: var(--primary);
+    --popover-foreground: var(--primary-foreground);
+    --muted: #26344a;
+    --muted-foreground: #acb8ca;
+    --accent: #26344a;
+    --accent-foreground: #f7fafc;
+    --destructive: #e74747;
+    --destructive-foreground: #f8fafc;
+    --success: #418141;
+    --success-foreground: #f8fafc;
+    --primary-button: #1a2640;
+    --primary-button-foreground: #faf9f9;
+    --secondary-button: #fad780;
+    --secondary-button-foreground: #564b31;
+    --border: #2b3a50;
+    --input: #26344a;
+    --ring: #cbd5e1;
     --circuit-background: #000;
-    --hero-background: linear-gradient(
-      to bottom,
-      rgba(81, 73, 196, 0.55) 0%,
-      rgba(33, 39, 80, 0.8) 50%,
-      transparent 100%
-    );
   }
 }
 
@@ -115,7 +80,7 @@ body {
 
 @layer utilities {
   .skeleton {
-    @apply bg-primary rounded-md relative isolate overflow-hidden;
+    @apply bg-gray-200 dark:bg-primary rounded-md relative isolate overflow-hidden;
     @apply before:absolute before:inset-0;
     @apply before:-translate-x-full before:animate-shimmer before:animate-[shimmer_2s_infinite];
     @apply before:bg-gradient-to-r before:from-transparent before:via-rose-100/10 before:to-transparent;
@@ -123,5 +88,17 @@ body {
 
   .skeleton-card {
     @apply skeleton border-border border;
+  }
+
+  .dark-hero-gradient {
+    background: linear-gradient(90deg, #697ceb 0%, #6a61eb 100%);
+  }
+
+  .light-hero-gradient {
+    background: linear-gradient(90deg, #939dec 0%, #8d90e5 100%);
+  }
+
+  .mask-gradient {
+    mask-image: linear-gradient(rgba(0, 0, 0, 0.4) 0%, transparent 90%);
   }
 }

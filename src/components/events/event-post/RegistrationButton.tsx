@@ -61,7 +61,7 @@ function RegistrationButton({
         }
       }}>
       <Button
-        variant={registered || full ? "destructive" : "discord"}
+        variant={registered || full ? "destructive" : "default"}
         disabled={full && !registered}>
         {registered ? (
           <>

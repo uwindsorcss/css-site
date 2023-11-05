@@ -18,7 +18,7 @@ function Post({ post, currentPage, truncate, animateOnHover }: PostProps) {
         "flex flex-col gap-2 p-6 w-full bg-card text-card-foreground rounded-md duration-300 border border-border",
         animateOnHover
           ? "transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-lg"
-          : "hover:bg-gray-200 dark:hover:bg-card/50"
+          : "hover:bg-gray-200 dark:hover:bg-[#192236]"
       )}>
       <div>
         <h2 className="text-2xl font-bold">{post.title}</h2>

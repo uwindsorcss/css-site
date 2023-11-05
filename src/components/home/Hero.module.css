@@ -1,9 +1,0 @@
-.hero::before {
-  position: absolute;
-  content: "";
-  top: 0%;
-  bottom: 10%;
-  width: 100%;
-  background-color: var(--background);
-  background: var(--hero-background);
-}

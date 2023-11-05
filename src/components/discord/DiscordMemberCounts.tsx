@@ -44,16 +44,8 @@ async function DiscordMemberCounts({ cardInfo }: DiscordMemberCountsProps) {
 
   return (
     <>
-      <CountDisplay
-        color="gray"
-        countValue={memberCount}
-        countText={cardInfo.memberCountText}
-      />
-      <CountDisplay
-        color="green"
-        countValue={onlineCount}
-        countText={cardInfo.onlineCountText}
-      />
+      <CountDisplay color="gray" countValue={memberCount} countText={cardInfo.memberCountText} />
+      <CountDisplay color="green" countValue={onlineCount} countText={cardInfo.onlineCountText} />
     </>
   );
 }
