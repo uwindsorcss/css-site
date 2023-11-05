@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/db";
 import { DiscordAccount } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { canEditEvent, getSession, isUndergradStudent } from "@/lib/utils";
+import { canEditEvent, canEditPost, getSession, isUndergradStudent } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
@@ -337,10 +337,10 @@ async function unregisterForEvent(eventId: number, userId: number) {
   redirect(`/events/${eventId}?success=${encodeURIComponent("You've unregistered successfully.")}`);
 }
 
-// News Actions
+// Post Actions
 async function createPost(post: PostFormData) {
   const session = await getSession();
-  if (!session || !canEditEvent(session))
+  if (!session || !canEditPost(session))
     throw new Error("You do not have permission to create posts.");
 
   await prisma.post.create({
@@ -355,7 +355,7 @@ async function createPost(post: PostFormData) {
 
 async function updatePost(post: PostFormData, id: number) {
   const session = await getSession();
-  if (!session || !canEditEvent(session))
+  if (!session || !canEditPost(session))
     throw new Error("You do not have permission to update posts.");
 
   await prisma.post.update({
@@ -371,7 +371,7 @@ async function updatePost(post: PostFormData, id: number) {
 
 async function deletePost(id: number) {
   const session = await getSession();
-  if (!session || !canEditEvent(session))
+  if (!session || !canEditPost(session))
     throw new Error("You do not have permission to delete posts.");
 
   await prisma.post.delete({
