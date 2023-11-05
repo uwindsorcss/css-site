@@ -8,30 +8,18 @@ async function getSession() {
   return await getServerSession(authOptions);
 }
 
-function isModOrAdmin(session: Session) {
-  const user = session.user;
-  return user.role === Role.mod || user.role === Role.admin;
+function checkUserRole(session: Session, roles: Role[]): boolean {
+  return roles.includes(session.user.role);
 }
 
-function isAdmin(session: Session) {
-  const user = session.user;
-  return user.role === Role.admin;
-}
+const isAdmin = (session: Session): boolean => checkUserRole(session, [Role.admin]);
+const isMod = (session: Session): boolean => checkUserRole(session, [Role.mod]);
+const isModOrAdmin = (session: Session): boolean => checkUserRole(session, [Role.mod, Role.admin]);
 
-function isMod(session: Session) {
-  const user = session.user;
-  return user.role === Role.mod;
-}
-
-function isEventEditor(session: Session) {
-  const user = session.user;
-  return user.role === Role.eventEditor;
-}
-
-function canEditEvent(session: Session) {
-  const user = session.user;
-  return user.role === Role.eventEditor || user.role === Role.mod || user.role === Role.admin;
-}
+const canEditEvent = (session: Session): boolean =>
+  checkUserRole(session, [Role.eventEditor, Role.mod, Role.admin]);
+const canEditPost = (session: Session): boolean =>
+  checkUserRole(session, [Role.postEditor, Role.mod, Role.admin]);
 
 function isUndergradStudent(session: Session) {
   const user = session.user;
@@ -143,11 +131,8 @@ const getEventRelativeTime = (startDate: Date, endDate: Date) => {
 
 export {
   getSession,
-  isModOrAdmin,
-  isAdmin,
-  isMod,
-  isEventEditor,
   canEditEvent,
+  canEditPost,
   isUndergradStudent,
   cn,
   camelCaseToTitleCase,

@@ -5,7 +5,7 @@ import BackButton from "@/components/ui/back-button";
 import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
 import DeletePostButton from "@/components/newsletter/newsletter-post/DeletePostButton";
 import { prisma } from "@/lib/db";
-import { formatTimeDifference, getSession, isModOrAdmin } from "@/lib/utils";
+import { canEditPost, formatTimeDifference, getSession } from "@/lib/utils";
 
 interface PageProps {
   params: { id: string };
@@ -46,7 +46,7 @@ export default async function Post({ params, searchParams }: PageProps) {
       <MarkDownView allowLinks markdown={post!.content} />
       <div className="flex justify-between w-full mt-10">
         <BackButton href="/newsletter" searchParams={searchParams} />
-        {session && isModOrAdmin(session) && (
+        {session && canEditPost(session) && (
           <div className="space-x-2">
             <EditPostButton id={post!.id} post={post!} />
             <DeletePostButton id={post!.id} />
