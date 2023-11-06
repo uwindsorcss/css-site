@@ -2,9 +2,12 @@ import dynamic from "next/dynamic";
 import { Pencil } from "lucide-react";
 import { Event } from "@prisma/client";
 import { Button } from "@/components/ui/button";
+import { fromDate } from "@internationalized/date";
 const EventFormDialog = dynamic(() => import("@/components/events/EventFormDialog"));
 
 function transformEventToFormValues(event: Event) {
+  const startDateETC = fromDate(event.startDate, "America/Toronto");
+  const endDateETC = fromDate(event.endDate, "America/Toronto");
   return {
     title: event.title || "",
     description: event.description || "",
@@ -12,18 +15,18 @@ function transformEventToFormValues(event: Event) {
     registrable: event.registrationEnabled || false,
     capacity: event.capacity || 0,
     startDate: {
-      year: event.startDate.getFullYear(),
-      month: event.startDate.getMonth() + 1,
-      day: event.startDate.getDate(),
-      hour: event.startDate.getHours(),
-      minute: event.startDate.getMinutes(),
+      year: startDateETC.year,
+      month: startDateETC.month + 1,
+      day: startDateETC.day,
+      hour: startDateETC.hour,
+      minute: startDateETC.minute,
     },
     endDate: {
-      year: event.endDate.getFullYear(),
-      month: event.endDate.getMonth() + 1,
-      day: event.endDate.getDate(),
-      hour: event.endDate.getHours(),
-      minute: event.endDate.getMinutes(),
+      year: endDateETC.year,
+      month: endDateETC.month + 1,
+      day: endDateETC.day,
+      hour: endDateETC.hour,
+      minute: endDateETC.minute,
     },
   };
 }
