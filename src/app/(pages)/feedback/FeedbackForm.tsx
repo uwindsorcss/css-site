@@ -70,11 +70,6 @@ export default function FeedbackForm({ authenticated }: { authenticated: boolean
 
   return (
     <>
-      <p className="text-muted-foreground mb-5 text-center md:text-left">
-        {content.feedbackPrompt.paragraph}
-        <strong>{content.feedbackPrompt.strong}</strong>
-        {content.feedbackPrompt.note}
-      </p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
           <FormField
