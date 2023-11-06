@@ -71,14 +71,10 @@ function AccountButton({ session }: { session: Session | null }) {
 
   return (
     <>
-      <Button
-        className="flex md:hidden"
-        size="icon"
-        variant={"outline"}
-        onClick={() => signIn("azure-ad")}>
+      <Button className="flex md:hidden" size="icon" variant={"outline"} onClick={() => signIn()}>
         <User className="w-4 h-4" />
       </Button>
-      <Button className="hidden md:flex" variant={"outline"} onClick={() => signIn("azure-ad")}>
+      <Button className="hidden md:flex" variant={"outline"} onClick={() => signIn()}>
         <User className="w-4 h-4 mr-2" />
         <span>Sign In</span>
       </Button>

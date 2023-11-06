@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import FeedbackSignInButton from "./FeedbackSignInButton";
 import content from "./content.json";
+import { signIn } from "@/lib/utils";
 
 type FeedbackSchema = z.infer<typeof feedbackSchema>;
 const feedbackSchema = z.object({
@@ -65,7 +65,13 @@ export default function FeedbackForm({ authenticated }: { authenticated: boolean
   }
 
   if (!authenticated) {
-    return <FeedbackSignInButton />;
+    return (
+      <div className="w-full flex justify-center">
+        <Button className="w-full md:w-auto" onClick={() => signIn()}>
+          Sign In to Leave Feedback
+        </Button>
+      </div>
+    );
   }
 
   return (

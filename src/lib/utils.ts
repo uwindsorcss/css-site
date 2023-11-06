@@ -1,39 +1,33 @@
 import { type ClassValue, clsx } from "clsx";
 import { Session, getServerSession } from "next-auth";
+import { signIn as nextAuthSignIn } from "next-auth/react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { twMerge } from "tailwind-merge";
 import { Role } from "@prisma/client";
 
-async function getSession() {
-  return await getServerSession(authOptions);
-}
+const getSession = async () => await getServerSession(authOptions);
+const signIn = () => nextAuthSignIn("azure-ad");
 
-function checkUserRole(session: Session, roles: Role[]): boolean {
-  return roles.includes(session.user.role);
-}
+const checkUserRole = (session: Session, roles: Role[]): boolean =>
+  roles.includes(session.user.role);
 
 const isAdmin = (session: Session): boolean => checkUserRole(session, [Role.admin]);
 const isMod = (session: Session): boolean => checkUserRole(session, [Role.mod]);
 const isModOrAdmin = (session: Session): boolean => checkUserRole(session, [Role.mod, Role.admin]);
+const isUndergradStudent = (session: Session) => session.user.title === "Undergrad Student";
 
 const canEditEvent = (session: Session): boolean =>
   checkUserRole(session, [Role.eventEditor, Role.mod, Role.admin]);
+
 const canEditPost = (session: Session): boolean =>
   checkUserRole(session, [Role.postEditor, Role.mod, Role.admin]);
 
-function isUndergradStudent(session: Session) {
-  const user = session.user;
-  return user.title === "Undergrad Student";
-}
+const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
-function camelCaseToTitleCase(s: string) {
+const camelCaseToTitleCase = (s: string) => {
   const result = s.replace(/([A-Z])/g, " $1");
   return result.charAt(0).toUpperCase() + result.slice(1);
-}
+};
 
 const isDateInPast = (date: Date) => date.getTime() < Date.now();
 const isDateInFuture = (date: Date) => date.getTime() > Date.now();
@@ -42,7 +36,7 @@ const isWithinDateRange = (start: Date, end: Date) => {
   return start <= now && end >= now;
 };
 
-function formatTimeDifference(date: Date) {
+const formatTimeDifference = (date: Date) => {
   const isFuture = date.getTime() > Date.now();
   const diff = Math.abs(date.getTime() - Date.now()) / 1000;
 
@@ -73,7 +67,7 @@ function formatTimeDifference(date: Date) {
         : `${count} ${label}${count === 1 ? "" : "s"} ago`;
     }
   }
-}
+};
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "America/Toronto",
@@ -99,7 +93,7 @@ const timeFormatter = new Intl.DateTimeFormat("en-US", {
   hour12: true,
 });
 
-function formatDateRange(start: Date, end: Date) {
+const formatDateRange = (start: Date, end: Date) => {
   const isSameDay =
     start.toLocaleDateString("en-US", { timeZone: "America/Toronto" }) ===
     end.toLocaleDateString("en-US", { timeZone: "America/Toronto" });
@@ -112,16 +106,10 @@ function formatDateRange(start: Date, end: Date) {
   return `${dateFormatter.format(start)} at ${timeFormatter.format(
     start
   )} to ${dateFormatter.format(end)} at ${timeFormatter.format(end)}`;
-}
+};
 
-function formatDate(date: Date) {
-  return dateFormatter.format(date);
-}
-
-function formatShortDate(date: Date) {
-  return shortDateFormatter.format(date);
-}
-
+const formatDate = (date: Date) => dateFormatter.format(date);
+const formatShortDate = (date: Date) => shortDateFormatter.format(date);
 const getEventRelativeTime = (startDate: Date, endDate: Date) => {
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";
@@ -131,6 +119,7 @@ const getEventRelativeTime = (startDate: Date, endDate: Date) => {
 
 export {
   getSession,
+  signIn,
   canEditEvent,
   canEditPost,
   isUndergradStudent,

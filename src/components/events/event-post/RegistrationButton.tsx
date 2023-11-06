@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Clipboard, ClipboardX, CircleSlash } from "lucide-react";
 import ConfirmationDialog from "@/components/ui/confirmation-dialog";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn } from "@/lib/utils";
 
 interface RegistrationButtonProps {
   full: boolean;
@@ -26,7 +26,7 @@ function RegistrationButton({
 
   if (!userID)
     return (
-      <Button onClick={() => signIn("azure-ad")}>
+      <Button onClick={() => signIn()}>
         <Clipboard className="w-4 h-4 mr-2" />
         <span>Sign In to Register</span>
       </Button>

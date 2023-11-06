@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Button } from "../ui/button";
-import { signIn } from "next-auth/react";
+import { signIn } from "@/lib/utils";
 
 function SignInButton() {
   return (
-    <Button size="full" onClick={() => signIn("azure-ad")}>
+    <Button size="full" onClick={() => signIn()}>
       Sign In
     </Button>
   );
