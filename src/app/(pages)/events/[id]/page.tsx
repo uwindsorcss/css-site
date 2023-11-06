@@ -11,7 +11,7 @@ import { prisma } from "@/lib/db";
 import {
   canEditEvent,
   formatDateRange,
-  getEventRelativeTime,
+  getRelativeEventTime,
   getSession,
   isUndergradStudent,
 } from "@/lib/utils";
@@ -76,7 +76,7 @@ export default async function Post({ params, searchParams }: PageProps) {
   return (
     <FeedView
       heading={event.title}
-      subheading={`${formatDateRange(event.startDate, event.endDate)} ● ${getEventRelativeTime(
+      subheading={`${formatDateRange(event.startDate, event.endDate)} ● ${getRelativeEventTime(
         event.startDate,
         event.endDate
       )}`}

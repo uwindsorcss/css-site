@@ -5,7 +5,7 @@ import BackButton from "@/components/ui/back-button";
 import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
 import DeletePostButton from "@/components/newsletter/newsletter-post/DeletePostButton";
 import { prisma } from "@/lib/db";
-import { canEditPost, formatTimeDifference, getSession } from "@/lib/utils";
+import { canEditPost, getRelativeTimeDiff, getSession } from "@/lib/utils";
 
 interface PageProps {
   params: { id: string };
@@ -39,7 +39,7 @@ export default async function Post({ params, searchParams }: PageProps) {
   }
 
   const authorName = post?.author?.name ?? "CSS Team";
-  const formattedTime = formatTimeDifference(post!.createdAt);
+  const formattedTime = getRelativeTimeDiff(post!.createdAt);
 
   return (
     <FeedView heading={post?.title} subheading={`${authorName} ● ${formattedTime}`}>

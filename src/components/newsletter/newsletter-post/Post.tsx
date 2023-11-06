@@ -1,4 +1,4 @@
-import { cn, formatTimeDifference } from "@/lib/utils";
+import { cn, getRelativeTimeDiff } from "@/lib/utils";
 import Link from "next/link";
 import MarkDownView from "@/components/views/MarkDownView";
 
@@ -23,7 +23,7 @@ function Post({ post, currentPage, truncate, animateOnHover }: PostProps) {
       <div>
         <h2 className="text-2xl font-bold">{post.title}</h2>
         <span className="text-sm font-medium text-muted-foreground mb-2">
-          {post.author?.name ?? "CSS Team"} ● {formatTimeDifference(post.createdAt)}
+          {post.author?.name ?? "CSS Team"} ● {getRelativeTimeDiff(post.createdAt)}
         </span>
       </div>
       {truncate && post.content.length > 300 ? (

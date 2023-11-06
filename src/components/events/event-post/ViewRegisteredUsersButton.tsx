@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { canEditEvent, formatShortDate, formatTimeDifference } from "@/lib/utils";
+import { canEditEvent, formatShortDate, getRelativeTimeDiff } from "@/lib/utils";
 import CopyButton from "@/components/ui/copy-button";
 import { Session } from "next-auth";
 
@@ -96,7 +96,7 @@ export default async function ViewRegisteredUsersButton({
                     <TableCell>
                       <Tooltip>
                         <TooltipTrigger>{formatShortDate(timestamp)}</TooltipTrigger>
-                        <TooltipContent>{formatTimeDifference(timestamp)}</TooltipContent>
+                        <TooltipContent>{getRelativeTimeDiff(timestamp)}</TooltipContent>
                       </Tooltip>
                     </TableCell>
                   </TableRow>

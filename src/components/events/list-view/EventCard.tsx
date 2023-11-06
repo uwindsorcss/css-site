@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import MarkDownView from "@/components/views/MarkDownView";
-import { formatDateRange, getEventRelativeTime } from "@/lib/utils";
+import { formatDateRange, getRelativeEventTime } from "@/lib/utils";
 import { Event } from "@prisma/client";
 import { CalendarDays } from "lucide-react";
 
@@ -38,7 +38,7 @@ function EventCard({ event, currentPage, filter }: EventCardProps) {
             <CalendarDays className="w-4 h-4 mr-1" />
             <span>
               {formatDateRange(event.startDate, event.endDate)} (
-              {getEventRelativeTime(event.startDate, event.endDate)})
+              {getRelativeEventTime(event.startDate, event.endDate)})
             </span>
           </CardDescription>
           <CardContent className="p-0 text-muted-foreground">

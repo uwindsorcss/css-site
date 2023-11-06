@@ -1,7 +1,7 @@
 import { Event } from "@prisma/client";
 import Section from "./Section";
 import { Card, CardTitle, CardDescription } from "@/components/ui/card";
-import { getEventRelativeTime, isDateInFuture, isWithinDateRange } from "@/lib/utils";
+import { getRelativeEventTime, isDateInFuture, isWithinDateRange } from "@/lib/utils";
 import { CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -74,7 +74,7 @@ async function EventsSection({ content }: EventsSectionProps) {
                     })}
                   </span>
                   <span className="font-bold">
-                    {getEventRelativeTime(event.startDate, event.endDate)}
+                    {getRelativeEventTime(event.startDate, event.endDate)}
                   </span>
                 </CardDescription>
               </Card>

@@ -4,6 +4,7 @@ import { signIn as nextAuthSignIn } from "next-auth/react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { twMerge } from "tailwind-merge";
 import { Role } from "@prisma/client";
+import { DateFormatter } from "@internationalized/date";
 
 const getSession = async () => await getServerSession(authOptions);
 const signIn = () => nextAuthSignIn("azure-ad");
@@ -36,48 +37,41 @@ const isWithinDateRange = (start: Date, end: Date) => {
   return start <= now && end >= now;
 };
 
-const formatTimeDifference = (date: Date) => {
-  const isFuture = date.getTime() > Date.now();
-  const diff = Math.abs(date.getTime() - Date.now()) / 1000;
+const getRelativeTimeDiff = (date: Date): string => {
+  const now = Date.now();
+  const isFuture = date.getTime() > now;
+  const diffInSeconds = Math.abs(date.getTime() - now) / 1000;
 
-  if (diff < 60) return "now";
+  if (diffInSeconds < 60) return "now";
 
-  const SECOND = 1;
-  const MINUTE = 60 * SECOND;
-  const HOUR = 60 * MINUTE;
-  const DAY = 24 * HOUR;
-  const WEEK = 7 * DAY;
-  const MONTH = 30 * DAY;
-  const YEAR = 365 * DAY;
-
-  const timeUnits = [
-    { label: "minute", value: MINUTE, max: HOUR },
-    { label: "hour", value: HOUR, max: DAY },
-    { label: "day", value: DAY, max: WEEK },
-    { label: "week", value: WEEK, max: MONTH },
-    { label: "month", value: MONTH, max: YEAR },
-    { label: "year", value: YEAR, max: Infinity },
+  const timeUnits: [string, number][] = [
+    ["year", 31536000], // 365 days
+    ["month", 2592000], // 30 days
+    ["week", 604800], // 7 days
+    ["day", 86400], // 24 hours
+    ["hour", 3600], // 60 minutes
+    ["minute", 60],
   ];
 
-  for (const { label, value, max } of timeUnits) {
-    if (diff < max) {
-      const count = Math.floor(diff / value);
+  for (const [unit, secondsInUnit] of timeUnits) {
+    if (diffInSeconds >= secondsInUnit) {
+      const count = Math.floor(diffInSeconds / secondsInUnit);
       return isFuture
-        ? `In ${count} ${label}${count === 1 ? "" : "s"}`
-        : `${count} ${label}${count === 1 ? "" : "s"} ago`;
+        ? `In ${count} ${unit}${count === 1 ? "" : "s"}`
+        : `${count} ${unit}${count === 1 ? "" : "s"} ago`;
     }
   }
+  return "";
 };
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  timeZone: "America/Toronto",
-  weekday: "short",
-  year: "numeric",
-  month: "short",
-  day: "numeric",
-});
+const getRelativeEventTime = (startDate: Date, endDate: Date) => {
+  const now = new Date();
+  if (startDate <= now && endDate >= now) return "Currently Happening";
+  else if (startDate > now) return getRelativeTimeDiff(startDate);
+  return getRelativeTimeDiff(endDate);
+};
 
-const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+const shortDateFormatter = new DateFormatter("en-US", {
   timeZone: "America/Toronto",
   year: "numeric",
   month: "short",
@@ -86,7 +80,15 @@ const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
   minute: "numeric",
 });
 
-const timeFormatter = new Intl.DateTimeFormat("en-US", {
+const dateFormatter = new DateFormatter("en-US", {
+  timeZone: "America/Toronto",
+  weekday: "short",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
+
+const timeFormatter = new DateFormatter("en-US", {
   timeZone: "America/Toronto",
   hour: "numeric",
   minute: "numeric",
@@ -97,25 +99,20 @@ const formatDateRange = (start: Date, end: Date) => {
   const isSameDay =
     start.toLocaleDateString("en-US", { timeZone: "America/Toronto" }) ===
     end.toLocaleDateString("en-US", { timeZone: "America/Toronto" });
+  const startDateFormatted = dateFormatter.format(start);
+  const startTimeFormatted = timeFormatter.format(start);
+  const endTimeFormatted = timeFormatter.format(end);
 
-  if (isSameDay)
-    return `${dateFormatter.format(start)} from ${timeFormatter.format(
-      start
-    )} to ${timeFormatter.format(end)}`;
+  if (isSameDay) return `${startDateFormatted} from ${startTimeFormatted} to ${endTimeFormatted}`;
 
-  return `${dateFormatter.format(start)} at ${timeFormatter.format(
-    start
-  )} to ${dateFormatter.format(end)} at ${timeFormatter.format(end)}`;
+  const endDateFormatted = dateFormatter.format(end);
+  return `${startDateFormatted} at ${startTimeFormatted} to ${endDateFormatted} at ${endTimeFormatted}`;
 };
 
-const formatDate = (date: Date) => dateFormatter.format(date);
+const formatShortDateRange = (start: Date, end: Date) =>
+  `${timeFormatter.format(start)} - ${timeFormatter.format(end)}`;
 const formatShortDate = (date: Date) => shortDateFormatter.format(date);
-const getEventRelativeTime = (startDate: Date, endDate: Date) => {
-  const now = new Date();
-  if (startDate <= now && endDate >= now) return "Currently Happening";
-  else if (startDate > now) return formatTimeDifference(startDate);
-  return formatTimeDifference(endDate);
-};
+const formatDate = (date: Date) => dateFormatter.format(date);
 
 export {
   getSession,
@@ -128,10 +125,10 @@ export {
   isDateInPast,
   isDateInFuture,
   isWithinDateRange,
-  formatTimeDifference,
+  getRelativeTimeDiff,
   formatDateRange,
+  formatShortDateRange,
   formatDate,
   formatShortDate,
-  getEventRelativeTime,
-  timeFormatter,
+  getRelativeEventTime,
 };
