@@ -45,7 +45,7 @@ export function FormDialog({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{triggerButton}</DialogTrigger>
       <DialogContent
-        className={clsx("max-h-[80vh] overflow-y-auto min-h-[70vh]", contentClassName)}>
+        className={clsx("max-h-[80vh] overflow-y-auto", contentClassName)}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && (

@@ -102,6 +102,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       <Textarea
         label="Description"
         type="text"
+        className="h-40"
         {...form.register("description", { required: true })}
       />
       <DateTimePicker label="Start Date" {...form.register("startDate")} />
