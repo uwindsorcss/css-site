@@ -91,7 +91,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, any>(function DateTim
       name={props.name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>End Date</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <DateTimePickerPrimitive
             ref={ref}
             value={
