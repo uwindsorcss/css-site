@@ -1,15 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm } from "@/hooks/useForm";
 import * as z from "zod";
-import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
+import { Input, Textarea, Checkbox } from "../form/form-fields";
 import { createPost, updatePost } from "@/lib/actions";
 import { FormDialog } from "../form/FormDialog";
 import { useState } from "react";
-import { Checkbox } from "../ui/checkbox";
 
 type PostSchema = z.infer<typeof postSchema>;
 const postSchema = z.object({
@@ -18,12 +14,12 @@ const postSchema = z.object({
       required_error: "A title is required.",
     })
     .min(1),
-  isTeam: z.boolean().optional(),
   content: z
     .string({
       required_error: "The content is required.",
     })
     .min(1),
+  isTeam: z.boolean().optional(),
 });
 
 interface PostFormProps {
@@ -35,12 +31,12 @@ interface PostFormProps {
 function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const form = useForm<PostSchema>({
-    resolver: zodResolver(postSchema),
+  const form = useForm({
+    schema: postSchema,
     defaultValues: initialValues || {
       title: "",
-      isTeam: false,
       content: "",
+      isTeam: false,
     },
   });
 
@@ -68,45 +64,14 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
       buttonText={id ? "Update Post" : "Create Post"}
       pendingButtonText={id ? "Updating Post..." : "Creating Post..."}
       contentClassName="sm:max-w-[800px]">
-      <FormField
-        control={form.control}
-        name="title"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Title</FormLabel>
-            <Input {...field} />
-            <FormMessage />
-          </FormItem>
-        )}
+      <Input label="Title" type="text" {...form.register("title")} />
+      <Textarea
+        label="Content"
+        type="text"
+        className="min-h-[500px] h-full"
+        {...form.register("content")}
       />
-      <FormField
-        control={form.control}
-        name="isTeam"
-        render={({ field }) => (
-          <FormItem>
-            <div className="flex items-center gap-2">
-              <Checkbox
-                defaultChecked={field.value || false}
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-              <FormLabel>Post as a team</FormLabel>
-            </div>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="content"
-        render={({ field }) => (
-          <FormItem className="h-full">
-            <FormLabel>Content</FormLabel>
-            <Textarea className="h-[500px]" {...field} />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <Checkbox label="Post as a team" {...form.register("isTeam")} />
     </FormDialog>
   );
 }

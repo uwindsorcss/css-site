@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import { Form } from "@/components/form/form";
 import { Loader2 } from "lucide-react";
 import {
   Dialog,
@@ -54,20 +54,12 @@ export function FormDialog({
             </DialogDescription>
           )}
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmitAction)} className="space-y-4">
-            {children}
-            <Button size="full" type="submit" disabled={isPending}>
-              {isPending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {pendingButtonText}
-                </>
-              ) : (
-                <>{buttonText}</>
-              )}
-            </Button>
-          </form>
+        <Form form={form} onSubmit={onSubmitAction}>
+          {children}
+          <Button size="full" type="submit" disabled={isPending}>
+            {isPending && <Loader2 className="animate-spin" />}
+            {isPending ? pendingButtonText : buttonText}
+          </Button>
         </Form>
       </DialogContent>
     </Dialog>

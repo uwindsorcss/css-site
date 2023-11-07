@@ -45,14 +45,8 @@ function ConfirmationDialog({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction variant={variant} onClick={onAction} disabled={isPending}>
-            {isPending ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {pendingButtonText}
-              </>
-            ) : (
-              <>{actionButtonText}</>
-            )}
+            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isPending ? pendingButtonText : actionButtonText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

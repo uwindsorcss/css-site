@@ -346,8 +346,8 @@ async function createPost(post: PostFormData) {
   await prisma.post.create({
     data: {
       title: post.title,
-      author: post.isTeam ? undefined : { connect: { id: session.user.id } },
       content: post.content,
+      ...(post.isTeam ? {} : { author: { connect: { id: session.user.id } } }),
     },
   });
   revalidatePath("/newsletter");
@@ -358,14 +358,26 @@ async function updatePost(post: PostFormData, id: number) {
   if (!session || !canEditPost(session))
     throw new Error("You do not have permission to update posts.");
 
+  const data: any = {
+    title: post.title,
+    content: post.content,
+  };
+
+  if (post.isTeam) {
+    data.author = {
+      disconnect: true,
+    };
+  } else {
+    data.author = {
+      connect: { id: session.user.id },
+    };
+  }
+
   await prisma.post.update({
     where: { id },
-    data: {
-      title: post.title,
-      author: post.isTeam ? undefined : { connect: { id: session.user.id } },
-      content: post.content,
-    },
+    data,
   });
+
   revalidatePath(`/newsletter/${id}`);
 }
 

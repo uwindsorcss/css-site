@@ -1,17 +1,13 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm } from "@/hooks/useForm";
 import * as z from "zod";
-import { FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { DateTimePicker } from "../ui/date-time-picker/date-time-picker";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
+import { DateTimePicker, convertDate } from "../form/form-fields";
+import { Input, Textarea } from "../form/form-fields";
 import { createEvent, updateEvent } from "@/lib/actions";
-import { CalendarDateTime } from "@internationalized/date";
 import { FormDialog } from "../form/FormDialog";
 import { useState } from "react";
-import { Checkbox } from "../ui/checkbox";
+import { Checkbox } from "../form/form-fields";
 
 type EventSchema = z.infer<typeof eventSchema>;
 const eventSchema = z.object({
@@ -61,25 +57,15 @@ interface EventFormProps {
 }
 
 function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
-  const form = useForm<EventSchema>({
-    resolver: zodResolver(eventSchema),
-    defaultValues: initialValues || undefined,
+  const form = useForm({
+    schema: eventSchema,
+    defaultValues: initialValues || {
+      registrable: false,
+      capacity: 0,
+    },
   });
 
   const [isOpen, setIsOpen] = useState(false);
-
-  function convertDate(
-    date: {
-      year: number;
-      month: number;
-      day: number;
-      hour: number;
-      minute: number;
-    },
-    adjustMonth = true
-  ): [number, number, number, number, number] {
-    return [date.year, adjustMonth ? date.month - 1 : date.month, date.day, date.hour, date.minute];
-  }
 
   async function onSubmit(data: EventSchema) {
     const startDate = new Date(...convertDate(data.startDate));
@@ -109,109 +95,20 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       setIsOpen={setIsOpen}
       onSubmitAction={onSubmit}
       title={id ? "Edit Event" : "Create Event"}
-      buttonText={id ? "Edit Event" : "Create Event"}
-      pendingButtonText={id ? "Editing Event..." : "Creating Event..."}
+      buttonText={id ? "Update Event" : "Create Event"}
+      pendingButtonText={id ? "Updating Event..." : "Creating Event..."}
       contentClassName="sm:max-w-[600px]">
-      <FormField
-        control={form.control}
-        name="title"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Title</FormLabel>
-            <Input {...field} />
-            <FormMessage />
-          </FormItem>
-        )}
+      <Input label="Title" type="text" {...form.register("title", { required: true })} />
+      <Textarea
+        label="Description"
+        type="text"
+        {...form.register("description", { required: true })}
       />
-      <FormField
-        control={form.control}
-        name="description"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Description</FormLabel>
-            <Textarea className="h-40" {...field} />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="startDate"
-        render={({ field }) => (
-          <FormItem className="flex flex-col">
-            <FormLabel>Start Date</FormLabel>
-            <DateTimePicker
-              value={
-                initialValues ? new CalendarDateTime(...convertDate(field.value, false)) : undefined
-              }
-              granularity={"minute"}
-              onChange={field.onChange}
-              label="Start Date"
-            />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="endDate"
-        render={({ field }) => (
-          <FormItem className="flex flex-col">
-            <FormLabel>End Date</FormLabel>
-            <DateTimePicker
-              value={
-                initialValues ? new CalendarDateTime(...convertDate(field.value, false)) : undefined
-              }
-              granularity={"minute"}
-              onChange={field.onChange}
-              label="End Date"
-            />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="location"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Location</FormLabel>
-            <Input {...field} />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="capacity"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Capacity</FormLabel>
-            <Input type="number" {...field} />
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="registrable"
-        render={({ field }) => (
-          <FormItem>
-            <div className="flex items-center gap-2 mt-6 mb-2">
-              <Checkbox
-                size="medium"
-                defaultChecked={field.value || false}
-                checked={field.value}
-                onCheckedChange={field.onChange}
-              />
-              <FormLabel onClick={() => field.onChange(!field.value)} className="cursor-pointer">
-                Allow Registration
-              </FormLabel>
-            </div>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <DateTimePicker label="Start Date" {...form.register("startDate")} />
+      <DateTimePicker label="End Date" {...form.register("endDate")} />
+      <Input label="Location" type="text" {...form.register("location")} />
+      <Input label="Capacity" type="number" {...form.register("capacity")} />
+      <Checkbox label="Allow Registration" {...form.register("registrable")} />
     </FormDialog>
   );
 }

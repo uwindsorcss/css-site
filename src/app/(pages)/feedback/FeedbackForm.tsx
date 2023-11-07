@@ -1,15 +1,13 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm } from "@/hooks/useForm";
 import * as z from "zod";
-import { FormField, FormItem, FormLabel, FormMessage, Form } from "@/components/ui/form";
+import { Form } from "@/components/form/form";
 import { submitFeedback } from "@/lib/actions";
 import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 import { Heart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Input, Textarea } from "@/components/form/form-fields";
 import { useState } from "react";
 import content from "./content.json";
 import { signIn } from "@/lib/utils";
@@ -33,7 +31,7 @@ const feedbackSchema = z.object({
 
 export default function FeedbackForm({ authenticated }: { authenticated: boolean }) {
   const handleAsync = useAsyncFeedback();
-  const form = useForm<FeedbackSchema>({ resolver: zodResolver(feedbackSchema) });
+  const form = useForm({ schema: feedbackSchema });
   const [success, setSuccess] = useState(false);
   const isPending = form.formState.isSubmitting;
 
@@ -75,43 +73,23 @@ export default function FeedbackForm({ authenticated }: { authenticated: boolean
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full">
-          <FormField
-            control={form.control}
-            name="subject"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{content.labels.subject}</FormLabel>
-                <Input {...field} />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="feedback"
-            render={({ field }) => (
-              <FormItem className="h-full">
-                <FormLabel>{content.labels.feedback}</FormLabel>
-                <Textarea className="h-[300px]" {...field} />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button size="full" type="submit" disabled={isPending}>
-            {isPending ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {content.labels.submitting}
-              </>
-            ) : (
-              <>{content.labels.submit}</>
-            )}
-          </Button>
-        </form>
-      </Form>
-    </>
+    <Form form={form} onSubmit={onSubmit} className="space-y-4 w-full">
+      <Input
+        label={content.labels.subject}
+        placeholder={content.placeholders.subject}
+        className="w-full"
+        {...form.register("subject")}
+      />
+      <Textarea
+        label={content.labels.feedback}
+        placeholder={content.placeholders.feedback}
+        className="h-[300px] w-full"
+        {...form.register("feedback")}
+      />
+      <Button size="full" type="submit" disabled={isPending}>
+        {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {isPending ? content.labels.submitting : content.labels.submit}
+      </Button>
+    </Form>
   );
 }
