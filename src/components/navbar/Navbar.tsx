@@ -1,47 +1,12 @@
 import ThemeButton from "./ThemeButton";
 import DesktopMenu from "./DesktopMenu";
 import Logo from "./Logo";
-import MobileMenu from "./MobileMenu";
 import AccountButton from "./AccountButton";
 import { getSession } from "@/lib/utils";
+import MobileMenuButton from "./MobileMenuButton";
 
 async function NavBar() {
   const session = await getSession();
-
-  const links: Link[] = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Events", href: "/events" },
-    { name: "Newsletter", href: "/newsletter" },
-    { name: "Feedback", href: "/feedback" },
-    { name: "Discord", href: "/discord" },
-    {
-      name: "Resources",
-      href: "#",
-      sublinks: [
-        {
-          name: "Wiki",
-          href: "https://uwindsorcss.github.io/wiki",
-          description: "A wiki of everything CS at UWindsor.",
-        },
-        {
-          name: "Store",
-          href: "https://store.uwindsorcss.ca",
-          description: "Buy CSS merch and swag.",
-        },
-        {
-          name: "Gallery",
-          href: "/gallery",
-          description: "A gallery of photos from CSS events.",
-        },
-        {
-          name: "Incoming Student Guide",
-          href: "https://uwindsorcss.github.io/wiki/resources/guides/first-year",
-          description: "A guide for new students to help them get started with CS at UWindsor.",
-        },
-      ],
-    },
-  ];
 
   return (
     <div className="z-50 w-screen h-16 fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
@@ -49,11 +14,11 @@ async function NavBar() {
         <div className="flex justify-between py-2 justify-self-start">
           <Logo />
         </div>
-        <DesktopMenu links={links} />
+        <DesktopMenu />
         <div className="flex gap-2 justify-self-end">
           <ThemeButton />
           <AccountButton session={session} />
-          <MobileMenu links={links} />
+          <MobileMenuButton />
         </div>
       </div>
     </div>

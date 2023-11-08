@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
+import { links } from "./links.json";
 import {
   ListItem,
   NavigationMenu,
@@ -12,11 +12,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-interface MenuItemProps {
-  links: Link[];
-}
-
-function Menu({ links }: MenuItemProps) {
+function DesktopMenu() {
   return (
     <div className="hidden lg:flex h-auto items-center justify-center">
       <NavigationMenu>
@@ -49,4 +45,4 @@ function Menu({ links }: MenuItemProps) {
   );
 }
 
-export default Menu;
+export default DesktopMenu;
