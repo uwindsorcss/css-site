@@ -306,6 +306,15 @@ async function registerForEvent(eventId: number, userId: number) {
   if (!isUndergradStudent(session))
     throw new Error("You must be an undergraduate student to register for events.");
 
+  const existingRegistration = await prisma.eventRegistration.findFirst({
+    where: {
+      eventId,
+      userId,
+    },
+  });
+
+  if (existingRegistration) throw new Error("You are already registered for this event.");
+
   const registrations = await prisma.eventRegistration.count({
     where: {
       eventId,
