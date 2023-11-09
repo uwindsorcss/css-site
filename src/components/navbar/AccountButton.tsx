@@ -1,5 +1,5 @@
 "use client";
-import { signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import React from "react";
 import { Button } from "../ui/button";
 import { LogOut, User } from "lucide-react";
@@ -17,7 +17,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Role } from "@prisma/client";
-import { camelCaseToTitleCase } from "@/lib/utils";
+import { camelCaseToTitleCase, signIn } from "@/lib/utils";
 
 function AccountButton({ session }: { session: Session | null }) {
   const name: string = session?.user?.name ?? "user";
