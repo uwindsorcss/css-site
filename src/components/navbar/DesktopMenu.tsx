@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { links } from "./links.json";
+import links from "./links.json";
 import {
   ListItem,
   NavigationMenu,

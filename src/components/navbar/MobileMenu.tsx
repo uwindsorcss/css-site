@@ -5,7 +5,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { RemoveScrollBar } from "react-remove-scroll-bar";
-import { links } from "./links.json";
+import links from "./links.json";
 
 interface MobileMenuProps {
   open: boolean;
