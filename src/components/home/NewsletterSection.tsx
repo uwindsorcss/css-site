@@ -1,6 +1,6 @@
 import Section from "./Section";
 import { Card, CardTitle } from "../ui/card";
-import PostComponent from "@/components/newsletter/newsletter-post/Post";
+import PostComponent from "@/components/newsletter/newsletter-post/PostCard";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { prisma } from "@/lib/db";

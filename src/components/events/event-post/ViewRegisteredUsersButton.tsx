@@ -20,6 +20,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { canEditEvent, formatShortDate, getRelativeTimeDiff } from "@/lib/utils";
 import CopyButton from "@/components/ui/copy-button";
 import { Session } from "next-auth";
+import clsx from "clsx";
 
 interface RegistrationButtonProps {
   session: Session | null;
@@ -33,14 +34,17 @@ export default async function ViewRegisteredUsersButton({
   const event = await prisma.event.findUnique({
     where: { id: eventID },
     include: {
-      EventRegistration: { include: { user: true } },
+      EventRegistration: {
+        include: { user: true },
+        orderBy: { timestamp: "asc" },
+      },
     },
   });
   const count = event?.EventRegistration?.length || 0;
   const title = `Registered Users (${count})`;
 
   const UsersCountComponent = () => (
-    <Button>
+    <Button className={clsx(!session && "cursor-auto")}>
       <User className="w-5 h-5 mr-1" />
       {`${count}${event?.capacity !== null ? `/${event?.capacity}` : ""}`}
     </Button>
@@ -68,7 +72,7 @@ export default async function ViewRegisteredUsersButton({
                 variant="ghost"
                 className="ml-2 text-muted-foreground"
                 label="Copy List"
-                Icon={<Clipboard className="w-5 h-5" />}
+                Icon={<Clipboard size={18} className="mr-1" />}
               />
             )}
           </DialogTitle>

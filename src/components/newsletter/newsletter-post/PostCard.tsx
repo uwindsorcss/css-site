@@ -1,6 +1,7 @@
 import { cn, getRelativeTimeDiff } from "@/lib/utils";
 import Link from "next/link";
 import MarkDownView from "@/components/views/MarkDownView";
+import { AlarmClock, User } from "lucide-react";
 
 interface PostProps {
   post: any;
@@ -9,7 +10,7 @@ interface PostProps {
   animateOnHover?: boolean;
 }
 
-function Post({ post, currentPage, truncate, animateOnHover }: PostProps) {
+function PostCard({ post, currentPage, truncate, animateOnHover }: PostProps) {
   return (
     <Link
       key={post.id}
@@ -20,11 +21,19 @@ function Post({ post, currentPage, truncate, animateOnHover }: PostProps) {
           ? "transition-all duration-300 ease-in-out transform hover:scale-[1.01] hover:shadow-lg"
           : "hover:bg-gray-200 dark:hover:bg-[#192236]"
       )}>
-      <div>
-        <h2 className="text-2xl font-bold">{post.title}</h2>
-        <span className="text-sm font-medium text-muted-foreground mb-2">
-          {post.author?.name ?? "CSS Team"} ● {getRelativeTimeDiff(post.createdAt)}
-        </span>
+      <div className="space-y-1.5">
+        <h2 className="text-2xl font-semibold">{post.title}</h2>
+        <div className="flex text-sm font-medium text-muted-foreground mb-2 gap-2 flex-wrap">
+          <span className="flex items-center gap-1">
+            <User size={18} />
+            {post.author?.name ?? "CSS Team"}
+          </span>
+          <span>•</span>
+          <span className="flex items-center gap-1">
+            <AlarmClock size={18} />
+            {getRelativeTimeDiff(post.createdAt)}
+          </span>
+        </div>
       </div>
       {truncate && post.content.length > 300 ? (
         <div className="relative overflow-hidden">
@@ -44,4 +53,4 @@ function Post({ post, currentPage, truncate, animateOnHover }: PostProps) {
   );
 }
 
-export default Post;
+export default PostCard;

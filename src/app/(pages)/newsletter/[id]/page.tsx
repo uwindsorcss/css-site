@@ -3,9 +3,11 @@ import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
-import DeletePostButton from "@/components/newsletter/newsletter-post/DeletePostButton";
 import { prisma } from "@/lib/db";
 import { canEditPost, getRelativeTimeDiff, getSession } from "@/lib/utils";
+import { deletePost } from "@/lib/actions";
+import DeleteButton from "@/components/DeleteButton";
+import { AlarmClock, User } from "lucide-react";
 
 interface PageProps {
   params: { id: string };
@@ -42,16 +44,18 @@ export default async function Post({ params, searchParams }: PageProps) {
   const formattedTime = getRelativeTimeDiff(post!.createdAt);
 
   return (
-    <FeedView heading={post?.title} subheading={`${authorName} ● ${formattedTime}`}>
+    <FeedView
+      heading={post?.title}
+      subheadings={[{ text: authorName, Icon: User, text2: formattedTime, Icon2: AlarmClock }]}>
+      {session && canEditPost(session) && (
+        <div className="flex flex-wrap w-full gap-2 my-2">
+          <EditPostButton id={post!.id} post={post!} />
+          <DeleteButton type={"post"} callback={deletePost} id={post!.id} />
+        </div>
+      )}
       <MarkDownView allowLinks markdown={post!.content} />
-      <div className="flex justify-between w-full mt-10">
+      <div className="w-full mt-10">
         <BackButton href="/newsletter" searchParams={searchParams} />
-        {session && canEditPost(session) && (
-          <div className="space-x-2">
-            <EditPostButton id={post!.id} post={post!} />
-            <DeletePostButton id={post!.id} />
-          </div>
-        )}
       </div>
     </FeedView>
   );

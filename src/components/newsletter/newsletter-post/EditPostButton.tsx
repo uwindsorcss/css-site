@@ -1,8 +1,7 @@
-import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { Post } from "@prisma/client";
-const PostFormDialog = dynamic(() => import("../PostFormDialog"));
+import PostFormDialog from "../PostFormDialog";
 
 function EditPostButton({ id, post }: { id: number; post: Post }) {
   const values = {
@@ -17,7 +16,8 @@ function EditPostButton({ id, post }: { id: number; post: Post }) {
       initialValues={values}
       triggerButton={
         <Button>
-          <Pencil className="w-5 h-5" />
+          <Pencil size={18} className="mr-1" />
+          {"Edit"}
         </Button>
       }
     />

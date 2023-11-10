@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import Post from "@/components/newsletter/newsletter-post/Post";
+import PostCard from "@/components/newsletter/newsletter-post/PostCard";
 import PaginationButtons from "../ui/pagination-buttons";
 
 interface PostsFeedProps {
@@ -23,7 +23,7 @@ export default async function PostsFeed({ currentPage }: PostsFeedProps) {
   return (
     <>
       {posts.map((post) => (
-        <Post key={post.id} post={post} currentPage={currentPage} />
+        <PostCard key={post.id} post={post} currentPage={currentPage} />
       ))}
       <PaginationButtons href={"/newsletter"} currentPage={currentPage} totalPages={totalPages} />
     </>

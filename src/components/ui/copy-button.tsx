@@ -34,8 +34,8 @@ function CopyButton({
 
   return (
     <Button onClick={() => copyToClipboard()} className={className} size={size} variant={variant}>
-      {Icon && isCopied ? <Check className="w-5 h-5" /> : Icon}
-      <span className="hidden sm:inline text-sm ml-1">{isCopied ? "Copied!" : label}</span>
+      {Icon && isCopied ? <Check size={18} className="mr-1" /> : Icon}
+      <span>{label}</span>
     </Button>
   );
 }

@@ -103,10 +103,10 @@ const formatDateRange = (start: Date, end: Date) => {
   const startTimeFormatted = timeFormatter.format(start);
   const endTimeFormatted = timeFormatter.format(end);
 
-  if (isSameDay) return `${startDateFormatted} from ${startTimeFormatted} to ${endTimeFormatted}`;
+  if (isSameDay) return `${startDateFormatted}, ${startTimeFormatted} - ${endTimeFormatted}`;
 
   const endDateFormatted = dateFormatter.format(end);
-  return `${startDateFormatted} at ${startTimeFormatted} to ${endDateFormatted} at ${endTimeFormatted}`;
+  return `${startDateFormatted}, ${startTimeFormatted} - ${endDateFormatted}, ${endTimeFormatted}`;
 };
 
 const formatShortDateRange = (start: Date, end: Date) =>

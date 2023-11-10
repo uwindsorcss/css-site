@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../..
 import MarkDownView from "@/components/views/MarkDownView";
 import { formatDateRange, getRelativeEventTime } from "@/lib/utils";
 import { Event } from "@prisma/client";
-import { CalendarDays } from "lucide-react";
+import { AlarmClock, CalendarDays, MapPin } from "lucide-react";
 
 interface EventCardProps {
   event: Event;
@@ -32,22 +32,35 @@ function EventCard({ event, currentPage, filter }: EventCardProps) {
             </div>
           </div>
         )}
-        <CardHeader>
-          <CardTitle>{event.title} </CardTitle>
-          <CardDescription className="flex font-medium mb-2">
-            <CalendarDays className="w-4 h-4 mr-1" />
-            <span>
-              {formatDateRange(event.startDate, event.endDate)} (
-              {getRelativeEventTime(event.startDate, event.endDate)})
+        <CardHeader className="flex flex-col gap-1 pb-2">
+          <CardTitle>{event.title}</CardTitle>
+          <CardDescription className="flex font-medium gap-2 flex-col md:flex-row flex-wrap">
+            <span className="flex items-center gap-1">
+              <CalendarDays size={18} />
+              {`${formatDateRange(event.startDate, event.endDate)}`}
             </span>
+            <span className="hidden md:block">•</span>
+            <span className="flex items-center gap-1">
+              <AlarmClock size={18} />
+              {getRelativeEventTime(event.startDate, event.endDate)}
+            </span>
+            {event.location && (
+              <>
+                <span className="hidden md:block">•</span>
+                <span className="flex items-center gap-1">
+                  <MapPin size={18} />
+                  {event.location}
+                </span>
+              </>
+            )}
           </CardDescription>
-          <CardContent className="p-0 text-muted-foreground">
-            <MarkDownView
-              className="prose dark:prose-invert max-w-none w-full break-words"
-              markdown={event.description!}
-            />
-          </CardContent>
         </CardHeader>
+        <CardContent className="mt-0 text-muted-foreground">
+          <MarkDownView
+            className="prose dark:prose-invert max-w-none w-full break-words"
+            markdown={event.description!}
+          />
+        </CardContent>
       </Link>
     </Card>
   );

@@ -1,9 +1,8 @@
-import dynamic from "next/dynamic";
 import { Pencil } from "lucide-react";
 import { Event } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { fromDate } from "@internationalized/date";
-const EventFormDialog = dynamic(() => import("@/components/events/EventFormDialog"));
+import EventFormDialog from "@/components/events/EventFormDialog";
 
 function transformEventToFormValues(event: Event) {
   const startDateETC = fromDate(event.startDate, "America/Toronto");
@@ -40,7 +39,8 @@ function EditEventButton({ id, event }: { id: number; event: Event }) {
       initialValues={initialValues}
       triggerButton={
         <Button>
-          <Pencil className="w-5 h-5" />
+          <Pencil size={18} className="mr-1" />
+          {"Edit"}
         </Button>
       }
     />

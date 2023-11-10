@@ -22,7 +22,7 @@ function RegistrationButton({
   registered,
   notAllowed = false,
   isLoggedOut = true,
-  eventID
+  eventID,
 }: RegistrationButtonProps) {
   const [isRegistering, setIsRegistering] = useState(false);
   const { toast } = useToast();
@@ -32,7 +32,7 @@ function RegistrationButton({
     return (
       <Button onClick={() => signIn()}>
         <Clipboard className="w-4 h-4 mr-2" />
-        <span>Sign In to Register</span>
+        <span>Register</span>
       </Button>
     );
 
@@ -56,14 +56,14 @@ function RegistrationButton({
           : "Are you sure you want to register for this event?"
       }
       actionButtonText="Confirm"
-      pendingButtonText={registered ? "Cancelling..." : "Registering..."}
+      pendingButtonText={registered ? "Unregistering..." : "Registering..."}
       isPending={isRegistering}
       variant={registered ? "destructive" : "default"}
       onAction={async () => {
         if (!full || registered) {
           setIsRegistering(true);
           try {
-            const actionResults = await Promise.allSettled([
+            const [res] = await Promise.allSettled([
               registered ? unregisterForEvent(eventID) : registerForEvent(eventID),
               // Artificial delay for ui feedback: https://www.youtube.com/watch?v=YnksFDAN_GA
               new Promise((resolve) => setTimeout(resolve, 800)),
@@ -71,14 +71,12 @@ function RegistrationButton({
 
             router.refresh();
 
-            const feedback = (
-              actionResults.find((c) => c.status === "fulfilled") as PromiseFulfilledResult<any>
-            ).value;
+            const feedback = res.status === "fulfilled" ? res.value : null;
             const wasSuccessful = feedback?.success;
 
             toast({
               variant: wasSuccessful ? "success" : "destructive",
-              title: wasSuccessful ? registered ? "Unregistered" : "Registered" : "Error",
+              title: wasSuccessful ? (registered ? "Unregistered" : "Registered") : "Error",
               description: wasSuccessful ? feedback.success : feedback?.error,
             });
           } catch (e) {

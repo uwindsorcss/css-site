@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { CalendarDays, Link, MapPin } from "lucide-react";
+import { AlarmClock, CalendarDays, Link, MapPin } from "lucide-react";
 import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
-import DeleteEventButton from "@/components/events/event-post/DeleteEventButton";
 import EditEventButton from "@/components/events/event-post/EditEventButton";
 import RegistrationButton from "@/components/events/event-post/RegistrationButton";
 import ViewRegisteredUsersButton from "@/components/events/event-post/ViewRegisteredUsersButton";
@@ -16,6 +15,8 @@ import {
   isUndergradStudent,
 } from "@/lib/utils";
 import CopyButton from "@/components/ui/copy-button";
+import DeleteButton from "@/components/DeleteButton";
+import { deleteEvent } from "@/lib/actions";
 
 interface PageProps {
   params: { id: string };
@@ -76,31 +77,19 @@ export default async function Post({ params, searchParams }: PageProps) {
   return (
     <FeedView
       heading={event.title}
-      subheading={`${formatDateRange(event.startDate, event.endDate)} ● ${getRelativeEventTime(
-        event.startDate,
-        event.endDate
-      )}`}
-      subheadingIcon={<CalendarDays className="w-4 h-4 mr-1" />}
-      subheading2={event.location ? `Location: ${event.location}` : undefined}
-      subheading2Icon={event.location ? <MapPin className="w-4 h-4 mr-1" /> : undefined}>
-      <MarkDownView allowLinks markdown={event.description || ""} />
-      <div className="flex justify-between w-full mt-10 flex-wrap gap-2">
-        <BackButton href="/events" searchParams={searchParams} />
-        <div className="flex flex-wrap gap-2">
-          {session && canEditEvent(session) && (
-            <>
-              <EditEventButton id={event.id} event={event} />
-              <DeleteEventButton id={event.id} />
-            </>
-          )}
-          <CopyButton
-            string={`${process.env.NEXTAUTH_URL}/events/${event.id}`}
-            label="Share"
-            Icon={<Link className="w-5 h-5 mr-1" />}
-          />
+      subheadings={[
+        {
+          text: `${formatDateRange(event.startDate, event.endDate)}`,
+          Icon: CalendarDays,
+          text2: getRelativeEventTime(event.startDate, event.endDate),
+          Icon2: AlarmClock,
+        },
+        { text: event.location, Icon: MapPin },
+      ]}>
+      <div className="flex flex-wrap w-full gap-2 my-2">
+        <>
           {event.registrationEnabled && (
             <>
-              <ViewRegisteredUsersButton session={session} eventID={event.id} />
               <RegistrationButton
                 eventID={eventId}
                 notAllowed={userID && !isUndergradStudent(session)}
@@ -108,9 +97,25 @@ export default async function Post({ params, searchParams }: PageProps) {
                 registered={registered !== null}
                 full={event.capacity !== null && event._count?.EventRegistration === event.capacity}
               />
+              <ViewRegisteredUsersButton session={session} eventID={event.id} />
             </>
           )}
-        </div>
+          <CopyButton
+            string={`${process.env.NEXTAUTH_URL}/events/${event.id}`}
+            label="Share"
+            Icon={<Link size={18} className="mr-1" />}
+          />
+          {session && canEditEvent(session) && (
+            <div className="flex flex-wrap gap-2">
+              <EditEventButton id={event.id} event={event} />
+              <DeleteButton type={"event"} callback={deleteEvent} id={event.id} />
+            </div>
+          )}
+        </>
+      </div>
+      <MarkDownView allowLinks markdown={event.description || ""} />
+      <div className="w-full mt-10">
+        <BackButton href="/events" searchParams={searchParams} />
       </div>
     </FeedView>
   );
