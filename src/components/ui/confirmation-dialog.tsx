@@ -2,7 +2,6 @@
 
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -12,6 +11,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "./button";
 
 interface ConfirmationDialogProps {
   children: React.ReactNode;
@@ -21,7 +22,7 @@ interface ConfirmationDialogProps {
   isPending?: boolean;
   actionButtonText: string;
   pendingButtonText?: string;
-  onAction: () => void;
+  onAction: () => Promise<void> | void;
 }
 
 function ConfirmationDialog({
@@ -34,8 +35,15 @@ function ConfirmationDialog({
   isPending = false,
   onAction,
 }: ConfirmationDialogProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleAction = async () => {
+    await onAction();
+    setIsOpen(false);
+  };
+
   return (
-    <AlertDialog>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -44,10 +52,10 @@ function ConfirmationDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant={variant} onClick={onAction} disabled={isPending}>
+          <Button variant={variant} onClick={handleAction} disabled={isPending}>
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {isPending ? pendingButtonText : actionButtonText}
-          </AlertDialogAction>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

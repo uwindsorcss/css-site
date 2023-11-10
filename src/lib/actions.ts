@@ -294,17 +294,19 @@ async function deleteEvent(id: number) {
   redirect(`/events?success=${encodeURIComponent("Event deleted successfully.")}`);
 }
 
-async function registerForEvent(eventId: number, userId: number) {
+async function registerForEvent(eventId: number) {
   const session = await getSession();
-  if (!session) throw new Error("You must be logged in to register for events.");
+  const userId = session?.user.id;
+
+  if (!session) return { error: "You must be logged in to register for events." };
 
   const event = await prisma.event.findUnique({ where: { id: eventId } });
-  if (!event) throw new Error("Event not found.");
+  if (!event) return { error: "Event not found." };
 
-  if (!event.registrationEnabled) throw new Error("Event is not open for registration.");
+  if (!event.registrationEnabled) return { error: "Registration is not enabled for this event." };
 
   if (!isUndergradStudent(session))
-    throw new Error("You must be an undergraduate student to register for events.");
+    return { error: "You must be an undergraduate student to register for events." };
 
   const existingRegistration = await prisma.eventRegistration.findFirst({
     where: {
@@ -313,7 +315,7 @@ async function registerForEvent(eventId: number, userId: number) {
     },
   });
 
-  if (existingRegistration) throw new Error("You are already registered for this event.");
+  if (existingRegistration) return { error: "You are already registered for this event." };
 
   const registrations = await prisma.eventRegistration.count({
     where: {
@@ -322,7 +324,7 @@ async function registerForEvent(eventId: number, userId: number) {
   });
 
   if (event.capacity !== null && registrations >= event.capacity)
-    throw new Error("Event is full. Please try again later.");
+    return { error: "This event is at full capacity." };
 
   await prisma.eventRegistration.create({
     data: {
@@ -330,12 +332,23 @@ async function registerForEvent(eventId: number, userId: number) {
       user: { connect: { id: userId } },
     },
   });
-  redirect(`/events/${eventId}?success=${encodeURIComponent("You've registered successfully.")}`);
+  return { success: "You've been registered for this event!" };
 }
 
-async function unregisterForEvent(eventId: number, userId: number) {
+async function unregisterForEvent(eventId: number) {
   const session = await getSession();
-  if (!session) throw new Error("You must be logged in to unregister for events.");
+  const userId = session?.user.id;
+
+  if (!session) return { error: "You must be logged in to unregister from events." };
+
+  const existingRegistration = await prisma.eventRegistration.findFirst({
+    where: {
+      eventId,
+      userId,
+    },
+  });
+
+  if (!existingRegistration) return { error: "You are not registered for this event." };
 
   await prisma.eventRegistration.deleteMany({
     where: {
@@ -343,7 +356,7 @@ async function unregisterForEvent(eventId: number, userId: number) {
       userId,
     },
   });
-  redirect(`/events/${eventId}?success=${encodeURIComponent("You've unregistered successfully.")}`);
+  return { success: "You've been unregistered from this event!" };
 }
 
 // Post Actions
