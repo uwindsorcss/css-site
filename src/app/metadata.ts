@@ -1,54 +1,53 @@
 import type { Metadata } from "next";
 
-const title = "Computer Science Society";
-const description =
-  "A student-run organization committed to provide a community for Computer Science students.";
-const url = "https://css.uwindsor.ca";
-
 export const metadataObject: Metadata = {
   title: {
-    template: `%s | ${title}`,
-    default: title,
+    template: "%s | Computer Science Society",
+    default: "Computer Science Society",
   },
-  viewport: {
-    width: "device-width",
-    minimumScale: 1,
-  },
-  description: description,
+  description:
+    "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
-  themeColor: "#0f1627",
   metadataBase: new URL(`${process.env.NEXTAUTH_URL}`),
   openGraph: {
     type: "website",
-    url: url,
-    title: title,
-    description: description,
+    url: "https://css.uwindsor.ca",
+    title: "Computer Science Society",
+    description:
+      "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
     images: "/images/css-logo-shield.png",
   },
   twitter: {
     card: "app",
-    title: title,
-    description: description,
+    title: "Computer Science Society",
+    description:
+      "A student-run organization that aims to provide a community for Computer Science students at the University of Windsor.",
     creator: "@UWindsorCSS",
     images: {
       url: `${process.env.NEXTAUTH_URL}/images/css-logo-shield.png`,
-      alt: title,
+      alt: "Computer Science Society",
     },
     app: {
-      name: title,
+      name: "Computer Science Society",
       id: {
-        iphone: url,
-        ipad: url,
-        googleplay: url,
+        iphone: "https://css.uwindsor.ca",
+        ipad: "https://css.uwindsor.ca",
+        googleplay: "https://css.uwindsor.ca",
       },
       url: {
-        iphone: url,
-        ipad: url,
+        iphone: "https://css.uwindsor.ca",
+        ipad: "https://css.uwindsor.ca",
       },
     },
   },
+};
+
+export const viewportObject = {
+  width: "device-width",
+  minimumScale: 1,
+  themeColor: "#141a2f",
 };

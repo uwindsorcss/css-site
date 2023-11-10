@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { Session, getServerSession } from "next-auth";
 import { signIn as nextAuthSignIn } from "next-auth/react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { twMerge } from "tailwind-merge";
 import { Role } from "@prisma/client";
 import { DateFormatter } from "@internationalized/date";

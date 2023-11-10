@@ -5,10 +5,11 @@ import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
-import { metadataObject } from "./metadata";
+import { metadataObject, viewportObject } from "./metadata";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = metadataObject;
+export const viewport = viewportObject;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
