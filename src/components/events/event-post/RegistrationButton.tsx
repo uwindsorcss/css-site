@@ -9,62 +9,59 @@ import { signIn } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
+const DisabledButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
+  <Button disabled {...props} className="select-none">
+    <Clipboard size={20} className="mr-1" />
+    {children}
+  </Button>
+);
+
 interface RegistrationButtonProps {
-  full: boolean;
-  registered: boolean;
-  notAllowed?: boolean;
-  isLoggedOut?: boolean;
   eventID: number;
+  isFull: boolean;
+  isRegistered: boolean;
+  isNotAllowed?: boolean;
+  isLoggedOut?: boolean;
+  isExpired?: boolean;
 }
 
 function RegistrationButton({
-  full,
-  registered,
-  notAllowed = false,
-  isLoggedOut = true,
   eventID,
+  isFull,
+  isRegistered,
+  isNotAllowed = false,
+  isLoggedOut = true,
+  isExpired = false,
 }: RegistrationButtonProps) {
   const [isRegistering, setIsRegistering] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
-  if (isLoggedOut)
-    return (
-      <Button onClick={() => signIn()}>
-        <Clipboard className="w-4 h-4 mr-2" />
-        <span>Register</span>
-      </Button>
-    );
+  if (isLoggedOut) return <Button onClick={signIn}><Clipboard size={20} className="mr-1" /> Register</Button>;
+  if (isNotAllowed) return <DisabledButton>Not Allowed</DisabledButton>;
+  if (isExpired) return <DisabledButton>Expired</DisabledButton>;
 
-  if (notAllowed)
-    return (
-      <Button disabled>
-        <Clipboard className="w-4 h-4 mr-2" />
-        <span>Not Allowed</span>
-      </Button>
-    );
-
-  const ButtonText = registered ? "Unregister" : full ? "Full" : "Register";
-  const ButtonIcon = registered ? ClipboardX : full ? CircleSlash : Clipboard;
+  const ButtonText = isRegistered ? "Unregister" : isFull ? "Full" : "Register";
+  const ButtonIcon = isRegistered ? ClipboardX : isFull ? CircleSlash : Clipboard;
 
   return (
     <ConfirmationDialog
-      title={registered ? "Cancel Registration" : "Register"}
+      title={isRegistered ? "Cancel Registration" : "Register"}
       description={
-        registered
+        isRegistered
           ? "Are you sure you want to cancel your registration for this event?"
           : "Are you sure you want to register for this event?"
       }
       actionButtonText="Confirm"
-      pendingButtonText={registered ? "Unregistering..." : "Registering..."}
+      pendingButtonText={isRegistered ? "Unregistering..." : "Registering..."}
       isPending={isRegistering}
-      variant={registered ? "destructive" : "default"}
+      variant={isRegistered ? "destructive" : "default"}
       onAction={async () => {
-        if (!full || registered) {
+        if (!isFull || isRegistered) {
           setIsRegistering(true);
           try {
             const [res] = await Promise.allSettled([
-              registered ? unregisterForEvent(eventID) : registerForEvent(eventID),
+              isRegistered ? unregisterForEvent(eventID) : registerForEvent(eventID),
               // Artificial delay for ui feedback: https://www.youtube.com/watch?v=YnksFDAN_GA
               new Promise((resolve) => setTimeout(resolve, 800)),
             ]);
@@ -76,7 +73,7 @@ function RegistrationButton({
 
             toast({
               variant: wasSuccessful ? "success" : "destructive",
-              title: wasSuccessful ? (registered ? "Unregistered" : "Registered") : "Error",
+              title: wasSuccessful ? (isRegistered ? "Unregistered" : "Registered") : "Error",
               description: wasSuccessful ? feedback.success : feedback?.error,
             });
           } catch (e) {
@@ -91,8 +88,8 @@ function RegistrationButton({
         }
       }}>
       <Button
-        variant={registered || full ? "destructive" : "default"}
-        disabled={full && !registered}>
+        variant={isRegistered || isFull ? "destructive" : "default"}
+        disabled={isFull && !isRegistered}>
         <ButtonIcon size={20} className="mr-1" /> {ButtonText}
       </Button>
     </ConfirmationDialog>

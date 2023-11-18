@@ -308,6 +308,9 @@ async function registerForEvent(eventId: number) {
   if (!isUndergradStudent(session))
     return { error: "You must be an undergraduate student to register for events." };
 
+  if (event.endDate < new Date())
+    return { error: "You cannot register for an event that has already ended." };
+
   const existingRegistration = await prisma.eventRegistration.findFirst({
     where: {
       eventId,
@@ -341,6 +344,18 @@ async function unregisterForEvent(eventId: number) {
 
   if (!session) return { error: "You must be logged in to unregister from events." };
 
+  const event = await prisma.event.findUnique({ where: { id: eventId } });
+  if (!event) return { error: "Event not found." };
+
+  if (!event.registrationEnabled)
+    return {
+      error:
+        "The registration has been disabled for this event. If you would like to unregister, please contact a CSS member.",
+    };
+
+  if (event.endDate < new Date())
+    return { error: "You cannot unregister from an event that has already ended." };
+
   const existingRegistration = await prisma.eventRegistration.findFirst({
     where: {
       eventId,
@@ -348,7 +363,7 @@ async function unregisterForEvent(eventId: number) {
     },
   });
 
-  if (!existingRegistration) return { error: "You are not registered for this event." };
+  if (!existingRegistration) return { error: "You're not registered for this event." };
 
   await prisma.eventRegistration.deleteMany({
     where: {
