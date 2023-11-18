@@ -25,7 +25,7 @@ async function CallToActionSection({ content }: CallToActionSectionProps) {
   return (
     <Section className="flex flex-col items-center justify-center w-full">
       <div className="relative flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-secondary text-secondary-foreground rounded-md w-full max-w-[1000px] py-24 px-12">
-        <div className="absolute w-[100px] h-[115px] sm:w-[125px] sm:h-[150px] top-[-105px] right-[-20px] sm:top-[-140px] sm:right-[-40px]">
+        <div className="absolute w-[100px] h-[115px] sm:w-[125px] sm:h-[150px] top-[-105px] right-[-15px] sm:top-[-140px] sm:right-[-40px]">
           <Image src="/images/chip.png" alt="Chip" fill />
         </div>
         <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">{content.heading}</h2>

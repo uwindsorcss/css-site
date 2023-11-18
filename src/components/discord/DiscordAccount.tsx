@@ -12,11 +12,9 @@ async function DiscordAccount({ account }: DiscordAccountProps) {
 
   return (
     <div className="inline-flex font-semibold text-foreground items-center gap-2 mt-2">
-      <Avatar>
-        <AvatarImage src={avatarUrl} alt={"Discord Avatar"} className="w-6 h-6 mr-2" />
-        <AvatarFallback>
-          <Image src={"/images/discord-avatar.png"} alt={"Discord Avatar"} fill />
-        </AvatarFallback>
+      <Avatar className="w-10 h-10">
+        <AvatarImage src={avatarUrl} alt={"Discord Avatar"} />
+        <AvatarFallback className="w-full h-full skeleton-card" />
       </Avatar>
       {username}
     </div>

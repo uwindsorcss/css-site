@@ -3,6 +3,7 @@ import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
@@ -93,15 +94,16 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
     return (
       <li>
         <NavigationMenuLink asChild>
-          <a
+          <Link
             ref={ref}
             target={props.href?.startsWith("http") ? "_blank" : undefined}
             rel="noopener noreferrer"
+            href={props.href ?? "#"}
             className={cn(
               "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
               className
             )}
-            {...props}>
+          >
             <div className="inline-flex text-sm font-medium leading-none">
               {title}
               {props.href?.startsWith("http") && (
@@ -109,7 +111,7 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
               )}
             </div>
             <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-          </a>
+          </Link>
         </NavigationMenuLink>
       </li>
     );
