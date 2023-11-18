@@ -51,7 +51,7 @@ function parseTextWithLinks(text: string) {
 
 async function DiscordPage() {
   return (
-    <div className="flex flex-col justify-center h-full flex-1">
+    <div className="flex flex-1 flex-col justify-center sm:items-center h-full w-full">
       <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3">
         <div className="flex justify-end">
           <Popover>
@@ -75,7 +75,7 @@ async function DiscordPage() {
           </div>
           <CardTitle className="flex flex-col justify-center items-center gap-2">
             <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
-            <div className="flex gap-5">
+            <div className="flex flex-wrap gap-5 justify-center">
               <DiscordMemberCounts cardInfo={discordContent.cardInfo} />
             </div>
           </CardTitle>
