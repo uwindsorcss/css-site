@@ -1,7 +1,6 @@
 import { DiscordAccount } from "@prisma/client";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { getUpdatedDiscordAccount } from "@/lib/actions";
-import Image from "next/image";
 
 interface DiscordAccountProps {
   account: DiscordAccount;
