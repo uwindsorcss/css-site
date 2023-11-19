@@ -44,13 +44,11 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
     <Link
       key={id}
       href={linkUrl}
-      className="group flex flex-col gap-2 p-6 w-full bg-card text-card-foreground rounded-md border border-border transition-border duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236] hover:border-gray-600">
+      className="group relative flex flex-col gap-2 p-6 w-full bg-card text-card-foreground rounded-md border border-border transition-border duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236] hover:border-gray-600">
       {isNewContent(createdAt) && (
-        <div className="relative w-full pb-1">
-          <span className="absolute top-0 right-0 bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr">
-            New
-          </span>
-        </div>
+        <span className="absolute top-0 right-0 bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr">
+          New
+        </span>
       )}
       <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
       <div className="flex font-medium gap-2 flex-col md:flex-row flex-wrap text-sm text-muted-foreground">
