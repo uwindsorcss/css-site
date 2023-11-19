@@ -37,9 +37,14 @@ function RegistrationButton({
   const { toast } = useToast();
   const router = useRouter();
 
-  if (isLoggedOut) return <Button onClick={signIn}><Clipboard size={20} className="mr-1" /> Register</Button>;
-  if (isNotAllowed) return <DisabledButton>Not Allowed</DisabledButton>;
   if (isExpired) return <DisabledButton>Expired</DisabledButton>;
+  if (isLoggedOut)
+    return (
+      <Button onClick={signIn}>
+        <Clipboard size={20} className="mr-1" /> Register
+      </Button>
+    );
+  if (isNotAllowed) return <DisabledButton>Not Allowed</DisabledButton>;
 
   const ButtonText = isRegistered ? "Unregister" : isFull ? "Full" : "Register";
   const ButtonIcon = isRegistered ? ClipboardX : isFull ? CircleSlash : Clipboard;
