@@ -95,7 +95,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, any>(function DateTim
           <DateTimePickerPrimitive
             ref={ref}
             value={
-              props.initialValues
+              field.value
                 ? new CalendarDateTime(...convertDate(field.value, false))
                 : undefined
             }
