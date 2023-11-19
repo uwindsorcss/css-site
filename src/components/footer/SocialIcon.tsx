@@ -1,17 +1,18 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { LucideIcon } from "lucide-react";
 
 interface SocialIconProps {
   href: string;
-  icon: any;
+  Icon: LucideIcon;
 }
 
-const SocialIcon = ({ href, icon }: SocialIconProps) => {
+const SocialIcon = ({ href, Icon }: SocialIconProps) => {
   return (
-    <Button variant="ghost" size="icon">
+    <Button variant="ghost" size="icon" asChild>
       <Link target="_blank" rel="noopener noreferrer" href={href}>
-        {React.createElement(icon, { className: "w-5 h-5" })}
+        <Icon size={20} />
       </Link>
     </Button>
   );
