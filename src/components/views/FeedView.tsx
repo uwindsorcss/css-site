@@ -46,7 +46,7 @@ const FeedView = ({ children, heading, subheadings }: FeedViewProps) => {
     <div className="flex flex-col items-center justify-center w-full gap-2 max-w-2xl mx-auto">
       {(heading || (subheadings && subheadings.length > 0)) && (
         <div className="w-full flex flex-col gap-2">
-          {heading && <h1 className="text-2xl md:text-3xl font-bold">{heading}</h1>}
+          {heading && <h1 className="text-xl sm:text-2xl font-bold">{heading}</h1>}
           {subheadings?.map(({ text, Icon, text2, Icon2 }, index) => (
             <Subheading key={index} text={text} Icon={Icon} text2={text2} Icon2={Icon2} />
           ))}

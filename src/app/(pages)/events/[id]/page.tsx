@@ -95,7 +95,9 @@ export default async function Post({ params, searchParams }: PageProps) {
                 isLoggedOut={!userID}
                 isRegistered={registered !== null}
                 isNotAllowed={!userID || !isUndergradStudent(session)}
-                isFull={event.capacity !== null && event._count?.EventRegistration === event.capacity}
+                isFull={
+                  event.capacity !== null && event._count?.EventRegistration === event.capacity
+                }
                 isExpired={event.endDate < new Date()}
               />
               <ViewRegisteredUsersButton session={session} eventID={event.id} />

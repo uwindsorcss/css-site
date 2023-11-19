@@ -74,7 +74,9 @@ async function DiscordPage() {
             <SiDiscord className="w-10 h-10" />
           </div>
           <CardTitle className="flex flex-col justify-center items-center gap-2">
-            <span className="text-xl font-semibold text-center">{discordContent.cardInfo.title}</span>
+            <span className="text-xl font-semibold text-center">
+              {discordContent.cardInfo.title}
+            </span>
             <div className="flex flex-wrap gap-5 justify-center">
               <DiscordMemberCounts cardInfo={discordContent.cardInfo} />
             </div>

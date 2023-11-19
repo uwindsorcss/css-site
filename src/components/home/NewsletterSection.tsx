@@ -1,9 +1,9 @@
 import Section from "./Section";
 import { Card, CardTitle } from "../ui/card";
-import PostComponent from "@/components/newsletter/newsletter-post/PostCard";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import PostCard from "../PostCard";
 
 interface NewsletterSectionProps {
   content: {
@@ -36,7 +36,7 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
         ) : (
           <>
             {posts.map((post) => (
-              <PostComponent key={post.id} post={post} truncate animateOnHover />
+              <PostCard key={post.id} post={post} truncate />
             ))}
           </>
         )}

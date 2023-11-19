@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
 import PaginationButtons from "../../ui/pagination-buttons";
 import { redirect } from "next/navigation";
-import EventCard from "./EventCard";
+import PostCard from "@/components/PostCard";
 
 interface EventsFeedProps {
   page: string | undefined;
@@ -34,23 +34,20 @@ async function EventsFeed({ page, filter }: EventsFeedProps) {
     },
   });
 
+  if (events === null || events.length === 0)
+    return <h2 className="text-2xl text-center font-bold mt-10">No events found</h2>;
+
   return (
     <>
-      {events === null || events.length === 0 ? (
-        <h2 className="text-2xl text-center font-bold mt-10">No events found</h2>
-      ) : (
-        <>
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} currentPage={currentPage} filter={filter} />
-          ))}
-          <PaginationButtons
-            href={"/events"}
-            currentPage={currentPage}
-            filter={filter}
-            totalPages={totalPages}
-          />
-        </>
-      )}
+      {events.map((event) => (
+        <PostCard key={event.id} post={event} currentPage={currentPage} filter={filter} truncate />
+      ))}
+      <PaginationButtons
+        href={"/events"}
+        currentPage={currentPage}
+        filter={filter}
+        totalPages={totalPages}
+      />
     </>
   );
 }

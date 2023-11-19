@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
-import ListView from "@/components/events/list-view/ListView";
+import EventsFilter from "@/components/events/list-view/EventsFilter";
+import EventsFeed from "@/components/events/list-view/EventsFeed";
 import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
 import { canEditEvent, getSession } from "@/lib/utils";
@@ -14,12 +15,13 @@ export const metadata: Metadata = {
 };
 
 interface EventsProps {
-  searchParams: URLSearchParams & { page?: string; view?: string };
+  searchParams: URLSearchParams & { page?: string; view?: string; filter?: string };
 }
 
 export default async function EventsPage({ searchParams }: EventsProps) {
   const view = searchParams.view;
   const session = await getSession();
+  const { page, filter } = searchParams;
 
   return (
     <>
@@ -41,10 +43,15 @@ export default async function EventsPage({ searchParams }: EventsProps) {
         <TabsContent
           value="list"
           className="grid grid-cols-1 gap-4 break-words max-w-3xl w-full mx-auto">
-          <ListView searchParams={searchParams} />
+          <div className="grid grid-cols-1 gap-6">
+            <EventsFilter filter={filter} />
+            <Suspense fallback={eventsSkeleton}>
+              <EventsFeed page={page} filter={filter} />
+            </Suspense>
+          </div>
         </TabsContent>
         <TabsContent value="calendar">
-          <Suspense fallback={<div className="text-center">Loading...</div>}>
+          <Suspense>
             <CalendarView />
           </Suspense>
         </TabsContent>
@@ -52,3 +59,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
     </>
   );
 }
+
+const eventsSkeleton = Array.from({ length: 3 }, (_, i) => (
+  <div key={i} className="w-full h-60 bg-card rounded-md border border-border skeleton-card" />
+));

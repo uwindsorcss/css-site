@@ -87,6 +87,10 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         shimmer: "shimmer 1s ease-out infinite",
       },
+      lineClamp: {
+        7: "7",
+        8: "8",
+      },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
