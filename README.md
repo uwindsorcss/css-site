@@ -1,5 +1,11 @@
 # CSS Site
 
+## Overview
+
+This repository contains the source code for the University of Windsor Computer Science Society's website, developed with the Next.js framework. A key feature is the integration of Discord authorization, which is specifically designed to allow only University of Windsor students to join our Discord server, ensuring a secure and student-exclusive community. The site also provides up-to-date information on events and activities, alongside regularly published newsletters.
+
+![css-site-preview](https://github.com/uwindsorcss/css-site/assets/60056206/cc065bad-660a-462a-94ca-7bacfc022a53)
+
 ## Development Setup
 
 ### Prerequisites
