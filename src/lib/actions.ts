@@ -254,6 +254,7 @@ async function createEvent(event: EventFormData) {
       title: event.title,
       description: event.description,
       registrationEnabled: event.registrable,
+      visible: event.visible,
       capacity: event.capacity,
       location: event.location,
       startDate: event.startDate,
@@ -274,6 +275,7 @@ async function updateEvent(event: EventFormData, id: number) {
       title: event.title,
       description: event.description,
       registrationEnabled: event.registrable,
+      visible: event.visible,
       capacity: event.capacity,
       location: event.location,
       startDate: event.startDate,
@@ -303,7 +305,8 @@ async function registerForEvent(eventId: number) {
   const event = await prisma.event.findUnique({ where: { id: eventId } });
   if (!event) return { error: "Event not found." };
 
-  if (!event.registrationEnabled) return { error: "Registration is not enabled for this event." };
+  if (!event.registrationEnabled || !event.visible)
+    return { error: "Registration is not enabled for this event." };
 
   if (!isUndergradStudent(session))
     return { error: "You must be an undergraduate student to register for events." };
@@ -347,7 +350,7 @@ async function unregisterForEvent(eventId: number) {
   const event = await prisma.event.findUnique({ where: { id: eventId } });
   if (!event) return { error: "Event not found." };
 
-  if (!event.registrationEnabled)
+  if (!event.registrationEnabled || !event.visible)
     return {
       error:
         "The registration has been disabled for this event. If you would like to unregister, please contact a CSS member.",

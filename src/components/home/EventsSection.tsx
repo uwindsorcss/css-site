@@ -44,6 +44,9 @@ async function EventsSection({ content }: EventsSectionProps) {
     orderBy: {
       startDate: "desc",
     },
+    where: {
+      visible: true,
+    },
   });
 
   const { heading, subheading } = getEventsContent(events, content);

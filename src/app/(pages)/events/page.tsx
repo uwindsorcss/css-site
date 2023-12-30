@@ -46,13 +46,13 @@ export default async function EventsPage({ searchParams }: EventsProps) {
           <div className="grid grid-cols-1 gap-6">
             <EventsFilter filter={filter} />
             <Suspense fallback={eventsSkeleton}>
-              <EventsFeed page={page} filter={filter} />
+              <EventsFeed page={page} filter={filter} session={session} />
             </Suspense>
           </div>
         </TabsContent>
         <TabsContent value="calendar">
           <Suspense>
-            <CalendarView />
+            <CalendarView session={session} />
           </Suspense>
         </TabsContent>
       </Tabs>

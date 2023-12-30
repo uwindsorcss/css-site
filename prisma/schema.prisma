@@ -97,6 +97,7 @@ model Event {
   location            String?
   capacity            Int?
   registrationEnabled Boolean             @default(false)
+  visible             Boolean             @default(true)
   thumbnailImage      ThumbnailImage?
   eventImages         EventImage[]
   author              User?               @relation(fields: [authorId], references: [id])

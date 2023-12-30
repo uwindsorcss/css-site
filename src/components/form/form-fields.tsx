@@ -95,9 +95,7 @@ export const DateTimePicker = forwardRef<HTMLInputElement, any>(function DateTim
           <DateTimePickerPrimitive
             ref={ref}
             value={
-              field.value
-                ? new CalendarDateTime(...convertDate(field.value, false))
-                : undefined
+              field.value ? new CalendarDateTime(...convertDate(field.value, false)) : undefined
             }
             granularity={"minute"}
             onChange={field.onChange}

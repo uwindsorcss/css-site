@@ -6,7 +6,8 @@
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 1",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"],
+    "visible": true
   },
   {
     "title": "Event 2",
@@ -15,7 +16,8 @@
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 2",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"],
+    "visible": false
   },
   {
     "title": "Event 3",
@@ -24,7 +26,8 @@
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 3",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"],
+    "visible": true
   },
   {
     "title": "Event 4",
@@ -33,6 +36,7 @@
     "endDate": "2023-08-28T13:00:00.000Z",
     "location": "Location 4",
     "thumbnailUrl": "/images/placeholder/480x360.png",
-    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"]
+    "imageUrls": ["/images/placeholder/480x360.png", "/images/placeholder/480x360.png"],
+    "visible": true
   }
 ]

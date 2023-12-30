@@ -24,12 +24,14 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const session = await getSession();
   const eventId = parseInt(params.id);
   const event = await prisma.event.findUnique({
     where: { id: eventId },
   });
 
-  if (!event) return { title: "Event Not Found" };
+  if (!event || (!event.visible && (!session || !canEditEvent(session))))
+    return { title: "Event Not Found" };
 
   const descriptionSnippet = event.description?.substring(0, 200) ?? "";
 
@@ -59,7 +61,7 @@ export default async function Post({ params, searchParams }: PageProps) {
     },
   });
 
-  if (!event) {
+  if (!event || (!event.visible && (!session || !canEditEvent(session)))) {
     return (
       <div className="text-center font-bold text-2xl mt-10 text-muted-foreground">
         Event Not Found

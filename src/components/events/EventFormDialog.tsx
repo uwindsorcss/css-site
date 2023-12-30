@@ -22,6 +22,7 @@ const eventSchema = z.object({
     })
     .min(1),
   registrable: z.boolean().default(false),
+  visible: z.boolean().default(true),
   capacity: z.coerce.number().min(0).optional(),
   location: z.string().optional(),
   startDate: z.object(
@@ -61,6 +62,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
     schema: eventSchema,
     defaultValues: initialValues || {
       registrable: false,
+      visible: true,
       capacity: 0,
     },
   });
@@ -75,6 +77,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       title: data.title,
       description: data.description,
       registrable: data.registrable,
+      visible: data.visible,
       capacity: data.capacity,
       location: data.location,
       startDate,
@@ -110,6 +113,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       <Input label="Location" type="text" {...form.register("location")} />
       <Input label="Capacity" type="number" {...form.register("capacity")} />
       <Checkbox label="Allow Registration" {...form.register("registrable")} />
+      <Checkbox label="Visible" {...form.register("visible")} />
     </FormDialog>
   );
 }

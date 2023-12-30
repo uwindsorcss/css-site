@@ -1,7 +1,7 @@
 import Link from "next/link";
 import MarkDownView from "@/components/views/MarkDownView";
 import { formatDateRange, getRelativeEventTime, getRelativeTimeDiff, cn } from "@/lib/utils";
-import { AlarmClock, CalendarDays, LucideIcon, MapPin, User } from "lucide-react";
+import { AlarmClock, CalendarDays, EyeOff, LucideIcon, MapPin, User } from "lucide-react";
 import { Event, Post } from "@prisma/client";
 
 interface PostWithAuthor extends Post {
@@ -45,11 +45,19 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
       key={id}
       href={linkUrl}
       className="group relative flex flex-col gap-2 p-6 w-full bg-card text-card-foreground rounded-md border border-border transition-border duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236] hover:border-gray-600">
-      {isNewContent(createdAt) && (
-        <span className="absolute top-0 right-0 bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr">
-          New
+      {/* Visibility and New Indicators */}
+      {"visible" in post && !post.visible ? (
+        <span className="absolute top-0 right-0 bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr w-11 flex items-center justify-center">
+          <EyeOff size={16} />
         </span>
+      ) : (
+        isNewContent(createdAt) && (
+          <span className="absolute top-0 right-0 bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr">
+            New
+          </span>
+        )
       )}
+
       <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
       <div className="flex font-medium gap-2 flex-col md:flex-row flex-wrap text-sm text-muted-foreground">
         <PostInfo post={post} />
@@ -59,7 +67,10 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
           <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-card opacity-100 group-hover:opacity-0 duration-300 ease-in-out transition-all" />
         )}
         <MarkDownView
-          className={cn("prose dark:prose-invert max-w-none w-full break-words", truncateContent && "line-clamp-7 sm:line-clamp-8")}
+          className={cn(
+            "prose dark:prose-invert max-w-none w-full break-words",
+            truncateContent && "line-clamp-7 sm:line-clamp-8"
+          )}
           markdown={truncateContent ? content!.slice(0, 400) + "..." : content ?? ""}
         />
       </div>
@@ -84,8 +95,8 @@ const PostInfo = ({ post }: { post: Event | Post | PostWithAuthor }) => {
           isEvent
             ? formatDateRange(post.startDate, post.endDate)
             : "author" in post && post.author && post.author.name
-              ? post.author.name
-              : "CSS Team"
+            ? post.author.name
+            : "CSS Team"
         }
       />
       <span className="hidden sm:block">•</span>

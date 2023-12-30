@@ -2,13 +2,16 @@ import { prisma } from "@/lib/db";
 import PaginationButtons from "../../ui/pagination-buttons";
 import { redirect } from "next/navigation";
 import PostCard from "@/components/PostCard";
+import { Session } from "next-auth";
+import { canEditEvent } from "@/lib/utils";
 
 interface EventsFeedProps {
   page: string | undefined;
   filter: string | undefined;
+  session: Session | null;
 }
 
-async function EventsFeed({ page, filter }: EventsFeedProps) {
+async function EventsFeed({ page, filter, session }: EventsFeedProps) {
   const eventsPerPage = 5;
   const totalPages = Math.ceil((await prisma.event.count()) / eventsPerPage);
   const currentPage = Math.min(Math.max(parseInt(page ?? "1"), 1), totalPages);
@@ -17,9 +20,14 @@ async function EventsFeed({ page, filter }: EventsFeedProps) {
   const events = await prisma.event.findMany({
     skip: (currentPage - 1) * eventsPerPage,
     take: eventsPerPage,
-    orderBy: {
-      startDate: "desc",
-    },
+    orderBy: [
+      {
+        startDate: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
     where: {
       startDate:
         filter === "Past"
@@ -31,6 +39,7 @@ async function EventsFeed({ page, filter }: EventsFeedProps) {
               gt: new Date(),
             }
           : undefined,
+      visible: session && canEditEvent(session) ? undefined : true,
     },
   });
 

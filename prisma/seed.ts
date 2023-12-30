@@ -103,6 +103,7 @@ async function seed() {
           location: event.location,
           capacity: event.capacity === null ? null : Number(event.capacity),
           registrationEnabled: event.registration_enabled === "t" ? true : false,
+          visible: event.visible ?? true,
           createdAt: new Date(event.created_at),
           updatedAt: new Date(event.updated_at),
         },
