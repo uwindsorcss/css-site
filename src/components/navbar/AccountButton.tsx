@@ -2,7 +2,7 @@
 import { signOut } from "next-auth/react";
 import React from "react";
 import { Button } from "../ui/button";
-import { LogOut, User } from "lucide-react";
+import { LogOut, Shield, User } from "lucide-react";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import {
   DropdownMenu,
@@ -43,7 +43,7 @@ function AccountButton({ session }: { session: Session | null }) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <div className="flex items-center px-2 py-2">
-            <User className="w-5 h-5" />
+            <User size={20} className="mr-2" />
             <div>
               <DropdownMenuLabel className="pb-0">{name}</DropdownMenuLabel>
               <div className="px-2 text-sm font-semibold text-gray-500">
@@ -53,9 +53,17 @@ function AccountButton({ session }: { session: Session | null }) {
           </div>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
+            {role === Role.admin && (
+              <DropdownMenuItem asChild>
+                <Link href="/admin">
+                  <Shield size={16} className="mr-3" />
+                  <span>Admin Dashboard</span>
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem asChild>
               <Link href="/discord">
-                <SiDiscord className="w-4 h-4 mr-3" />
+                <SiDiscord size={16} className="mr-3" />
                 <span>Discord Account</span>
               </Link>
             </DropdownMenuItem>
