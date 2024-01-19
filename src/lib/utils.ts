@@ -116,6 +116,7 @@ const formatDate = (date: Date) => dateFormatter.format(date);
 
 export {
   getSession,
+  isAdmin,
   signIn,
   canEditEvent,
   canEditPost,
