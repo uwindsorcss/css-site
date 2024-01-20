@@ -44,11 +44,11 @@ function ChipTyping() {
     if (now - lastClicked > coolDown) {
       let word = "";
       let special = false;
-      
+
       if (count in countToWordMap) {
         word = countToWordMap[count];
         special = true;
-      } else if (count > 100 && count % 50 === 0) {
+      } else if (count >= 100 && count % 50 === 0) {
         word = `${count} clicks!`;
         special = true;
       } else word = count % 2 === 0 ? "*Click*" : "*Clack*";
@@ -68,7 +68,7 @@ function ChipTyping() {
   return (
     <div
       onClick={handleClick}
-      className="absolute w-[90px] h-[105px] sm:w-[125px] sm:h-[150px] top-[53px] right-[3%] sm:top-[44px] sm:right-[5%] select-none"
+      className="absolute w-[90px] h-[105px] sm:w-[125px] sm:h-[150px] top-[53px] right-[50%] sm:top-[44px] sm:right-[5%] select-none translate-x-[50%]"
       draggable={false}>
       <Image src={`/images/chip-${currentImage}.png`} alt="Chip" fill draggable={false} />
       <AnimatePresence>

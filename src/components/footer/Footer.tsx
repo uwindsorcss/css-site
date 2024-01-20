@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground py-14 px-5 text-center">
+    <footer className="bg-primary text-primary-foreground py-20 px-5 text-center">
       <div className="flex justify-center gap-4 mb-8">
         <SocialIcon href="https://www.linkedin.com/company/uwindsorcss/" Icon={SiLinkedin} />
         <SocialIcon href="https://x.com/UWindsorCSS" Icon={SiX} />
