@@ -24,11 +24,14 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
       <h1 className="text-4xl text-center font-bold">News</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
         {session && canEditPost(session) && (
-          <PostFormDialog triggerButton={
-            <Button size="full">
-              <PlusSquare size={18} className="mr-2" />
-              Create Post
-            </Button>} />
+          <PostFormDialog
+            triggerButton={
+              <Button size="full">
+                <PlusSquare size={18} className="mr-2" />
+                Create Post
+              </Button>
+            }
+          />
         )}
         <Suspense fallback={postsSkeleton}>
           <PostsFeed currentPage={parseInt(page ?? "1")} />
