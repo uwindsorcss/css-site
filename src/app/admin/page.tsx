@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { camelCaseToTitleCase } from "@/lib/utils";
-import { EditRoleDropdown } from "@/components/admin/EditRoleDropdown";
+import { UpdateRoleDropdown } from "@/components/admin/UpdateRoleDropdown";
 import { RemoveUserDialog } from "@/components/admin/RemoveUserDialog";
 import { AddUserDialog } from "@/components/admin/AddUserDialog";
 import { Role } from "@prisma/client";
@@ -50,11 +50,19 @@ export default async function AdminPage() {
                 <TableCell>
                   <div className="flex gap-2 items-center">
                     {camelCaseToTitleCase(user.role)}
-                    <EditRoleDropdown disabled={user.role === Role.admin} currentRole={user.role} />
+                    <UpdateRoleDropdown
+                      disabled={user.role === Role.admin}
+                      userId={user.id}
+                      currentRole={user.role}
+                    />
                   </div>
                 </TableCell>
                 <TableCell className="flex gap-2 text-right justify-end">
-                  <RemoveUserDialog disabled={user.role === Role.admin} />
+                  <RemoveUserDialog
+                    disabled={user.role === Role.admin}
+                    userId={user.id}
+                    userName={user.name || ""}
+                  />
                 </TableCell>
               </TableRow>
             ))}

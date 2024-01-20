@@ -2,6 +2,14 @@ import { forwardRef } from "react";
 import { FieldError } from "./form";
 import { Input as InputPrimitive } from "../ui/input";
 import { Textarea as TextareaPrimitive } from "../ui/textarea";
+import {
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  Select as SelectPrimitive,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { FormField, FormItem as FormItemPrimitive, FormLabel, FormMessage } from "../ui/form";
 import { Checkbox as CheckboxPrimitive } from "../ui/checkbox";
 import { CalendarDateTime } from "@internationalized/date";
@@ -28,13 +36,10 @@ const FormItem = ({ label, name, children }: any) => {
   );
 };
 
-export const Input = forwardRef<HTMLInputElement, InputPropsWClass>(function Input(
-  { label, type = "text", ...props },
-  ref
-) {
+export const Input = forwardRef<HTMLInputElement, InputPropsWClass>(function Input(props, ref) {
   return (
-    <FormItem label={label} name={props.name}>
-      <InputPrimitive type={type} ref={ref} {...props} />
+    <FormItem label={props.label} name={props.name}>
+      <InputPrimitive type={props.type} ref={ref} className={props.className} {...props} />
     </FormItem>
   );
 });
@@ -76,6 +81,33 @@ export const Checkbox = forwardRef<HTMLInputElement, any>(function Checkbox(
           </div>
           <FieldError name={props.name} />
         </FormItemPrimitive>
+      )}
+    />
+  );
+});
+
+export const Select = forwardRef<HTMLSelectElement, any>(function Select(props, ref) {
+  return (
+    <FormField
+      control={props.control}
+      name={props.name}
+      render={({ field }) => (
+        <FormItem label={props.label} name={props.name}>
+          <SelectPrimitive onValueChange={field.onChange}>
+            <SelectTrigger>
+              <SelectValue placeholder={props.placeholder} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {props.options.map((option: any) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </SelectPrimitive>
+        </FormItem>
       )}
     />
   );

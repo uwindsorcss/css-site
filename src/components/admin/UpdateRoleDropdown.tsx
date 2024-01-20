@@ -10,15 +10,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
+import { updateUserRole } from "@/lib/admin-actions";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 
 interface EditRoleDropdownProps {
   currentRole: string;
+  userId: number;
   disabled?: boolean;
 }
 
-export function EditRoleDropdown({ disabled = false, currentRole }: EditRoleDropdownProps) {
+export function UpdateRoleDropdown({
+  disabled = false,
+  userId,
+  currentRole,
+}: EditRoleDropdownProps) {
+  const handleAsync = useAsyncFeedback();
   const [role, setRole] = useState(currentRole);
 
   return (
@@ -31,7 +39,12 @@ export function EditRoleDropdown({ disabled = false, currentRole }: EditRoleDrop
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Role</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value={role} onValueChange={setRole}>
+        <DropdownMenuRadioGroup
+          value={role}
+          onValueChange={(value) => {
+            setRole(value);
+            handleAsync(updateUserRole, userId, value);
+          }}>
           <DropdownMenuRadioItem value="mod">Mod</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="eventEditor">Event Editor</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="postEditor">Post Editor</DropdownMenuRadioItem>

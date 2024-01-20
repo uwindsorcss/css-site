@@ -1,41 +1,37 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+"use client";
+
 import { Button } from "@/components/ui/button";
+import ConfirmationDialog from "../ui/confirmation-dialog";
+import { useState } from "react";
+import { removeUserFromStaff } from "@/lib/admin-actions";
 import { X } from "lucide-react";
+import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 
 interface RemoveUserDialogProps {
   disabled?: boolean;
+  userId: number;
+  userName: string;
 }
 
-export function RemoveUserDialog({ disabled = false }: RemoveUserDialogProps) {
+export function RemoveUserDialog({ disabled = false, userId, userName }: RemoveUserDialogProps) {
+  const handleAsync = useAsyncFeedback();
+  const [isRemoving, setIsRemoving] = useState(false);
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button size={"icon"} disabled={disabled}>
-          <X size={16} />
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
-          <AlertDialogDescription>
-            Are you sure you want to delete this user? This action cannot be undone.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <ConfirmationDialog
+      title={`Remove User`}
+      description={`Are you sure you want to remove ${userName} from the staff team? This action cannot be undone.`}
+      actionButtonText="Remove"
+      pendingButtonText="Removing..."
+      isPending={isRemoving}
+      onAction={async () => {
+        setIsRemoving(true);
+        await handleAsync(removeUserFromStaff, userId);
+        setIsRemoving(false);
+      }}>
+      <Button size={"icon"} disabled={disabled}>
+        <X size={18} />
+      </Button>
+    </ConfirmationDialog>
   );
 }
