@@ -39,9 +39,9 @@ function ChipTyping() {
 
   const handleClick = () => {
     const now = Date.now();
-    setCount(count + 1);
 
     if (now - lastClicked > coolDown) {
+      setCount(count + 1);
       let word = "";
       let special = false;
 
