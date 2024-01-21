@@ -17,12 +17,6 @@ function ChipTyping() {
   const [currentImage, setCurrentImage] = useState<number>(2);
   const [count, setCount] = useState<number>(0);
 
-  const fadeAndFloatAnimation = {
-    initial: { opacity: 1, y: 0 },
-    animate: { opacity: 0, y: -50 },
-    exit: { opacity: 0 },
-  };
-
   const handleAnimationComplete = (completedSpawn: number) => {
     setWords((prevSpawns) => prevSpawns.filter((spawn) => spawn.id !== completedSpawn));
   };
@@ -32,9 +26,20 @@ function ChipTyping() {
     5: "I'm Chip!",
     10: "I'm CSS's mascot!",
     15: "I love typing!",
-    30: "Oh wow, you're still going?",
-    60: "You're really dedicated!",
-    80: "I'm impressed!",
+    30: "Look at me go!",
+    60: "Have you ever seen a cat type?",
+    80: "I love Computers!",
+    110: "I'm a quick typer!",
+    160: "Actually, a typing master!",
+    210: "Typing is my passion!",
+    260: "I'm getting a bit tired...",
+    310: "I'm going to take a break...",
+    320: "Just kidding!",
+    360: "Did you finish your assignment?",
+    410: "I think you should get back to work!",
+    460: "How about you check out our events?",
+    470: "Or maybe the newsletters?",
+    510: "Enjoy the rest of your day!",
   };
 
   const handleClick = () => {
@@ -75,18 +80,17 @@ function ChipTyping() {
         {words.map((spawn) => (
           <motion.div
             key={spawn.id}
-            initial={fadeAndFloatAnimation.initial}
-            animate={fadeAndFloatAnimation.animate}
-            exit={fadeAndFloatAnimation.exit}
-            transition={{ duration: 3 }}
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 0, y: spawn.special ? -150 : -50 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: spawn.special ? 5 : 3 }}
             style={{
               position: "absolute",
               left: `${spawn.id % 100}px`,
-              rotate: `
-                                ${spawn.id % 2 === 1 ? "-" : ""}${spawn.id % 25}deg`,
+              rotate: `${spawn.id % 2 === 1 ? "-" : ""}${spawn.id % 25}deg`,
             }}
             onAnimationComplete={() => handleAnimationComplete(spawn.id)}>
-            <span className={`${spawn.special ? "font-bold text-amber-500" : ""}`}>
+            <span className={`${spawn.special ? "font-bold text-amber-400" : ""}`}>
               {spawn.word}
             </span>
           </motion.div>
