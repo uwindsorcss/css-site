@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import clsx from "clsx";
 
 interface WordObject {
   id: number;
@@ -14,7 +15,7 @@ function ChipTyping() {
   const coolDown = 200;
   const [words, setWords] = useState<WordObject[]>([]);
   const [lastClicked, setLastClicked] = useState<number>(0);
-  const [currentImage, setCurrentImage] = useState<number>(2);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
   const [count, setCount] = useState<number>(0);
 
   const handleAnimationComplete = (completedSpawn: number) => {
@@ -61,10 +62,10 @@ function ChipTyping() {
       setWords((prevSpawns) => [...prevSpawns, { id: now, word, special }]);
       setLastClicked(now);
 
-      if (currentImage === 2) {
-        setCurrentImage(3);
+      if (!isTyping) {
+        setIsTyping(true);
         setTimeout(() => {
-          setCurrentImage(2);
+          setIsTyping(false);
         }, coolDown);
       }
     }
@@ -75,7 +76,8 @@ function ChipTyping() {
       onClick={handleClick}
       className="absolute w-[90px] h-[105px] sm:w-[125px] sm:h-[150px] top-[53px] right-[50%] sm:top-[44px] sm:right-[5%] select-none translate-x-[50%] cursor-pointer"
       draggable={false}>
-      <Image src={`/images/chip-${currentImage}.png`} alt="Chip" fill draggable={false} />
+      <Image src={`/images/chip-2.png`} alt="Chip Waving" fill draggable={false} className={clsx({ "hidden": isTyping })} priority />
+      <Image src={`/images/chip-3.png`} alt="Chip Typing" fill draggable={false} className={clsx({ "hidden": !isTyping })} priority />
       <AnimatePresence>
         {words.map((spawn) => (
           <motion.div
