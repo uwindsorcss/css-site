@@ -8,12 +8,11 @@ import { X } from "lucide-react";
 import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 
 interface RemoveUserDialogProps {
-  disabled?: boolean;
   userId: number;
   userName: string;
 }
 
-export function RemoveUserDialog({ disabled = false, userId, userName }: RemoveUserDialogProps) {
+export function RemoveUserDialog({ userId, userName }: RemoveUserDialogProps) {
   const handleAsync = useAsyncFeedback();
   const [isRemoving, setIsRemoving] = useState(false);
 
@@ -29,7 +28,7 @@ export function RemoveUserDialog({ disabled = false, userId, userName }: RemoveU
         await handleAsync(removeUserFromStaff, userId);
         setIsRemoving(false);
       }}>
-      <Button size={"icon"} disabled={disabled}>
+      <Button size={"icon"}>
         <X size={18} />
       </Button>
     </ConfirmationDialog>

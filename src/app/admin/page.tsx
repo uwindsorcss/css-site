@@ -12,7 +12,6 @@ import { camelCaseToTitleCase } from "@/lib/utils";
 import { UpdateRoleDropdown } from "@/components/admin/UpdateRoleDropdown";
 import { RemoveUserDialog } from "@/components/admin/RemoveUserDialog";
 import { AddUserDialog } from "@/components/admin/AddUserDialog";
-import { Role } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -51,7 +50,6 @@ export default async function AdminPage() {
                   <div className="flex gap-2 items-center">
                     {camelCaseToTitleCase(user.role)}
                     <UpdateRoleDropdown
-                      disabled={user.role === Role.admin}
                       userId={user.id}
                       currentRole={user.role}
                     />
@@ -59,7 +57,6 @@ export default async function AdminPage() {
                 </TableCell>
                 <TableCell className="flex gap-2 text-right justify-end">
                   <RemoveUserDialog
-                    disabled={user.role === Role.admin}
                     userId={user.id}
                     userName={user.name || ""}
                   />

@@ -20,7 +20,7 @@ export function AddUserDialog() {
         required_error: "The user's email is required.",
       })
       .min(1),
-    role: z.enum([Role.mod, Role.postEditor, Role.eventEditor]),
+    role: z.enum([Role.admin, Role.mod, Role.postEditor, Role.eventEditor]),
   });
 
   type PostSchema = z.infer<typeof postSchema>;
@@ -58,6 +58,7 @@ export function AddUserDialog() {
         label="Role"
         placeholder="Select a role..."
         options={[
+          { label: "Admin", value: Role.admin },
           { label: "Moderator", value: Role.mod },
           { label: "Post Editor", value: Role.postEditor },
           { label: "Event Editor", value: Role.eventEditor },

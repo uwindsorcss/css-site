@@ -14,8 +14,6 @@ export async function removeUserFromStaff(userId: number) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) return { error: "The user you're trying to remove doesn't exist." };
 
-  if (user.role === Role.admin) return { error: `${user.name} is an admin and cannot be removed.` };
-
   if (user.role === Role.user) return { error: `${user.name} is not a staff member.` };
 
   await prisma.user.update({
@@ -24,6 +22,11 @@ export async function removeUserFromStaff(userId: number) {
   });
 
   revalidatePath(`/admin`);
+  
+  if (user.id === session.user.id) {
+    return { success: "You've been removed from the staff team." };
+  }
+
   return { success: `${user.name} has been removed from the staff team.` };
 }
 
@@ -36,7 +39,8 @@ export async function addUserToStaff(email: string, role: Role) {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return { error: "The user you're trying to add doesn't exist." };
 
-  if (user.role !== Role.user) return { error: `${user.name} is already a staff member.` };
+  if (user.role !== Role.user)
+    return { error: `${user.name} is already a staff member, update their role instead.` };
 
   await prisma.user.update({
     where: { email },
@@ -56,10 +60,8 @@ export async function updateUserRole(userId: number, role: Role) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) return { error: "The user you're trying to update doesn't exist." };
 
-  if (user.role === Role.admin) return { error: `${user.name} is an admin and cannot be updated.` };
-
   if (user.role === role)
-    return { error: `${user.name} is already a ${camelCaseToTitleCase(role)}.` };
+    return { error: `${user.name} is already has the ${camelCaseToTitleCase(role)} role.` };
 
   await prisma.user.update({
     where: { id: userId },
