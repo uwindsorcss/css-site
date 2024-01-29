@@ -33,6 +33,15 @@ export default async function AdminPage() {
     <>
       <h1 className="text-4xl text-center font-bold">Admin Dashboard</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
+        <div className="bg-gray-200/5 p-5 rounded-md w-full">
+          <p className="text-sm font-medium text-gray-500 leading-6">
+            The roles are as follows:<br />
+            <strong>Post Editor</strong>- Can add/delete/edit posts (newsletter).<br />
+            <strong>Event Editor</strong>- Can add/delete/edit events.<br />
+            <strong>Mod</strong> - Can add/delete/edit both, posts and events.<br />
+            <strong>Admin</strong> - Can do all of the above and add/remove users from the staff team.
+          </p>
+        </div>
         <AddUserDialog />
         <Table className="mx-auto">
           <TableHeader>
