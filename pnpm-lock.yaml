@@ -120,8 +120,8 @@ dependencies:
     specifier: ^0.2.1
     version: 0.2.1(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
   nextjs-toploader:
-    specifier: ^1.6.4
-    version: 1.6.4(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.6.6
+    version: 1.6.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
   postcss:
     specifier: 8.4.33
     version: 8.4.33
@@ -5524,8 +5524,8 @@ packages:
       - babel-plugin-macros
     dev: false
 
-  /nextjs-toploader@1.6.4(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-KYLQ+0MvGdFk9JwOQfRtaYBAsyuX67Ca5QTa51RGNO4gQx64KLSE+ryHjUQ5LcDczHotp0l32GgksQW9vucUkw==}
+  /nextjs-toploader@1.6.6(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-LKow/aV28/DLhj4yH1E8ydF/I5QDNsb5NqlbsXBaIVFrmZ9/OGHyxPLdumvPE2IOYoQdvJ4XWoaCA1v7aivYBg==}
     peerDependencies:
       next: '>= 6.0.0'
       react: '>= 16.0.0'

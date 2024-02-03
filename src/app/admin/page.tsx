@@ -12,6 +12,7 @@ import { camelCaseToTitleCase } from "@/lib/utils";
 import { UpdateRoleDropdown } from "@/components/admin/UpdateRoleDropdown";
 import { RemoveUserDialog } from "@/components/admin/RemoveUserDialog";
 import { AddUserDialog } from "@/components/admin/AddUserDialog";
+import { Role } from "@prisma/client";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -29,12 +30,28 @@ export default async function AdminPage() {
     },
   });
 
+  type StaffRoles = Exclude<Role, "user">;
+
+  const rolePriority: { [key in StaffRoles]: number } = {
+    admin: 4,
+    mod: 3,
+    eventEditor: 2,
+    postEditor: 1,
+  };
+
+  staff.sort((a, b) => {
+    const priorityA = rolePriority[a.role as StaffRoles] || 0;
+    const priorityB = rolePriority[b.role as StaffRoles] || 0;
+
+    return priorityB - priorityA;
+  });
+
   return (
     <>
       <h1 className="text-4xl text-center font-bold">Admin Dashboard</h1>
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
-        <div className="bg-gray-200/5 p-5 rounded-md w-full">
-          <p className="text-sm font-medium text-gray-500 leading-6">
+        <div className="p-5 rounded-md w-full bg-card text-card-foreground duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236]">
+          <p className="text-sm font-medium leading-6 text-gray-800 dark:text-gray-400">
             The roles are as follows:<br />
             <strong>Post Editor</strong>- Can add/delete/edit posts (newsletter).<br />
             <strong>Event Editor</strong>- Can add/delete/edit events.<br />
