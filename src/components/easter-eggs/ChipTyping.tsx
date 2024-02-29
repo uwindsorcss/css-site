@@ -76,6 +76,11 @@ function ChipTyping() {
       onClick={handleClick}
       className="absolute w-[90px] h-[105px] sm:w-[125px] sm:h-[150px] top-[53px] right-[50%] sm:top-[44px] sm:right-[5%] select-none translate-x-[50%] cursor-pointer"
       draggable={false}>
+      {count === 0 && (
+        <div className="absolute top-[-20px] right-[20%] transform text-xs sm:text-sm text-center rotate-[10deg] opacity-50">
+          <span className="text-xs sm:text-sm">Click me!</span>
+        </div>
+      )}
       <Image src={`/images/chip-2.png`} alt="Chip Waving" fill draggable={false} className={clsx({ "hidden": isTyping })} priority />
       <Image src={`/images/chip-3.png`} alt="Chip Typing" fill draggable={false} className={clsx({ "hidden": !isTyping })} priority />
       <AnimatePresence>
