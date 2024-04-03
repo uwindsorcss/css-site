@@ -1,4 +1,4 @@
-import { DiscordAccount } from "@prisma/client";
+import type { DiscordAccount } from "@prisma/client";
 import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
 import { getUpdatedDiscordAccount } from "@/lib/actions";
 

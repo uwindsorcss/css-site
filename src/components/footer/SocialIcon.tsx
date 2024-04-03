@@ -1,11 +1,11 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { LucideIcon } from "lucide-react";
+import { IconType } from "@icons-pack/react-simple-icons";
 
 interface SocialIconProps {
   href: string;
-  Icon: LucideIcon;
+  Icon: IconType;
 }
 
 const SocialIcon = ({ href, Icon }: SocialIconProps) => {
