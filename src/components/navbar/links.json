@@ -1,28 +1,27 @@
 [
   { "name": "Home", "href": "/" },
   { "name": "About", "href": "/about" },
-  { "name": "Events", "href": "/events" },
-  { "name": "Newsletter", "href": "/newsletter" },
-  { "name": "Feedback", "href": "/feedback" },
-  { "name": "Discord", "href": "/discord" },
+  { "name": "News", "href": "/newsletter" },
+  {
+    "name": "Community",
+    "href": "#",
+    "sublinks": [
+      { "name": "Events", "href": "/events", "description": "A list of upcoming and past events." },
+      {
+        "name": "Discord",
+        "href": "/discord",
+        "description": "Join our Discord server to chat with other students and get help."
+      }
+    ]
+  },
   {
     "name": "Resources",
     "href": "#",
     "sublinks": [
       {
-        "name": "Wiki",
+        "name": "Computer Science Wiki",
         "href": "https://uwindsorcss.github.io/wiki",
         "description": "A wiki of everything CS at UWindsor."
-      },
-      {
-        "name": "Store",
-        "href": "https://store.uwindsorcss.ca",
-        "description": "Buy CSS merch and swag."
-      },
-      {
-        "name": "Gallery",
-        "href": "/gallery",
-        "description": "A gallery of photos from CSS events."
       },
       {
         "name": "Incoming Student Guide",
@@ -30,5 +29,7 @@
         "description": "A guide for new students to help them get started with CS at UWindsor."
       }
     ]
-  }
+  },
+  { "name": "Store", "href": "https://store.uwindsorcss.ca" },
+  { "name": "Feedback", "href": "/feedback" }
 ]
