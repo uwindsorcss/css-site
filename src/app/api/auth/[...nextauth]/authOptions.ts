@@ -97,14 +97,20 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // @ts-ignore
     async signIn({ user }: { user: User }) {
-      const userInJson = await prisma.blackList.findUnique({
+      const userInBlackList = await prisma.blackList.findUnique({
         where: { email: user.email! },
       });
 
-      if (user.title !== null && user?.title.toLowerCase().includes("student") && !userInJson) {
+      const lowerCaseTitle = user.title?.toLowerCase();
+
+      if (
+        !userInBlackList &&
+        lowerCaseTitle &&
+        (lowerCaseTitle.includes("student") || lowerCaseTitle.includes("alumni"))
+      ) {
         return true;
       }
-      return "/?error=It seems like you are not a student, if you think this is a mistake, please contact us.";
+      return "/?error=It seems like you are not a student or an alumni, if you think this is a mistake, please contact us.";
     },
     // @ts-ignore
     async jwt({ token, profile }: { token: any; profile: any }) {
