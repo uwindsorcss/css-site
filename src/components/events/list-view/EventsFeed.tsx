@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import PaginationButtons from "../../ui/pagination-buttons";
+import PaginationButtons from "../../ui/pagination";
 import { redirect } from "next/navigation";
 import PostCard from "@/components/PostCard";
 import { Session } from "next-auth";
@@ -52,7 +52,7 @@ async function EventsFeed({ page, filter, session }: EventsFeedProps) {
         <PostCard key={event.id} post={event} currentPage={currentPage} filter={filter} truncate />
       ))}
       <PaginationButtons
-        href={"/events"}
+        baseUrl={"/events"}
         currentPage={currentPage}
         filter={filter}
         totalPages={totalPages}
