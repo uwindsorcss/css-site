@@ -81,8 +81,22 @@ function ChipTyping() {
           <span className="text-xs sm:text-sm">Click me!</span>
         </div>
       )}
-      <Image src={`/images/chip-2.png`} alt="Chip Waving" fill draggable={false} className={clsx({ "hidden": isTyping })} priority />
-      <Image src={`/images/chip-3.png`} alt="Chip Typing" fill draggable={false} className={clsx({ "hidden": !isTyping })} priority />
+      <Image
+        src={`/images/chip-2.png`}
+        alt="Chip Waving"
+        fill
+        draggable={false}
+        className={clsx({ hidden: isTyping })}
+        priority
+      />
+      <Image
+        src={`/images/chip-3.png`}
+        alt="Chip Typing"
+        fill
+        draggable={false}
+        className={clsx({ hidden: !isTyping })}
+        priority
+      />
       <AnimatePresence>
         {words.map((spawn) => (
           <motion.div

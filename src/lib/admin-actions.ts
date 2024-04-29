@@ -22,7 +22,7 @@ export async function removeUserFromStaff(userId: number) {
   });
 
   revalidatePath(`/admin`);
-  
+
   if (user.id === session.user.id) {
     return { success: "You've been removed from the staff team." };
   }

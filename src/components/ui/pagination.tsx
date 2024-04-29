@@ -11,7 +11,11 @@ interface PaginationButtonProps {
 
 const PaginationButton = ({ disabled, href, children, highlight }: PaginationButtonProps) => {
   return (
-    <Button disabled={disabled} size="icon" variant={highlight ? "discord" : "default"} asChild={!!href}>
+    <Button
+      disabled={disabled}
+      size="icon"
+      variant={highlight ? "discord" : "default"}
+      asChild={!!href}>
       {href ? <Link href={href}>{children}</Link> : children}
     </Button>
   );
@@ -25,7 +29,7 @@ interface PaginationProps {
 }
 
 const Pagination = ({ baseUrl, currentPage, filter, totalPages }: PaginationProps) => {
-  const getHref = (page: number) => `${baseUrl}?page=${page}${filter ? `&filter=${filter}` : ''}`;
+  const getHref = (page: number) => `${baseUrl}?page=${page}${filter ? `&filter=${filter}` : ""}`;
 
   const isFirstPage = currentPage === 1;
   const isLastPage = currentPage === totalPages;
@@ -48,12 +52,11 @@ const Pagination = ({ baseUrl, currentPage, filter, totalPages }: PaginationProp
       <PaginationButton disabled={isFirstPage} href={isFirstPage ? undefined : getHref(1)}>
         <ChevronsLeft />
       </PaginationButton>
-      {getMiddlePageNumbers().map(pageNumber => (
+      {getMiddlePageNumbers().map((pageNumber) => (
         <PaginationButton
           key={pageNumber}
           highlight={currentPage === pageNumber}
-          href={currentPage !== pageNumber ? getHref(pageNumber) : undefined}
-        >
+          href={currentPage !== pageNumber ? getHref(pageNumber) : undefined}>
           {pageNumber}
         </PaginationButton>
       ))}

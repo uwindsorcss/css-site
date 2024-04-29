@@ -52,11 +52,16 @@ export default async function AdminPage() {
       <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
         <div className="p-5 rounded-md w-full bg-card text-card-foreground duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236]">
           <p className="text-sm font-medium leading-6 text-gray-800 dark:text-gray-400">
-            The roles are as follows:<br />
-            <strong>Post Editor</strong>- Can add/delete/edit posts (newsletter).<br />
-            <strong>Event Editor</strong>- Can add/delete/edit events.<br />
-            <strong>Mod</strong> - Can add/delete/edit both, posts and events.<br />
-            <strong>Admin</strong> - Can do all of the above and add/remove users from the staff team.
+            The roles are as follows:
+            <br />
+            <strong>Post Editor</strong>- Can add/delete/edit posts (newsletter).
+            <br />
+            <strong>Event Editor</strong>- Can add/delete/edit events.
+            <br />
+            <strong>Mod</strong> - Can add/delete/edit both, posts and events.
+            <br />
+            <strong>Admin</strong> - Can do all of the above and add/remove users from the staff
+            team.
           </p>
         </div>
         <AddUserDialog />
@@ -75,17 +80,11 @@ export default async function AdminPage() {
                 <TableCell>
                   <div className="flex gap-2 items-center">
                     {camelCaseToTitleCase(user.role)}
-                    <UpdateRoleDropdown
-                      userId={user.id}
-                      currentRole={user.role}
-                    />
+                    <UpdateRoleDropdown userId={user.id} currentRole={user.role} />
                   </div>
                 </TableCell>
                 <TableCell className="flex gap-2 text-right justify-end">
-                  <RemoveUserDialog
-                    userId={user.id}
-                    userName={user.name || ""}
-                  />
+                  <RemoveUserDialog userId={user.id} userName={user.name || ""} />
                 </TableCell>
               </TableRow>
             ))}

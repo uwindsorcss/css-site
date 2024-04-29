@@ -25,7 +25,11 @@ export default async function PostsFeed({ currentPage }: PostsFeedProps) {
       {posts.map((post) => (
         <PostCard key={post.id} post={post} currentPage={currentPage} truncate />
       ))}
-      <PaginationButtons baseUrl={"/newsletter"} currentPage={currentPage} totalPages={totalPages} />
+      <PaginationButtons
+        baseUrl={"/newsletter"}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 }
