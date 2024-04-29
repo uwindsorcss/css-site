@@ -7,7 +7,7 @@ import ConfirmationDialog from "@/components/ui/confirmation-dialog";
 
 interface DeleteButtonProps {
   type: "post" | "event";
-  callback: (id: number) => Promise<void>;
+  callback: (id: number) => Promise<string | undefined>;
   id: number;
 }
 

@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/db";
 import { User } from "@prisma/client";
+import { error } from "@/lib/utils";
 
 function CustomPrismaAdapter(p: typeof prisma) {
   return {
@@ -110,7 +111,11 @@ export const authOptions: NextAuthOptions = {
       ) {
         return true;
       }
-      return "/?error=It seems like you are not a student or an alumni, if you think this is a mistake, please contact us.";
+      return error(
+        "It seems like you are not a student or an alumni, if you think this is a mistake, please contact us.",
+        "/",
+        false
+      );
     },
     // @ts-ignore
     async jwt({ token, profile }: { token: any; profile: any }) {

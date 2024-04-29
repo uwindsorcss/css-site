@@ -2,16 +2,14 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import ConfirmationDialog from "../ui/confirmation-dialog";
+import { authorizeDiscordAccount, unlinkDiscordAccount } from "@/lib/actions";
 
 interface DiscordAuthButtonProps {
   linked: boolean;
 }
 
 function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
-  const router = useRouter();
-
   if (linked) {
     return (
       <ConfirmationDialog
@@ -19,7 +17,7 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
         description="Are you sure you want to unlink your Discord account? This will remove your Discord account from the CSS server."
         actionButtonText="Unlink"
         onAction={() => {
-          router.replace("/api/discord/unlink");
+          unlinkDiscordAccount();
         }}>
         <Button variant="destructive" size="full">
           Unlink Account
@@ -32,7 +30,7 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
         size="full"
         variant="discord"
         onClick={() => {
-          router.replace("/api/discord/link");
+          authorizeDiscordAccount();
         }}>
         Link Discord
       </Button>

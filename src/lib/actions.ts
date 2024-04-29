@@ -2,8 +2,17 @@
 
 import { prisma } from "@/lib/db";
 import { DiscordAccount } from "@prisma/client";
-import { revalidatePath } from "next/cache";
-import { canEditEvent, canEditPost, getSession, isUndergradStudent } from "@/lib/utils";
+import {
+  canEditEvent,
+  canEditPost,
+  error,
+  errorRes,
+  getSession,
+  handleServerActionError,
+  isUndergradStudent,
+  success,
+  successRes,
+} from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
@@ -15,11 +24,20 @@ const discordEmbed = {
   color: "3447003",
 };
 
-async function linkDiscordAccount(discordResponse: any) {
+export async function authorizeDiscordAccount() {
+  const url = `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&redirect_uri=${process.env.DISCORD_CALLBACK_URL}&response_type=code&scope=identify%20guilds.join`;
+  redirect(url);
+}
+
+export async function linkDiscordAccount(discordResponse: any) {
   try {
     const session = await getSession();
 
-    if (!session?.user.id) throw new Error("Error while linking account. Session not found.");
+    if (!session?.user.id)
+      return errorRes("Error while linking account. It seems you're not logged in.", "/discord");
+
+    if (discordResponse.error || !discordResponse.access_token)
+      return errorRes("An error occurred while linking your account.", "/discord");
 
     const accessToken = discordResponse.access_token;
 
@@ -53,7 +71,7 @@ async function linkDiscordAccount(discordResponse: any) {
 
     const member = await getMemberFromServer(discordUser.id);
 
-    if (member.user) return;
+    if (member.user) return errorRes("You're already a member of the server.", "/discord");
 
     //Check the name length because the Discord API doesn't allow nicknames longer than 32 characters
     let userName = session.user.name;
@@ -85,17 +103,19 @@ async function linkDiscordAccount(discordResponse: any) {
       `🔗✅ You've successfully linked your account.\n\n Welcome to the **University of Windsor CS Discord**! You've come to a great place.\n\n
               We've set your nickname to **${session.user.name}**. Please contact a CSS member if you'd like to shorten your name (e.g. Johnathon Middlename Doe -> John Doe).`
     );
+
+    return successRes("Your account has been linked.", "/discord");
   } catch (error) {
-    console.error("An error occurred:", error);
-    throw error;
+    handleServerActionError(error as Error, "linkDiscordAccount");
   }
 }
 
-async function unlinkDiscordAccount() {
+export async function unlinkDiscordAccount() {
   try {
     const session = await getSession();
 
-    if (!session?.user.id) throw new Error("Error while unlinking account. Session not found.");
+    if (!session?.user.id)
+      return error("Error while unlinking account. It seems you're not logged in.");
 
     const discordAccount = await prisma.discordAccount.findUnique({
       where: {
@@ -103,8 +123,7 @@ async function unlinkDiscordAccount() {
       },
     });
 
-    if (!discordAccount || discordAccount === null)
-      throw new Error("No discord account found. Please try again.");
+    if (!discordAccount) return error("No discord account found. Please try again.");
 
     await sendDiscordDM(
       discordAccount.discordId,
@@ -130,14 +149,13 @@ async function unlinkDiscordAccount() {
       },
     });
 
-    return true;
+    return success("Your account has been unlinked.");
   } catch (error) {
-    console.error("An error occurred:", error);
-    throw error;
+    handleServerActionError(error as Error, "unlinkDiscordAccount");
   }
 }
 
-async function getMemberFromServer(userId: string) {
+export async function getMemberFromServer(userId: string) {
   return await fetch(
     `${DISCORD_API_ENDPOINT}/guilds/${process.env.DISCORD_GUILD_ID}/members/${userId}`,
     {
@@ -148,7 +166,7 @@ async function getMemberFromServer(userId: string) {
   ).then((res) => res.json());
 }
 
-async function sendDiscordDM(userID: string, message: string) {
+export async function sendDiscordDM(userID: string, message: string) {
   try {
     const channel = await fetch(`${DISCORD_API_ENDPOINT}/users/@me/channels`, {
       method: "POST",
@@ -176,11 +194,11 @@ async function sendDiscordDM(userID: string, message: string) {
       }),
     });
   } catch (error) {
-    console.error("An error occurred:", error);
+    handleServerActionError(error as Error, "sendDiscordDM");
   }
 }
 
-async function getMemberCount(): Promise<{
+export async function getMemberCount(): Promise<{
   memberCount: number;
   onlineCount: number;
 }> {
@@ -200,12 +218,12 @@ async function getMemberCount(): Promise<{
       onlineCount: data.approximate_presence_count,
     };
   } catch (error) {
-    console.error("An error occurred:", error);
-    throw error;
+    handleServerActionError(error as Error, "getMemberCount");
+    return { memberCount: 0, onlineCount: 0 };
   }
 }
 
-async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
+export async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
   let { username, avatar } = discordAccount;
   let avatarUrl = "/images/discord-avatar.png";
 
@@ -237,257 +255,278 @@ async function getUpdatedDiscordAccount(discordAccount: DiscordAccount) {
   return { username, avatarUrl };
 }
 
-async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
+export async function getDiscordAccountAvatar(discordId: string, avatarId: string) {
   return await fetch(`https://cdn.discordapp.com/avatars/${discordId}/${avatarId}.png`, {
     next: { revalidate: 300 },
   }).then((res) => res.url);
 }
 
 // Event Actions
-async function createEvent(event: EventFormData) {
-  const session = await getSession();
-  if (!session || !canEditEvent(session))
-    throw new Error("You do not have permission to create events.");
+export async function createEvent(event: EventFormData) {
+  try {
+    const session = await getSession();
+    if (!session || !canEditEvent(session))
+      return error("You do not have permission to create events.");
 
-  await prisma.event.create({
-    data: {
-      title: event.title,
-      description: event.description,
-      registrationEnabled: event.registrable,
-      visible: event.visible,
-      capacity: event.capacity,
-      location: event.location,
-      startDate: event.startDate,
-      endDate: event.endDate,
-    },
-  });
-  revalidatePath("/events");
+    await prisma.event.create({
+      data: {
+        title: event.title,
+        description: event.description,
+        registrationEnabled: event.registrable,
+        visible: event.visible,
+        capacity: event.capacity,
+        location: event.location,
+        startDate: event.startDate,
+        endDate: event.endDate,
+      },
+    });
+
+    return success("Event created successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "createEvent");
+  }
 }
 
-async function updateEvent(event: EventFormData, id: number) {
-  const session = await getSession();
-  if (!session || !canEditEvent(session))
-    throw new Error("You do not have permission to update events.");
+export async function updateEvent(event: EventFormData, id: number) {
+  try {
+    const session = await getSession();
+    if (!session || !canEditEvent(session))
+      return error("You do not have permission to update events.");
 
-  await prisma.event.update({
-    where: { id },
-    data: {
-      title: event.title,
-      description: event.description,
-      registrationEnabled: event.registrable,
-      visible: event.visible,
-      capacity: event.capacity,
-      location: event.location,
-      startDate: event.startDate,
-      endDate: event.endDate,
-    },
-  });
-  revalidatePath(`/events/${id}`);
+    await prisma.event.update({
+      where: { id },
+      data: {
+        title: event.title,
+        description: event.description,
+        registrationEnabled: event.registrable,
+        visible: event.visible,
+        capacity: event.capacity,
+        location: event.location,
+        startDate: event.startDate,
+        endDate: event.endDate,
+      },
+    });
+
+    return success("Event updated successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "updateEvent");
+  }
 }
 
-async function deleteEvent(id: number) {
-  const session = await getSession();
-  if (!session || !canEditEvent(session))
-    throw new Error("You do not have permission to delete events.");
+export async function deleteEvent(id: number) {
+  try {
+    const session = await getSession();
+    if (!session || !canEditEvent(session))
+      return error("You do not have permission to delete events.");
 
-  await prisma.event.delete({
-    where: { id },
-  });
-  redirect(`/events?success=${encodeURIComponent("Event deleted successfully.")}`);
+    await prisma.event.delete({
+      where: { id },
+    });
+
+    return success("Event deleted successfully.", "/events");
+  } catch (error) {
+    handleServerActionError(error as Error, "deleteEvent");
+  }
 }
 
-async function registerForEvent(eventId: number) {
-  const session = await getSession();
-  const userId = session?.user.id;
+export async function registerForEvent(eventId: number) {
+  try {
+    const session = await getSession();
+    const userId = session?.user.id;
 
-  if (!session) return { error: "You must be logged in to register for events." };
+    if (!session) return error("You must be logged in to register for events.");
 
-  const event = await prisma.event.findUnique({ where: { id: eventId } });
-  if (!event) return { error: "Event not found." };
+    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    if (!event) return error("Event not found.");
 
-  if (!event.registrationEnabled || !event.visible)
-    return { error: "Registration is not enabled for this event." };
+    if (!event.registrationEnabled || !event.visible)
+      return error("The registration has been disabled for this event.");
 
-  if (!isUndergradStudent(session))
-    return { error: "You must be an undergraduate student to register for events." };
+    if (!isUndergradStudent(session))
+      return error("Only undergraduate students can register for events.");
 
-  if (event.endDate < new Date())
-    return { error: "You cannot register for an event that has already ended." };
+    if (event.endDate < new Date())
+      return error("You cannot register for an event that has already ended.");
 
-  const existingRegistration = await prisma.eventRegistration.findFirst({
-    where: {
-      eventId,
-      userId,
-    },
-  });
+    const existingRegistration = await prisma.eventRegistration.findFirst({
+      where: {
+        eventId,
+        userId,
+      },
+    });
 
-  if (existingRegistration) return { error: "You are already registered for this event." };
+    if (existingRegistration) return error("You're already registered for this event.");
 
-  const registrations = await prisma.eventRegistration.count({
-    where: {
-      eventId,
-    },
-  });
+    const registrations = await prisma.eventRegistration.count({
+      where: {
+        eventId,
+      },
+    });
 
-  if (event.capacity !== null && registrations >= event.capacity)
-    return { error: "This event is at full capacity." };
+    if (event.capacity !== null && registrations >= event.capacity)
+      return error("This event is already at full capacity.");
 
-  await prisma.eventRegistration.create({
-    data: {
-      event: { connect: { id: eventId } },
-      user: { connect: { id: userId } },
-    },
-  });
-  return { success: "You've been registered for this event!" };
+    await prisma.eventRegistration.create({
+      data: {
+        event: { connect: { id: eventId } },
+        user: { connect: { id: userId } },
+      },
+    });
+
+    return success("You've been registered for this event!");
+  } catch (error) {
+    handleServerActionError(error as Error, "registerForEvent");
+  }
 }
 
-async function unregisterForEvent(eventId: number) {
-  const session = await getSession();
-  const userId = session?.user.id;
+export async function unregisterForEvent(eventId: number) {
+  try {
+    const session = await getSession();
+    const userId = session?.user.id;
 
-  if (!session) return { error: "You must be logged in to unregister from events." };
+    if (!session) return error("You must be logged in to unregister from events.");
 
-  const event = await prisma.event.findUnique({ where: { id: eventId } });
-  if (!event) return { error: "Event not found." };
+    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    if (!event) return error("Event not found.");
 
-  if (!event.registrationEnabled || !event.visible)
-    return {
-      error:
-        "The registration has been disabled for this event. If you would like to unregister, please contact a CSS member.",
-    };
+    if (!event.registrationEnabled || !event.visible)
+      return error("The registration has been disabled for this event.");
 
-  if (event.endDate < new Date())
-    return { error: "You cannot unregister from an event that has already ended." };
+    if (event.endDate < new Date())
+      return error("You cannot unregister from an event that has already ended.");
 
-  const existingRegistration = await prisma.eventRegistration.findFirst({
-    where: {
-      eventId,
-      userId,
-    },
-  });
+    const existingRegistration = await prisma.eventRegistration.findFirst({
+      where: {
+        eventId,
+        userId,
+      },
+    });
 
-  if (!existingRegistration) return { error: "You're not registered for this event." };
+    if (!existingRegistration) return error("You're not registered for this event.");
 
-  await prisma.eventRegistration.deleteMany({
-    where: {
-      eventId,
-      userId,
-    },
-  });
-  return { success: "You've been unregistered from this event!" };
+    await prisma.eventRegistration.deleteMany({
+      where: {
+        eventId,
+        userId,
+      },
+    });
+
+    return success("You've been unregistered from this event.");
+  } catch (error) {
+    handleServerActionError(error as Error, "unregisterForEvent");
+  }
 }
 
 // Post Actions
-async function createPost(post: PostFormData) {
-  const session = await getSession();
-  if (!session || !canEditPost(session))
-    throw new Error("You do not have permission to create posts.");
+export async function createPost(post: PostFormData) {
+  try {
+    const session = await getSession();
+    if (!session || !canEditPost(session))
+      return error("You do not have permission to create posts.");
 
-  await prisma.post.create({
-    data: {
+    await prisma.post.create({
+      data: {
+        title: post.title,
+        content: post.content,
+        ...(post.isTeam ? {} : { author: { connect: { id: session.user.id } } }),
+      },
+    });
+
+    return success("Post created successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "createPost");
+  }
+}
+
+export async function updatePost(post: PostFormData, id: number) {
+  try {
+    const session = await getSession();
+    if (!session || !canEditPost(session))
+      return error("You do not have permission to update posts.");
+
+    const data: any = {
       title: post.title,
       content: post.content,
-      ...(post.isTeam ? {} : { author: { connect: { id: session.user.id } } }),
-    },
-  });
-  revalidatePath("/newsletter");
-}
-
-async function updatePost(post: PostFormData, id: number) {
-  const session = await getSession();
-  if (!session || !canEditPost(session))
-    throw new Error("You do not have permission to update posts.");
-
-  const data: any = {
-    title: post.title,
-    content: post.content,
-  };
-
-  if (post.isTeam) {
-    data.author = {
-      disconnect: true,
     };
-  } else {
-    data.author = {
-      connect: { id: session.user.id },
-    };
+
+    if (post.isTeam) {
+      data.author = {
+        disconnect: true,
+      };
+    } else {
+      data.author = {
+        connect: { id: session.user.id },
+      };
+    }
+
+    await prisma.post.update({
+      where: { id },
+      data,
+    });
+
+    return success("Post updated successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "updatePost");
   }
-
-  await prisma.post.update({
-    where: { id },
-    data,
-  });
-
-  revalidatePath(`/newsletter/${id}`);
 }
 
-async function deletePost(id: number) {
-  const session = await getSession();
-  if (!session || !canEditPost(session))
-    throw new Error("You do not have permission to delete posts.");
+export async function deletePost(id: number) {
+  try {
+    const session = await getSession();
+    if (!session || !canEditPost(session))
+      return error("You do not have permission to delete posts.");
 
-  await prisma.post.delete({
-    where: { id },
-  });
-  redirect(`/newsletter?success=${encodeURIComponent("Post deleted successfully.")}`);
+    await prisma.post.delete({
+      where: { id },
+    });
+    return success("Post deleted successfully.", "/newsletter");
+  } catch (error) {
+    handleServerActionError(error as Error, "deletePost");
+  }
 }
 
 // Feedback Action
-async function submitFeedback(feedback: feedbackFormData) {
-  const session = await getSession();
-  if (!session) return { error: "You must be logged in to submit feedback." };
+export async function submitFeedback(feedback: feedbackFormData) {
+  try {
+    const session = await getSession();
+    if (!session) return error("You must be logged in to submit feedback.");
 
-  const todayFeedbackTotal = await prisma.feedback.count({
-    where: {
-      createdAt: {
-        gte: new Date(new Date().setHours(0, 0, 0, 0)),
-        lte: new Date(new Date().setHours(23, 59, 59, 999)),
-      },
-    },
-  });
-
-  if (todayFeedbackTotal > 25) return { error: "Feedback submissions are currently closed." };
-
-  await fetch(`${process.env.DISCORD_SUGGESTION_WEBHOOK_URL}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      embeds: [
-        {
-          title: feedback.subject,
-          description: feedback.feedback,
-          color: "3447003",
+    const todayFeedbackTotal = await prisma.feedback.count({
+      where: {
+        createdAt: {
+          gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          lte: new Date(new Date().setHours(23, 59, 59, 999)),
         },
-      ],
-    }),
-  });
+      },
+    });
 
-  await prisma.feedback.create({
-    data: {
-      subject: feedback.subject,
-      feedback: feedback.feedback,
-    },
-  });
+    if (todayFeedbackTotal > 25) return error("Feedback submissions are currently closed.");
 
-  return { success: "Feedback submitted successfully." };
+    await fetch(`${process.env.DISCORD_SUGGESTION_WEBHOOK_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        embeds: [
+          {
+            title: feedback.subject,
+            description: feedback.feedback,
+            color: "3447003",
+          },
+        ],
+      }),
+    });
+
+    await prisma.feedback.create({
+      data: {
+        subject: feedback.subject,
+        feedback: feedback.feedback,
+      },
+    });
+
+    return success("Feedback submitted successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "submitFeedback");
+  }
 }
-
-export {
-  linkDiscordAccount,
-  unlinkDiscordAccount,
-  getMemberFromServer,
-  sendDiscordDM,
-  getMemberCount,
-  getUpdatedDiscordAccount,
-  createEvent,
-  updateEvent,
-  deleteEvent,
-  registerForEvent,
-  unregisterForEvent,
-  createPost,
-  updatePost,
-  deletePost,
-  submitFeedback,
-};

@@ -6,8 +6,6 @@ import { Clipboard, ClipboardX, CircleSlash } from "lucide-react";
 import ConfirmationDialog from "@/components/ui/confirmation-dialog";
 import { useState } from "react";
 import { signIn } from "@/lib/utils";
-import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
 
 const DisabledButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
   <Button disabled {...props} className="select-none">
@@ -34,8 +32,6 @@ function RegistrationButton({
   isExpired = false,
 }: RegistrationButtonProps) {
   const [isRegistering, setIsRegistering] = useState(false);
-  const { toast } = useToast();
-  const router = useRouter();
 
   if (isExpired) return <DisabledButton>Expired</DisabledButton>;
   if (isLoggedOut)
@@ -64,32 +60,9 @@ function RegistrationButton({
       onAction={async () => {
         if (!isFull || isRegistered) {
           setIsRegistering(true);
-          try {
-            const [res] = await Promise.allSettled([
-              isRegistered ? unregisterForEvent(eventID) : registerForEvent(eventID),
-              // Artificial delay for ui feedback: https://www.youtube.com/watch?v=YnksFDAN_GA
-              new Promise((resolve) => setTimeout(resolve, 800)),
-            ]);
-
-            router.refresh();
-
-            const feedback = res.status === "fulfilled" ? res.value : null;
-            const wasSuccessful = feedback?.success;
-
-            toast({
-              variant: wasSuccessful ? "success" : "destructive",
-              title: wasSuccessful ? (isRegistered ? "Unregistered" : "Registered") : "Error",
-              description: wasSuccessful ? feedback.success : feedback?.error,
-            });
-          } catch (e) {
-            toast({
-              variant: "destructive",
-              title: "Error",
-              description: "Something went wrong.",
-            });
-          } finally {
-            setIsRegistering(false);
-          }
+          if (isRegistered) await unregisterForEvent(eventID);
+          else await registerForEvent(eventID);
+          setIsRegistering(false);
         }
       }}>
       <Button

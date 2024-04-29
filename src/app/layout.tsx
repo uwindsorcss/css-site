@@ -3,10 +3,10 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import Footer from "@/components/footer/Footer";
 import NavBar from "@/components/navbar/Navbar";
-import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 import { metadataObject, viewportObject } from "./metadata";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata = metadataObject;
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <Suspense>
           <Providers>
-            <Toaster />
+            <Toaster richColors />
             <NextTopLoader
               color="#F0F0F2"
               easing="ease-in-out"

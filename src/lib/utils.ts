@@ -5,39 +5,42 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { twMerge } from "tailwind-merge";
 import { Role } from "@prisma/client";
 import { DateFormatter } from "@internationalized/date";
+import { RedirectType, redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
-const getSession = async () => await getServerSession(authOptions);
-const signIn = () => nextAuthSignIn("azure-ad");
+export const getSession = async () => await getServerSession(authOptions);
+export const signIn = () => nextAuthSignIn("azure-ad");
 
-const checkUserRole = (session: Session, roles: Role[]): boolean =>
+export const checkUserRole = (session: Session, roles: Role[]): boolean =>
   roles.includes(session.user.role);
 
-const isAdmin = (session: Session): boolean => checkUserRole(session, [Role.admin]);
-const isMod = (session: Session): boolean => checkUserRole(session, [Role.mod]);
-const isModOrAdmin = (session: Session): boolean => checkUserRole(session, [Role.mod, Role.admin]);
-const isUndergradStudent = (session: Session) => session.user.title === "Undergrad Student";
+export const isAdmin = (session: Session): boolean => checkUserRole(session, [Role.admin]);
+export const isMod = (session: Session): boolean => checkUserRole(session, [Role.mod]);
+export const isModOrAdmin = (session: Session): boolean =>
+  checkUserRole(session, [Role.mod, Role.admin]);
+export const isUndergradStudent = (session: Session) => session.user.title === "Undergrad Student";
 
-const canEditEvent = (session: Session): boolean =>
+export const canEditEvent = (session: Session): boolean =>
   checkUserRole(session, [Role.eventEditor, Role.mod, Role.admin]);
 
-const canEditPost = (session: Session): boolean =>
+export const canEditPost = (session: Session): boolean =>
   checkUserRole(session, [Role.postEditor, Role.mod, Role.admin]);
 
-const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
-const camelCaseToTitleCase = (s: string) => {
+export const camelCaseToTitleCase = (s: string) => {
   const result = s.replace(/([A-Z])/g, " $1");
   return result.charAt(0).toUpperCase() + result.slice(1);
 };
 
-const isDateInPast = (date: Date) => date.getTime() < Date.now();
-const isDateInFuture = (date: Date) => date.getTime() > Date.now();
-const isWithinDateRange = (start: Date, end: Date) => {
+export const isDateInPast = (date: Date) => date.getTime() < Date.now();
+export const isDateInFuture = (date: Date) => date.getTime() > Date.now();
+export const isWithinDateRange = (start: Date, end: Date) => {
   const now = new Date();
   return start <= now && end >= now;
 };
 
-const getRelativeTimeDiff = (date: Date): string => {
+export const getRelativeTimeDiff = (date: Date): string => {
   const now = Date.now();
   const isFuture = date.getTime() > now;
   const diffInSeconds = Math.abs(date.getTime() - now) / 1000;
@@ -64,14 +67,14 @@ const getRelativeTimeDiff = (date: Date): string => {
   return "";
 };
 
-const getRelativeEventTime = (startDate: Date, endDate: Date) => {
+export const getRelativeEventTime = (startDate: Date, endDate: Date) => {
   const now = new Date();
   if (startDate <= now && endDate >= now) return "Currently Happening";
   else if (startDate > now) return getRelativeTimeDiff(startDate);
   return getRelativeTimeDiff(endDate);
 };
 
-const shortDateFormatter = new DateFormatter("en-US", {
+export const shortDateFormatter = new DateFormatter("en-US", {
   timeZone: "America/Toronto",
   year: "numeric",
   month: "short",
@@ -80,7 +83,7 @@ const shortDateFormatter = new DateFormatter("en-US", {
   minute: "numeric",
 });
 
-const dateFormatter = new DateFormatter("en-US", {
+export const dateFormatter = new DateFormatter("en-US", {
   timeZone: "America/Toronto",
   weekday: "short",
   year: "numeric",
@@ -88,14 +91,14 @@ const dateFormatter = new DateFormatter("en-US", {
   day: "numeric",
 });
 
-const timeFormatter = new DateFormatter("en-US", {
+export const timeFormatter = new DateFormatter("en-US", {
   timeZone: "America/Toronto",
   hour: "numeric",
   minute: "numeric",
   hour12: true,
 });
 
-const formatDateRange = (start: Date, end: Date) => {
+export const formatDateRange = (start: Date, end: Date) => {
   const isSameDay =
     start.toLocaleDateString("en-US", { timeZone: "America/Toronto" }) ===
     end.toLocaleDateString("en-US", { timeZone: "America/Toronto" });
@@ -109,27 +112,39 @@ const formatDateRange = (start: Date, end: Date) => {
   return `${startDateFormatted}, ${startTimeFormatted} - ${endDateFormatted}, ${endTimeFormatted}`;
 };
 
-const formatShortDateRange = (start: Date, end: Date) =>
+export const formatShortDateRange = (start: Date, end: Date) =>
   `${timeFormatter.format(start)} - ${timeFormatter.format(end)}`;
-const formatShortDate = (date: Date) => shortDateFormatter.format(date);
-const formatDate = (date: Date) => dateFormatter.format(date);
+export const formatShortDate = (date: Date) => shortDateFormatter.format(date);
+export const formatDate = (date: Date) => dateFormatter.format(date);
 
-export {
-  getSession,
-  isAdmin,
-  signIn,
-  canEditEvent,
-  canEditPost,
-  isUndergradStudent,
-  cn,
-  camelCaseToTitleCase,
-  isDateInPast,
-  isDateInFuture,
-  isWithinDateRange,
-  getRelativeTimeDiff,
-  formatDateRange,
-  formatShortDateRange,
-  formatDate,
-  formatShortDate,
-  getRelativeEventTime,
+export enum ToastType {
+  error = "error",
+  success = "success",
+}
+
+export const toast = (type: ToastType, message: string, destination = "", redirectToUrl = true) => {
+  if (!redirectToUrl) return `${destination}?${type}=${encodeURIComponent(message)}`;
+  return redirect(`${destination}?${type}=${encodeURIComponent(message)}`, RedirectType.replace);
+};
+
+export const error = (message: string, destination = "", redirectToUrl = true) =>
+  toast(ToastType.error, message, destination, redirectToUrl);
+
+export const success = (message: string, destination = "", redirectToUrl = true) =>
+  toast(ToastType.success, message, destination, redirectToUrl);
+
+export const toastRes = (type: ToastType, message: string, destination: string) =>
+  NextResponse.redirect(
+    `${process.env.NEXTAUTH_URL}${destination}?${type}=${encodeURIComponent(message)}`
+  );
+
+export const errorRes = (message: string, destination: string) =>
+  toastRes(ToastType.error, message, destination);
+
+export const successRes = (message: string, destination: string) =>
+  toastRes(ToastType.success, message, destination);
+
+export const handleServerActionError = (error: Error, name: string) => {
+  if (error.message === "NEXT_REDIRECT") throw error;
+  console.error(`An error occurred from (${name}): `, error);
 };
