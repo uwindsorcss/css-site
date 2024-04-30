@@ -7,13 +7,13 @@ import {
   canEditPost,
   error,
   errorRes,
-  getSession,
   handleServerActionError,
   isUndergradStudent,
   success,
   successRes,
 } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
@@ -31,7 +31,7 @@ export async function authorizeDiscordAccount() {
 
 export async function linkDiscordAccount(discordResponse: any) {
   try {
-    const session = await getSession();
+    const session = await auth();
 
     if (!session?.user.id)
       return errorRes("Error while linking account. It seems you're not logged in.", "/discord");
@@ -112,7 +112,7 @@ export async function linkDiscordAccount(discordResponse: any) {
 
 export async function unlinkDiscordAccount() {
   try {
-    const session = await getSession();
+    const session = await auth();
 
     if (!session?.user.id)
       return error("Error while unlinking account. It seems you're not logged in.");
@@ -264,7 +264,7 @@ export async function getDiscordAccountAvatar(discordId: string, avatarId: strin
 // Event Actions
 export async function createEvent(event: EventFormData) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session || !canEditEvent(session))
       return error("You do not have permission to create events.");
 
@@ -289,7 +289,7 @@ export async function createEvent(event: EventFormData) {
 
 export async function updateEvent(event: EventFormData, id: number) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session || !canEditEvent(session))
       return error("You do not have permission to update events.");
 
@@ -315,7 +315,7 @@ export async function updateEvent(event: EventFormData, id: number) {
 
 export async function deleteEvent(id: number) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session || !canEditEvent(session))
       return error("You do not have permission to delete events.");
 
@@ -331,7 +331,7 @@ export async function deleteEvent(id: number) {
 
 export async function registerForEvent(eventId: number) {
   try {
-    const session = await getSession();
+    const session = await auth();
     const userId = session?.user.id;
 
     if (!session) return error("You must be logged in to register for events.");
@@ -381,7 +381,7 @@ export async function registerForEvent(eventId: number) {
 
 export async function unregisterForEvent(eventId: number) {
   try {
-    const session = await getSession();
+    const session = await auth();
     const userId = session?.user.id;
 
     if (!session) return error("You must be logged in to unregister from events.");
@@ -420,7 +420,7 @@ export async function unregisterForEvent(eventId: number) {
 // Post Actions
 export async function createPost(post: PostFormData) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session || !canEditPost(session))
       return error("You do not have permission to create posts.");
 
@@ -440,7 +440,7 @@ export async function createPost(post: PostFormData) {
 
 export async function updatePost(post: PostFormData, id: number) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session || !canEditPost(session))
       return error("You do not have permission to update posts.");
 
@@ -472,7 +472,7 @@ export async function updatePost(post: PostFormData, id: number) {
 
 export async function deletePost(id: number) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session || !canEditPost(session))
       return error("You do not have permission to delete posts.");
 
@@ -488,7 +488,7 @@ export async function deletePost(id: number) {
 // Feedback Action
 export async function submitFeedback(feedback: feedbackFormData) {
   try {
-    const session = await getSession();
+    const session = await auth();
     if (!session) return error("You must be logged in to submit feedback.");
 
     const todayFeedbackTotal = await prisma.feedback.count({

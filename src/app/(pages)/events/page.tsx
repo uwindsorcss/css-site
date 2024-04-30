@@ -5,10 +5,11 @@ import EventsFilter from "@/components/events/list-view/EventsFilter";
 import EventsFeed from "@/components/events/list-view/EventsFeed";
 import CalendarView from "@/components/events/calendar-view/CalendarView";
 import EventTabTrigger from "@/components/events/TabTrigger";
-import { canEditEvent, getSession } from "@/lib/utils";
+import { canEditEvent } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
 import { PlusSquare } from "lucide-react";
+import { auth } from "@/auth";
 const EventFormDialog = dynamic(() => import("@/components/events/EventFormDialog"));
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ interface EventsProps {
 
 export default async function EventsPage({ searchParams }: EventsProps) {
   const view = searchParams.view;
-  const session = await getSession();
+  const session = await auth();
   const { page, filter } = searchParams;
 
   return (

@@ -4,10 +4,11 @@ import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
 import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
 import { prisma } from "@/lib/db";
-import { canEditPost, getRelativeTimeDiff, getSession } from "@/lib/utils";
+import { canEditPost, getRelativeTimeDiff } from "@/lib/utils";
 import { deletePost } from "@/lib/actions";
 import DeleteButton from "@/components/DeleteButton";
 import { AlarmClock, User } from "lucide-react";
+import { auth } from "@/auth";
 
 interface PageProps {
   params: { id: string };
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Post({ params, searchParams }: PageProps) {
-  const session = await getSession();
+  const session = await auth();
   const post = await fetchPostById(params.id);
   if (!post) {
     return (

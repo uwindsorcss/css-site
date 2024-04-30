@@ -1,15 +1,15 @@
 import { Metadata } from "next";
 import FeedView from "@/components/views/FeedView";
 import FeedbackForm from "./FeedbackForm";
-import { getSession } from "@/lib/utils";
 import content from "./content.json";
+import { auth } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Feedback",
 };
 
 export default async function FeedbackPage() {
-  const session = await getSession();
+  const session = await auth();
   return (
     <FeedView>
       <h1 className="text-4xl text-center font-bold mb-5">Feedback</h1>

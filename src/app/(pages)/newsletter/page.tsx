@@ -2,9 +2,10 @@ import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import PostsFeed from "@/components/newsletter/PostsFeed";
 import { Button } from "@/components/ui/button";
-import { getSession, canEditPost } from "@/lib/utils";
+import { canEditPost } from "@/lib/utils";
 import { Suspense } from "react";
 import { PlusSquare } from "lucide-react";
+import { auth } from "@/auth";
 const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ interface NewsletterPageProps {
 }
 
 export default async function NewsletterPage({ searchParams }: NewsletterPageProps) {
-  const session = await getSession();
+  const session = await auth();
   const page = searchParams.page;
 
   return (

@@ -1,12 +1,13 @@
 "use server";
 
+import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
-import { camelCaseToTitleCase, getSession, isAdmin } from "@/lib/utils";
+import { camelCaseToTitleCase, isAdmin } from "@/lib/utils";
 import { Role } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function removeUserFromStaff(userId: number) {
-  const session = await getSession();
+  const session = await auth();
   if (!session) return { error: "You're not logged in. Please log in and try again." };
 
   if (!isAdmin(session)) return { error: "You're not authorized." };
@@ -31,7 +32,7 @@ export async function removeUserFromStaff(userId: number) {
 }
 
 export async function addUserToStaff(email: string, role: Role) {
-  const session = await getSession();
+  const session = await auth();
   if (!session) return { error: "You're not logged in. Please log in and try again." };
 
   if (!isAdmin(session)) return { error: "You're not authorized." };
@@ -52,7 +53,7 @@ export async function addUserToStaff(email: string, role: Role) {
 }
 
 export async function updateUserRole(userId: number, role: Role) {
-  const session = await getSession();
+  const session = await auth();
   if (!session) return { error: "You're not logged in. Please log in and try again." };
 
   if (!isAdmin(session)) return { error: "You're not authorized." };

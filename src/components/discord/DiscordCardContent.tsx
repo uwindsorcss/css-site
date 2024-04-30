@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import SignInButton from "@/components/discord/SignInButton";
 import DiscordAccount from "@/components/discord/DiscordAccount";
-import { getSession } from "@/lib/utils";
+import { auth } from "@/auth";
 
 interface ServerCardContentProps {
   cardInfo: {
@@ -14,7 +14,7 @@ interface ServerCardContentProps {
 }
 
 async function ServerCardContent({ cardInfo }: ServerCardContentProps) {
-  const session = await getSession();
+  const session = await auth();
   const discordAccount = await prisma.discordAccount.findFirst({
     where: { userId: session?.user?.id },
   });

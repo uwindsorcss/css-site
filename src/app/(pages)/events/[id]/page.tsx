@@ -11,12 +11,12 @@ import {
   canEditEvent,
   formatDateRange,
   getRelativeEventTime,
-  getSession,
   isUndergradStudent,
 } from "@/lib/utils";
 import CopyButton from "@/components/ui/copy-button";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteEvent } from "@/lib/actions";
+import { auth } from "@/auth";
 
 interface PageProps {
   params: { id: string };
@@ -24,7 +24,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const session = await getSession();
+  const session = await auth();
   const eventId = parseInt(params.id);
   const event = await prisma.event.findUnique({
     where: { id: eventId },
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function Post({ params, searchParams }: PageProps) {
-  const session = await getSession();
+  const session = await auth();
   const userID = session?.user.id;
 
   const eventId = parseInt(params.id);

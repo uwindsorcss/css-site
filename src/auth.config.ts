@@ -1,13 +1,14 @@
-import { NextAuthOptions } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { AdapterUser, NextAuthConfig } from "next-auth";
+import AzureADProvider from "next-auth/providers/azure-ad";
 import { prisma } from "@/lib/db";
-import { User } from "@prisma/client";
 import { error } from "@/lib/utils";
+import { Adapter } from "next-auth/adapters";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 function CustomPrismaAdapter(p: typeof prisma) {
   return {
     ...PrismaAdapter(p),
-    async createUser(data: User) {
+    async createUser(data: AdapterUser) {
       return prisma.user.create({
         data: {
           name: data.name,
@@ -20,25 +21,22 @@ function CustomPrismaAdapter(p: typeof prisma) {
   };
 }
 
-// For more information on each option (and a full list of options) go to
-// https://next-auth.js.org/configuration/options
-export const authOptions: NextAuthOptions = {
+const authConfig: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
-  // @ts-ignore
-  adapter: CustomPrismaAdapter(prisma),
+  trustHost: true,
+  adapter: CustomPrismaAdapter(prisma) as unknown as Adapter,
   pages: {
     signIn: "/",
     signOut: "/",
     error: "/",
   },
-  // https://next-auth.js.org/configuration/providers/oauth
   providers: [
-    {
+    AzureADProvider({
       id: "azure-ad",
       name: "University of Windsor",
       clientId: process.env.AZURE_AD_CLIENT_ID,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-      type: "oauth",
+      tenantId: process.env.AZURE_AD_TENANT_ID,
       allowDangerousEmailAccountLinking: true,
       wellKnown: `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/v2.0/.well-known/openid-configuration?appid=${process.env.AZURE_AD_CLIENT_ID}`,
       authorization: {
@@ -46,7 +44,7 @@ export const authOptions: NextAuthOptions = {
           scope: "openid profile email",
         },
       },
-      async profile(profile, tokens) {
+      profile: async (profile, tokens) => {
         // https://docs.microsoft.com/en-us/graph/api/profilephoto-get?view=graph-rest-1.0#examples
         const response = await fetch(
           `https://graph.microsoft.com/v1.0/me/photos/${240}x${240}/$value`,
@@ -93,11 +91,11 @@ export const authOptions: NextAuthOptions = {
           image: image ?? null,
         };
       },
-    },
+    }),
   ],
   callbacks: {
-    // @ts-ignore
-    async signIn({ user }: { user: User }) {
+    async signIn(params) {
+      const user = params.user as AdapterUser;
       const userInBlackList = await prisma.blackList.findUnique({
         where: { email: user.email! },
       });
@@ -117,25 +115,29 @@ export const authOptions: NextAuthOptions = {
         false
       );
     },
-    // @ts-ignore
-    async jwt({ token, profile }: { token: any; profile: any }) {
-      if (profile) {
-        token.title = profile.title;
-      }
+    async jwt({ token, profile }) {
+      if (profile) token.title = profile.title;
       return token;
     },
-    // @ts-ignore
-    async session({ session, user }: { session: any; user: User }) {
-      const userInJson = await prisma.user.findUnique({
-        where: { email: session.user.email },
-      });
+    async session({ session }) {
+      try {
+        if (!session?.user?.email) return session;
 
-      if (session.user) {
-        session.user.id = user.id;
-        session.user.title = user.title;
-        session.user.role = userInJson?.role;
+        const userData = await prisma.user.findUnique({
+          where: { email: session.user.email },
+        });
+
+        if (userData) {
+          session.user.id = userData.id;
+          session.user.title = userData.title;
+          session.user.role = userData.role;
+        }
+      } catch (error) {
+        console.error("Failed to fetch user data (session callback):", error);
       }
       return session;
     },
   },
 };
+
+export default authConfig;

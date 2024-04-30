@@ -1,14 +1,12 @@
 import { type ClassValue, clsx } from "clsx";
-import { Session, getServerSession } from "next-auth";
+import { Session } from "next-auth";
 import { signIn as nextAuthSignIn } from "next-auth/react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { twMerge } from "tailwind-merge";
 import { Role } from "@prisma/client";
 import { DateFormatter } from "@internationalized/date";
 import { RedirectType, redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 
-export const getSession = async () => await getServerSession(authOptions);
 export const signIn = () => nextAuthSignIn("azure-ad");
 
 export const checkUserRole = (session: Session, roles: Role[]): boolean =>
@@ -133,15 +131,15 @@ export const error = (message: string, destination = "", redirectToUrl = true) =
 export const success = (message: string, destination = "", redirectToUrl = true) =>
   toast(ToastType.success, message, destination, redirectToUrl);
 
-export const toastRes = (type: ToastType, message: string, destination: string) =>
+export const toastRes = (type: ToastType, message: string, destination = "") =>
   NextResponse.redirect(
     `${process.env.NEXTAUTH_URL}${destination}?${type}=${encodeURIComponent(message)}`
   );
 
-export const errorRes = (message: string, destination: string) =>
+export const errorRes = (message: string, destination = "") =>
   toastRes(ToastType.error, message, destination);
 
-export const successRes = (message: string, destination: string) =>
+export const successRes = (message: string, destination = "") =>
   toastRes(ToastType.success, message, destination);
 
 export const handleServerActionError = (error: Error, name: string) => {
