@@ -5,7 +5,6 @@ import ConfirmationDialog from "../ui/confirmation-dialog";
 import { useState } from "react";
 import { removeUserFromStaff } from "@/lib/admin-actions";
 import { X } from "lucide-react";
-import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 
 interface RemoveUserDialogProps {
   userId: number;
@@ -13,7 +12,6 @@ interface RemoveUserDialogProps {
 }
 
 export function RemoveUserDialog({ userId, userName }: RemoveUserDialogProps) {
-  const handleAsync = useAsyncFeedback();
   const [isRemoving, setIsRemoving] = useState(false);
 
   return (
@@ -25,7 +23,7 @@ export function RemoveUserDialog({ userId, userName }: RemoveUserDialogProps) {
       isPending={isRemoving}
       onAction={async () => {
         setIsRemoving(true);
-        await handleAsync(removeUserFromStaff, userId);
+        await removeUserFromStaff(userId);
         setIsRemoving(false);
       }}>
       <Button size={"icon"}>

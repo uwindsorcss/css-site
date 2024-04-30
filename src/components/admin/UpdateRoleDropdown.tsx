@@ -10,8 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 import { updateUserRole } from "@/lib/admin-actions";
+import { Role } from "@prisma/client";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 
@@ -26,7 +26,6 @@ export function UpdateRoleDropdown({
   userId,
   currentRole,
 }: EditRoleDropdownProps) {
-  const handleAsync = useAsyncFeedback();
   const [role, setRole] = useState(currentRole);
 
   return (
@@ -43,7 +42,7 @@ export function UpdateRoleDropdown({
           value={role}
           onValueChange={(value) => {
             setRole(value);
-            handleAsync(updateUserRole, userId, value);
+            updateUserRole(userId, value as Role);
           }}>
           <DropdownMenuRadioItem value="mod">Mod</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="eventEditor">Event Editor</DropdownMenuRadioItem>

@@ -4,11 +4,9 @@ import { useForm } from "@/hooks/useForm";
 import * as z from "zod";
 import { Form } from "@/components/form/form";
 import { submitFeedback } from "@/lib/actions";
-import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
-import { Heart, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/form/form-fields";
-import { useState } from "react";
 import content from "./content.json";
 import { signIn } from "@/lib/utils";
 
@@ -25,14 +23,12 @@ const feedbackSchema = z.object({
     .string({
       required_error: content.feedbackSchema.feedback.required_error,
     })
-    .min(60, content.feedbackSchema.feedback.min_error)
+    .min(30, content.feedbackSchema.feedback.min_error)
     .max(1200, content.feedbackSchema.feedback.max_error),
 });
 
 export default function FeedbackForm({ authenticated }: { authenticated: boolean }) {
-  const handleAsync = useAsyncFeedback();
   const form = useForm({ schema: feedbackSchema });
-  const [success, setSuccess] = useState(false);
   const isPending = form.formState.isSubmitting;
 
   async function onSubmit(data: FeedbackSchema) {
@@ -41,25 +37,7 @@ export default function FeedbackForm({ authenticated }: { authenticated: boolean
       feedback: data.feedback,
     };
 
-    setSuccess(await handleAsync(submitFeedback, feedback));
-
-    if (success) {
-      form.reset();
-      form.setValue("subject", "");
-      form.setValue("feedback", "");
-    }
-  }
-
-  if (success) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-2 mt-2 text-gray-200">
-        <div className="flex items-center gap-2 justify-center">
-          <div className="text-xl font-semibold">{content.feedbackSuccessMessage.title}</div>
-          <Heart className="text-red-500 animate-pulse fill-current" />
-        </div>
-        <div className="text-lg font-semibold">{content.feedbackSuccessMessage.subtitle}</div>
-      </div>
-    );
+    await submitFeedback(feedback);
   }
 
   if (!authenticated) {

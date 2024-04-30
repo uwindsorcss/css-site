@@ -9,10 +9,8 @@ import { Button } from "../ui/button";
 import { Input, Select } from "../form/form-fields";
 import { addUserToStaff } from "@/lib/admin-actions";
 import { Role } from "@prisma/client";
-import { useAsyncFeedback } from "@/hooks/useAsyncFeedback";
 
 export function AddUserDialog() {
-  const handleAsync = useAsyncFeedback();
   const [isOpen, setIsOpen] = useState(false);
   const postSchema = z.object({
     email: z
@@ -38,7 +36,7 @@ export function AddUserDialog() {
       setIsOpen={setIsOpen}
       isOpen={isOpen}
       onSubmitAction={async (data: PostSchema) => {
-        await handleAsync(addUserToStaff, data.email, data.role);
+        await addUserToStaff(data.email, data.role);
         form.reset();
         setIsOpen(false);
       }}
