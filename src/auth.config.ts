@@ -4,11 +4,12 @@ import { prisma } from "@/lib/db";
 import { error } from "@/lib/utils";
 import { Adapter } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 
-function CustomPrismaAdapter(p: typeof prisma) {
+function CustomPrismaAdapter(p: PrismaClient) {
   return {
     ...PrismaAdapter(p),
-    async createUser(data: AdapterUser) {
+    createUser: async (data: AdapterUser) => {
       return prisma.user.create({
         data: {
           name: data.name,
@@ -55,7 +56,7 @@ const authConfig: NextAuthConfig = {
 
         // Confirm that profile photo was returned
         let image;
-        if (response.ok && typeof Buffer !== "undefined") {
+        if (response.ok) {
           try {
             const pictureBuffer = await response.arrayBuffer();
             const pictureBase64 = Buffer.from(pictureBuffer).toString("base64");
@@ -94,7 +95,7 @@ const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
-    async signIn(params) {
+    signIn: async (params) => {
       const user = params.user as AdapterUser;
       const userInBlackList = await prisma.blackList.findUnique({
         where: { email: user.email! },
@@ -115,11 +116,11 @@ const authConfig: NextAuthConfig = {
         false
       );
     },
-    async jwt({ token, profile }) {
+    jwt: async ({ token, profile }) => {
       if (profile) token.title = profile.title;
       return token;
     },
-    async session({ session }) {
+    session: async ({ session }) => {
       try {
         if (!session?.user?.email) return session;
 
