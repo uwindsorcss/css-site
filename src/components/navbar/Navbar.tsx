@@ -11,7 +11,7 @@ async function NavBar() {
   const session = await auth();
 
   return (
-    <div className="z-50 w-screen fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
+    <div className="z-50 w-full fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
       {alertBanner && alertBanner.display && (
         <AlertBanner
           id={alertBanner.id}

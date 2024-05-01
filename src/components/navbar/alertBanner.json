@@ -1,6 +1,6 @@
 {
   "display": true,
-  "hideOnMobile": false,
+  "hideOnMobile": true,
   "id": "mc-server",
   "prefix": "New",
   "text": "CSS Minecraft SMP server launching soon!",
