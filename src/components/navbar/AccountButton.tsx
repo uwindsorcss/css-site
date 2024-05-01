@@ -2,7 +2,7 @@
 import { signOut } from "next-auth/react";
 import React from "react";
 import { Button } from "../ui/button";
-import { LogOut, Shield, User } from "lucide-react";
+import { LogOut, Shield, SquarePen, User } from "lucide-react";
 import { SiDiscord } from "@icons-pack/react-simple-icons";
 import {
   DropdownMenu,
@@ -61,6 +61,12 @@ function AccountButton({ session }: { session: Session | null }) {
                 </Link>
               </DropdownMenuItem>
             )}
+            <DropdownMenuItem asChild>
+              <Link href="/feedback">
+                <SquarePen size={16} className="mr-3" />
+                <span>Leave Feedback</span>
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/discord">
                 <SiDiscord size={16} className="mr-3" />
