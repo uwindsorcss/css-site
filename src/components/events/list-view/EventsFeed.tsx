@@ -12,10 +12,24 @@ interface EventsFeedProps {
 const eventsPerPage = 5;
 const baseUrl = "/events";
 
+function getStartDate(filter: string) {
+  const currentDate = new Date();
+
+  return filter === "Past" ? { lte: currentDate } :
+    filter === "Upcoming" ? { gt: currentDate } :
+      undefined;
+}
+
 async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
-  const totalPages = Math.ceil((await prisma.event.count()) / eventsPerPage);
-  const page = requestedPage ? sanitizePageNumber(baseUrl, requestedPage, totalPages) : 1;
   const session = await auth();
+  const count = await prisma.event.count({
+    where: {
+      startDate: filter && getStartDate(filter),
+      visible: session && canEditEvent(session) ? undefined : true,
+    },
+  });
+  const totalPages = Math.ceil(count / eventsPerPage);
+  const page = requestedPage ? sanitizePageNumber(baseUrl, requestedPage, totalPages) : 1;
   const events = await prisma.event.findMany({
     skip: (page - 1) * eventsPerPage,
     take: eventsPerPage,
@@ -28,16 +42,7 @@ async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
       },
     ],
     where: {
-      startDate:
-        filter === "Past"
-          ? {
-              lte: new Date(),
-            }
-          : filter === "Upcoming"
-          ? {
-              gt: new Date(),
-            }
-          : undefined,
+      startDate: filter && getStartDate(filter),
       visible: session && canEditEvent(session) ? undefined : true,
     },
   });
