@@ -1,24 +1,23 @@
 import { prisma } from "@/lib/db";
 import PaginationButtons from "../../ui/pagination";
-import { redirect } from "next/navigation";
 import PostCard from "@/components/PostCard";
-import { Session } from "next-auth";
-import { canEditEvent } from "@/lib/utils";
+import { canEditEvent, sanitizePageNumber } from "@/lib/utils";
+import { auth } from "@/auth";
 
 interface EventsFeedProps {
-  page: string | undefined;
-  filter: string | undefined;
-  session: Session | null;
+  requestedPage?: string | number;
+  filter?: string;
 }
 
-async function EventsFeed({ page, filter, session }: EventsFeedProps) {
-  const eventsPerPage = 5;
-  const totalPages = Math.ceil((await prisma.event.count()) / eventsPerPage);
-  const currentPage = Math.min(Math.max(parseInt(page ?? "1"), 1), totalPages);
-  if (parseInt(page ?? "1") > totalPages) redirect(`/events?page=${totalPages}`);
+const eventsPerPage = 5;
+const baseUrl = "/events";
 
+async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
+  const totalPages = Math.ceil((await prisma.event.count()) / eventsPerPage);
+  const page = requestedPage ? sanitizePageNumber(baseUrl, requestedPage, totalPages) : 1;
+  const session = await auth();
   const events = await prisma.event.findMany({
-    skip: (currentPage - 1) * eventsPerPage,
+    skip: (page - 1) * eventsPerPage,
     take: eventsPerPage,
     orderBy: [
       {
@@ -49,11 +48,11 @@ async function EventsFeed({ page, filter, session }: EventsFeedProps) {
   return (
     <>
       {events.map((event) => (
-        <PostCard key={event.id} post={event} currentPage={currentPage} filter={filter} truncate />
+        <PostCard key={event.id} post={event} currentPage={page} filter={filter} truncate />
       ))}
       <PaginationButtons
         baseUrl={"/events"}
-        currentPage={currentPage}
+        currentPage={page}
         filter={filter}
         totalPages={totalPages}
       />

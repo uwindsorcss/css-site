@@ -146,3 +146,17 @@ export const handleServerActionError = (error: Error, name: string) => {
   if (error.message === "NEXT_REDIRECT") throw error;
   console.error(`An error occurred from (${name}): `, error);
 };
+
+export const sanitizePageNumber = (
+  baseUrl: string,
+  requestedPage: string | number,
+  totalPages: number
+): number => {
+  let page = typeof requestedPage === "string" ? parseInt(requestedPage) : requestedPage;
+
+  if (isNaN(page)) redirect(baseUrl);
+  if (page < 1 || page > totalPages)
+    redirect(`${baseUrl}?page=${Math.min(Math.max(page, 1), totalPages)}`);
+
+  return page;
+};

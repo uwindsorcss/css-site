@@ -49,7 +49,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
           <div className="grid grid-cols-1 gap-6">
             <EventsFilter filter={filter} />
             <Suspense fallback={eventsSkeleton}>
-              <EventsFeed page={page} filter={filter} session={session} />
+              <EventsFeed requestedPage={page} filter={filter} />
             </Suspense>
           </div>
         </TabsContent>

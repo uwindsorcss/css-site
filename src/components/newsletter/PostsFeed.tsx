@@ -1,16 +1,20 @@
 import { prisma } from "@/lib/db";
 import PaginationButtons from "../ui/pagination";
 import PostCard from "../PostCard";
+import { sanitizePageNumber } from "@/lib/utils";
 
 interface PostsFeedProps {
-  currentPage: number;
+  requestedPage?: string | number;
 }
 
-export default async function PostsFeed({ currentPage }: PostsFeedProps) {
-  const postsPerPage = 5;
+const postsPerPage = 5;
+const baseUrl = "/newsletter";
+
+export default async function PostsFeed({ requestedPage }: PostsFeedProps) {
   const totalPages = Math.ceil((await prisma.post.count()) / postsPerPage);
+  const page = requestedPage ? sanitizePageNumber(baseUrl, requestedPage, totalPages) : 1;
   const posts = await prisma.post.findMany({
-    skip: (currentPage - 1) * postsPerPage,
+    skip: (page - 1) * postsPerPage,
     take: postsPerPage,
     include: {
       author: true,
@@ -23,13 +27,9 @@ export default async function PostsFeed({ currentPage }: PostsFeedProps) {
   return (
     <>
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} currentPage={currentPage} truncate />
+        <PostCard key={post.id} post={post} currentPage={page} truncate />
       ))}
-      <PaginationButtons
-        baseUrl={"/newsletter"}
-        currentPage={currentPage}
-        totalPages={totalPages}
-      />
+      <PaginationButtons baseUrl={baseUrl} currentPage={page} totalPages={totalPages} />
     </>
   );
 }

@@ -35,7 +35,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
           />
         )}
         <Suspense fallback={postsSkeleton}>
-          <PostsFeed currentPage={parseInt(page ?? "1")} />
+          <PostsFeed requestedPage={page} />
         </Suspense>
       </div>
     </>
