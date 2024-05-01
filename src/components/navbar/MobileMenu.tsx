@@ -29,7 +29,7 @@ function MobileMenu({ open, toggleOpen }: MobileMenuProps) {
               transition: { delay: 0.1 },
             }}>
             <motion.div
-              className="p-5 flex flex-col overflow-y-scroll h-full pb-16"
+              className="p-5 flex flex-col overflow-y-auto h-full pb-16"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.1 } }}
               exit={{ opacity: 0 }}>
