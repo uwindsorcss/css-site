@@ -15,9 +15,11 @@ const baseUrl = "/events";
 function getStartDate(filter: string) {
   const currentDate = new Date();
 
-  return filter === "Past" ? { lte: currentDate } :
-    filter === "Upcoming" ? { gt: currentDate } :
-      undefined;
+  return filter === "Past"
+    ? { lte: currentDate }
+    : filter === "Upcoming"
+    ? { gt: currentDate }
+    : undefined;
 }
 
 async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {

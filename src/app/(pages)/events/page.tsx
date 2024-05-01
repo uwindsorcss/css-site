@@ -8,7 +8,7 @@ import EventTabTrigger from "@/components/events/TabTrigger";
 import { canEditEvent } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
-import { PlusSquare } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { auth } from "@/auth";
 const EventFormDialog = dynamic(() => import("@/components/events/EventFormDialog"));
 
@@ -33,7 +33,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
           <EventFormDialog
             triggerButton={
               <Button size="full" className="mb-4" variant="accent">
-                <PlusSquare size={18} className="mr-2" />
+                <SquarePen size={18} className="mr-2" />
                 Create Event
               </Button>
             }

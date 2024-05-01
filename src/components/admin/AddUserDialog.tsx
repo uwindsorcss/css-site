@@ -41,7 +41,7 @@ export function AddUserDialog() {
         setIsOpen(false);
       }}
       triggerButton={
-        <Button size="full" onClick={() => setIsOpen(true)}>
+        <Button size="full" onClick={() => setIsOpen(true)} variant="accent">
           <UserPlus size={18} className="mr-2" />
           Add User
         </Button>

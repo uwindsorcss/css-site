@@ -4,7 +4,7 @@ import PostsFeed from "@/components/newsletter/PostsFeed";
 import { Button } from "@/components/ui/button";
 import { canEditPost } from "@/lib/utils";
 import { Suspense } from "react";
-import { PlusSquare } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { auth } from "@/auth";
 const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
 
@@ -28,7 +28,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
           <PostFormDialog
             triggerButton={
               <Button size="full" variant="accent">
-                <PlusSquare size={18} className="mr-2" />
+                <SquarePen size={18} className="mr-2" />
                 Create Post
               </Button>
             }

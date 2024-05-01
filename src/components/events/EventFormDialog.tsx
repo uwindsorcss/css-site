@@ -101,7 +101,12 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       buttonText={id ? "Update Event" : "Create Event"}
       pendingButtonText={id ? "Updating Event..." : "Creating Event..."}
       contentClassName="sm:max-w-[600px]">
-      <Input label="Title" type="text" placeholder="e.g. Movie Night" {...form.register("title", { required: true })} />
+      <Input
+        label="Title"
+        type="text"
+        placeholder="e.g. Movie Night"
+        {...form.register("title", { required: true })}
+      />
       <Textarea
         label="Description"
         placeholder="This event is about..."
@@ -111,7 +116,12 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       />
       <DateTimePicker label="Start Date" {...form.register("startDate")} />
       <DateTimePicker label="End Date" {...form.register("endDate")} />
-      <Input label="Location" type="text" placeholder="e.g. Java Lounge" {...form.register("location")} />
+      <Input
+        label="Location"
+        type="text"
+        placeholder="e.g. Java Lounge"
+        {...form.register("location")}
+      />
       <Input label="Capacity" type="number" {...form.register("capacity")} />
       <Checkbox label="Allow Registration" {...form.register("registrable")} />
       <Checkbox label="Visible" {...form.register("visible")} />
