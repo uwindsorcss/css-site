@@ -4,13 +4,26 @@ import Logo from "./Logo";
 import AccountButton from "./AccountButton";
 import MobileMenuButton from "./MobileMenuButton";
 import { auth } from "@/auth";
+import AlertBanner from "../ui/alert-banner";
+import alertBanner from "./alertBanner.json";
 
 async function NavBar() {
   const session = await auth();
 
   return (
-    <div className="z-50 w-screen h-16 fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
-      <div className="h-full px-8 mx-auto items-center max-w-7xl grid grid-row-1 grid-cols-2 lg:grid-cols-3 my-auto">
+    <div className="z-50 w-screen fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
+      {alertBanner && alertBanner.display && (
+        <AlertBanner
+          id={alertBanner.id}
+          prefix={alertBanner.prefix}
+          text={alertBanner.text}
+          url={alertBanner.url}
+          expirationDate={new Date(alertBanner.expirationDate)}
+          hideOnMobile={alertBanner.hideOnMobile}
+          linkText={alertBanner.linkText}
+        />
+      )}
+      <div className="h-full px-8 my-1 mx-auto items-center max-w-7xl grid grid-row-1 grid-cols-2 lg:grid-cols-3">
         <div className="flex justify-between py-2 justify-self-start">
           <Logo />
         </div>
