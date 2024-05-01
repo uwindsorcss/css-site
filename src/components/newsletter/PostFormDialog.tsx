@@ -64,10 +64,11 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
       buttonText={id ? "Update Post" : "Create Post"}
       pendingButtonText={id ? "Updating Post..." : "Creating Post..."}
       contentClassName="sm:max-w-[800px]">
-      <Input label="Title" type="text" {...form.register("title")} />
+      <Input label="Title" type="text" placeholder=" e.g. Newsletter" {...form.register("title")} />
       <Textarea
         label="Content"
         type="text"
+        placeholder="Write your post here..."
         className="min-h-[500px] h-full"
         {...form.register("content")}
       />
