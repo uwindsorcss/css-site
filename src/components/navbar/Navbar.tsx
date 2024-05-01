@@ -6,12 +6,14 @@ import MobileMenuButton from "./MobileMenuButton";
 import { auth } from "@/auth";
 import AlertBanner from "../ui/alert-banner";
 import alertBanner from "./alertBanner.json";
+import clsx from "clsx";
+import { zeroRightClassName } from "react-remove-scroll-bar";
 
 async function NavBar() {
   const session = await auth();
 
   return (
-    <div className="z-50 w-full fixed top-0 left-0 right-0 bg-primary text-primary-foreground">
+    <div className={clsx("z-50 fixed top-0 left-0 right-0 bg-primary text-primary-foreground", zeroRightClassName)}>
       {alertBanner && alertBanner.display && (
         <AlertBanner
           id={alertBanner.id}
