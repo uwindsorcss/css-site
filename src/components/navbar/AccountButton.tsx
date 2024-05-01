@@ -62,15 +62,15 @@ function AccountButton({ session }: { session: Session | null }) {
               </DropdownMenuItem>
             )}
             <DropdownMenuItem asChild>
-              <Link href="/feedback">
-                <SquarePen size={16} className="mr-3" />
-                <span>Leave Feedback</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
               <Link href="/discord">
                 <SiDiscord size={16} className="mr-3" />
                 <span>Discord Account</span>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/feedback">
+                <SquarePen size={16} className="mr-3" />
+                <span>Leave Feedback</span>
               </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
