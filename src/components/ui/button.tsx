@@ -16,7 +16,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondaryButton text-secondaryButton-foreground hover:bg-secondaryButton/80 shadow-sm hover:shadow-md",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        discord: "bg-indigo-600 text-white hover:bg-indigo-700",
+        accent: "bg-indigo-600 text-white hover:bg-indigo-700",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

@@ -28,7 +28,7 @@ function DiscordAuthButton({ linked }: DiscordAuthButtonProps) {
     return (
       <Button
         size="full"
-        variant="discord"
+        variant="accent"
         onClick={() => {
           authorizeDiscordAccount();
         }}>

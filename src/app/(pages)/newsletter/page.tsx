@@ -27,7 +27,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
         {session && canEditPost(session) && (
           <PostFormDialog
             triggerButton={
-              <Button size="full">
+              <Button size="full" variant="accent">
                 <PlusSquare size={18} className="mr-2" />
                 Create Post
               </Button>

@@ -32,7 +32,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
         {session && canEditEvent(session) && (
           <EventFormDialog
             triggerButton={
-              <Button size="full" className="mb-4">
+              <Button size="full" className="mb-4" variant="accent">
                 <PlusSquare size={18} className="mr-2" />
                 Create Event
               </Button>

@@ -14,7 +14,7 @@ const PaginationButton = ({ disabled, href, children, highlight }: PaginationBut
     <Button
       disabled={disabled}
       size="icon"
-      variant={highlight ? "discord" : "default"}
+      variant={highlight ? "accent" : "default"}
       asChild={!!href}>
       {href ? <Link href={href}>{children}</Link> : children}
     </Button>

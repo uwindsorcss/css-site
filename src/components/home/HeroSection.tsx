@@ -28,7 +28,7 @@ function HeroSection({ content }: HeroProps) {
         <h3 className="text-[0.9rem] sm:text-[1.1rem] text-muted-foreground">
           {content.description}
         </h3>
-        <Button variant="discord" asChild>
+        <Button variant="accent" asChild>
           <Link href="/discord">
             <SiDiscord className="w-5 h-5 mr-2" />
             {content.buttonText}
