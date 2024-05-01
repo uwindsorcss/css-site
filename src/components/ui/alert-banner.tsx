@@ -51,19 +51,24 @@ function AlertBanner({
 
   return (
     <div
+      id={dismissalCookieId}
       className={clsx(
-        "block relative p-2 text-center bg-indigo-600 text-xs sm:text-sm text-primary-foreground select-none",
-        hideOnMobile && "hidden md:block"
+        "items-center p-1 text-center bg-indigo-600 text-xs sm:text-sm text-primary-foreground select-none",
+        hideOnMobile ? "hidden md:flex" : "flex",
       )}>
-      {url && url.length > 0 ? (
-        <Link href={url}>
+      <div className="flex-1">
+        {url && url.length > 0 ? (
+          <Link href={url}>
+            <Text />
+            {linkText && <span className="text-white underline whitespace-nowrap">{linkText}</span>}
+          </Link>
+        ) : (
           <Text />
-          {linkText && <span className="text-white underline whitespace-nowrap">{linkText}</span>}
-        </Link>
-      ) : (
-        <Text />
-      )}
-      <DismissBannerButton dismissalCookieId={dismissalCookieId} dismissBanner={dismissBanner} />
+        )}
+      </div>
+      <div className="flex-grow-0">
+        <DismissBannerButton dismissalCookieId={dismissalCookieId} dismissBanner={dismissBanner} />
+      </div>
     </div>
   );
 }
