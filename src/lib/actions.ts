@@ -14,7 +14,6 @@ import {
 } from "@/lib/utils";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import { cookies } from "next/headers";
 
 const DISCORD_API_ENDPOINT = "https://discordapp.com/api";
 
