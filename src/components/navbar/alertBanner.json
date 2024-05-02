@@ -1,10 +1,10 @@
 {
   "display": true,
   "hideOnMobile": true,
-  "id": "mc-server",
+  "id": "mc-server-release",
   "prefix": "New",
-  "text": "CSS Minecraft SMP server launching soon!",
+  "text": "CSS Minecraft SMP Server Released!",
   "linkText": "Learn more",
-  "url": "",
+  "url": "/newsletter/58",
   "expirationDate": "2024-06-01T00:00:00"
 }
