@@ -22,9 +22,7 @@ function DismissBannerButton({ dismissBanner, dismissalCookieId }: DismissBanner
   };
 
   return isShown ? (
-    <button
-      className="p-1 text-primary-foreground hover:text-gray-200"
-      onClick={handleDismiss}>
+    <button className="p-1 text-primary-foreground hover:text-gray-200" onClick={handleDismiss}>
       <X size={24} />
     </button>
   ) : null;

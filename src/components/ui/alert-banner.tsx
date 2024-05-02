@@ -54,7 +54,7 @@ function AlertBanner({
       id={dismissalCookieId}
       className={clsx(
         "items-center p-1 text-center bg-indigo-600 text-xs sm:text-sm text-primary-foreground select-none",
-        hideOnMobile ? "hidden md:flex" : "flex",
+        hideOnMobile ? "hidden md:flex" : "flex"
       )}>
       <div className="flex-1">
         {url && url.length > 0 ? (

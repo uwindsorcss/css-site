@@ -13,7 +13,11 @@ async function NavBar() {
   const session = await auth();
 
   return (
-    <div className={clsx("z-50 fixed top-0 left-0 right-0 bg-primary text-primary-foreground", zeroRightClassName)}>
+    <div
+      className={clsx(
+        "z-50 fixed top-0 left-0 right-0 bg-primary text-primary-foreground",
+        zeroRightClassName
+      )}>
       {alertBanner && alertBanner.display && (
         <AlertBanner
           id={alertBanner.id}

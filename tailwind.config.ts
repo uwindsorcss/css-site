@@ -91,6 +91,9 @@ module.exports = {
         7: "7",
         8: "8",
       },
+      backgroundImage: {
+        'radial-gradient': 'radial-gradient(70.81% 168.07% at 49.97% 178.07%, #2b5baf4d, #02182d00)'
+      }
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
