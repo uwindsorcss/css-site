@@ -19,6 +19,7 @@ interface RegistrationButtonProps {
   isFull: boolean;
   isWaitListEnabled: boolean;
   isRegistered: boolean;
+  waitListPosition: number;
   isNotAllowed?: boolean;
   isLoggedOut?: boolean;
   isExpired?: boolean;
@@ -29,6 +30,7 @@ function RegistrationButton({
   isFull,
   isWaitListEnabled,
   isRegistered,
+  waitListPosition,
   isNotAllowed = false,
   isLoggedOut = true,
   isExpired = false,
@@ -44,31 +46,44 @@ function RegistrationButton({
     );
   if (isNotAllowed) return <DisabledButton>Not Allowed</DisabledButton>;
 
+  const isOnWaitList = isRegistered && waitListPosition > 0;
   const ButtonText = isRegistered
-    ? "Unregister"
+    ? isOnWaitList
+      ? `Leave Waitlist (${waitListPosition})`
+      : "Unregister"
     : isFull
-    ? isWaitListEnabled
-      ? "Join Waitlist"
-      : "Full"
-    : "Register";
+      ? isWaitListEnabled
+        ? "Join Waitlist"
+        : "Full"
+      : "Register";
   const ButtonIcon = isRegistered
     ? ClipboardX
     : isFull
-    ? isWaitListEnabled
-      ? Clipboard
-      : CircleSlash
-    : Clipboard;
+      ? isWaitListEnabled
+        ? Clipboard
+        : CircleSlash
+      : Clipboard;
   const waitListEnabled = isFull && isWaitListEnabled;
 
   return (
     <ConfirmationDialog
-      title={isRegistered ? "Cancel Registration" : waitListEnabled ? "Join Waitlist" : "Register"}
+      title={
+        isRegistered
+          ? isOnWaitList
+            ? "Leave Waitlist"
+            : "Cancel Registration"
+          : waitListEnabled
+            ? "Join Waitlist"
+            : "Register"
+      }
       description={
         isRegistered
-          ? "Are you sure you want to cancel your registration for this event?"
+          ? isOnWaitList
+            ? "Are you sure you want to leave the waitlist?"
+            : "Are you sure you want to unregister?"
           : waitListEnabled
-          ? "This event is full. Would you like to join the waitlist?"
-          : "Are you sure you want to register for this event?"
+            ? "This event is full. Would you like to join the waitlist?"
+            : "Are you sure you want to register for this event?"
       }
       actionButtonText="Confirm"
       pendingButtonText={isRegistered ? "Unregistering..." : "Registering..."}

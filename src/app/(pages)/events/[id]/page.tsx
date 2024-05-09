@@ -76,6 +76,23 @@ export default async function Post({ params, searchParams }: PageProps) {
     },
   });
 
+  // Calculate waitlist position if waitlist is enabled
+  let waitListPosition = 0;
+  if (
+    event.waitListEnabled &&
+    event.capacity !== null &&
+    event._count.EventRegistration > event.capacity
+  ) {
+    const registrations = await prisma.eventRegistration.findMany({
+      where: { eventId: event.id },
+      orderBy: { timestamp: "asc" },
+      skip: event.capacity,
+    });
+
+    const userIndex = registrations.findIndex((registration) => registration.userId === userID);
+    if (userIndex !== -1) waitListPosition = userIndex + 1;
+  }
+
   return (
     <FeedView
       heading={event.title}
@@ -96,6 +113,7 @@ export default async function Post({ params, searchParams }: PageProps) {
                 eventID={eventId}
                 isLoggedOut={!userID}
                 isRegistered={registered !== null}
+                waitListPosition={waitListPosition}
                 isNotAllowed={!userID || !isUndergradStudent(session)}
                 isFull={event.capacity !== null && event._count.EventRegistration >= event.capacity}
                 isWaitListEnabled={event.waitListEnabled}

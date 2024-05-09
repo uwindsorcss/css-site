@@ -50,15 +50,19 @@ function UsersCountComponent({
   session,
   count,
   capacity,
+  isOverCapacity,
 }: {
   session?: Session | null;
   count: number;
   capacity: number | null;
+  isOverCapacity?: boolean;
 }) {
   return (
     <Button className={clsx(!session && "cursor-auto")}>
       <User className="w-5 h-5 mr-1" />
-      {`${count}${capacity !== null ? ` / ${capacity}` : ""}`}
+      {`${capacity !== null && isOverCapacity ? capacity : count}${
+        capacity !== null ? ` / ${capacity}` : ""
+      }`}
     </Button>
   );
 }
@@ -128,7 +132,14 @@ export default async function ViewRegisteredUsersButton({
   const title = `Registered Users (${count})`;
 
   if (!session || !canEditEvent(session))
-    return <UsersCountComponent session={session} count={count} capacity={capacity} />;
+    return (
+      <UsersCountComponent
+        session={session}
+        count={count}
+        capacity={capacity}
+        isOverCapacity={isOverCapacity}
+      />
+    );
 
   const generateUserList = () => {
     if (count === 0) return "";
@@ -146,7 +157,12 @@ export default async function ViewRegisteredUsersButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <UsersCountComponent session={session} count={count} capacity={capacity} />
+        <UsersCountComponent
+          session={session}
+          count={count}
+          capacity={capacity}
+          isOverCapacity={isOverCapacity}
+        />
       </DialogTrigger>
       <DialogContent className="max-h-[80vh] overflow-y-auto w-full max-w-[700px]">
         <DialogHeader>
