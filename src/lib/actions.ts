@@ -273,6 +273,7 @@ export async function createEvent(event: EventFormData) {
         title: event.title,
         description: event.description,
         registrationEnabled: event.registrable,
+        waitListEnabled: event.waitListEnabled,
         visible: event.visible,
         capacity: event.capacity,
         location: event.location,
@@ -293,12 +294,39 @@ export async function updateEvent(event: EventFormData, id: number) {
     if (!session || !canEditEvent(session))
       return error("You do not have permission to update events.");
 
+    if (!event.waitListEnabled && event.capacity !== undefined) {
+      const registrations = await prisma.eventRegistration.count({
+        where: {
+          eventId: id,
+        },
+      });
+
+      if (registrations > event.capacity) {
+        const registrationsToDelete = registrations - event.capacity;
+        const recentRegistrations = await prisma.eventRegistration.findMany({
+          where: {
+            eventId: id,
+          },
+          take: registrationsToDelete,
+        });
+
+        for (const registration of recentRegistrations) {
+          await prisma.eventRegistration.delete({
+            where: {
+              id: registration.id,
+            },
+          });
+        }
+      }
+    }
+
     await prisma.event.update({
       where: { id },
       data: {
         title: event.title,
         description: event.description,
         registrationEnabled: event.registrable,
+        waitListEnabled: event.waitListEnabled,
         visible: event.visible,
         capacity: event.capacity,
         location: event.location,
@@ -363,8 +391,19 @@ export async function registerForEvent(eventId: number) {
       },
     });
 
-    if (event.capacity !== null && registrations >= event.capacity)
-      return error("This event is already at full capacity.");
+    if (event.capacity !== null && registrations >= event.capacity) {
+      if (event.waitListEnabled) {
+        await prisma.eventRegistration.create({
+          data: {
+            event: { connect: { id: eventId } },
+            user: { connect: { id: userId } },
+          },
+        });
+
+        return success("You've been added to the waitlist for this event.");
+      }
+      return error("This event is full. You've not been registered.");
+    }
 
     await prisma.eventRegistration.create({
       data: {

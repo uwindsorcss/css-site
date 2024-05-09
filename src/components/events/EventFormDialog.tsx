@@ -22,6 +22,7 @@ const eventSchema = z.object({
     })
     .min(1),
   registrable: z.boolean().default(false),
+  waitListEnabled: z.boolean().default(false),
   visible: z.boolean().default(true),
   capacity: z.coerce.number().min(0).optional(),
   location: z.string().optional(),
@@ -62,6 +63,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
     schema: eventSchema,
     defaultValues: initialValues || {
       registrable: true,
+      waitListEnabled: false,
       visible: true,
       capacity: 30,
     },
@@ -77,6 +79,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       title: data.title,
       description: data.description,
       registrable: data.registrable,
+      waitListEnabled: data.waitListEnabled,
       visible: data.visible,
       capacity: data.capacity,
       location: data.location,
@@ -124,6 +127,7 @@ function EventFormDialog({ triggerButton, id, initialValues }: EventFormProps) {
       />
       <Input label="Capacity" type="number" {...form.register("capacity")} />
       <Checkbox label="Allow Registration" {...form.register("registrable")} />
+      <Checkbox label="Allow Waitlist" {...form.register("waitListEnabled")} />
       <Checkbox label="Visible" {...form.register("visible")} />
     </FormDialog>
   );

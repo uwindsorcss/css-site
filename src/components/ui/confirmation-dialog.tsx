@@ -18,7 +18,7 @@ interface ConfirmationDialogProps {
   children: React.ReactNode;
   title: string;
   description: string;
-  variant?: "destructive" | "default";
+  variant?: "destructive" | "default" | "accent";
   isPending?: boolean;
   actionButtonText: string;
   pendingButtonText?: string;

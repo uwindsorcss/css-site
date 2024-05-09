@@ -60,7 +60,9 @@ function AlertBanner({
         {url && url.length > 0 ? (
           <Link href={url}>
             <Text />
-            {linkText && <span className="ml-2 text-white underline whitespace-nowrap">{linkText}</span>}
+            {linkText && (
+              <span className="ml-2 text-white underline whitespace-nowrap">{linkText}</span>
+            )}
           </Link>
         ) : (
           <Text />

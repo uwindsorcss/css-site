@@ -12,6 +12,7 @@ function transformEventToFormValues(event: Event) {
     description: event.description || "",
     location: event.location || "",
     registrable: event.registrationEnabled || false,
+    waitListEnabled: event.waitListEnabled || false,
     visible: event.visible,
     capacity: event.capacity || 0,
     startDate: {

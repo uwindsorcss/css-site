@@ -12,6 +12,7 @@ declare global {
     title: string;
     description: string;
     registrable: boolean;
+    waitListEnabled: boolean;
     visible: boolean;
     capacity?: number;
     location?: string;
