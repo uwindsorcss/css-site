@@ -89,30 +89,32 @@ model BlackList {
 }
 
 model Event {
-  id                  Int                 @id @default(autoincrement())
+  id                  Int             @id @default(autoincrement())
   title               String
   description         String?
   startDate           DateTime
   endDate             DateTime
   location            String?
   capacity            Int?
-  registrationEnabled Boolean             @default(false)
-  waitListEnabled     Boolean             @default(false)
-  visible             Boolean             @default(true)
+  registrationEnabled Boolean         @default(false)
+  waitListEnabled     Boolean         @default(false)
+  visible             Boolean         @default(true)
   thumbnailImage      ThumbnailImage?
   eventImages         EventImage[]
-  author              User?               @relation(fields: [authorId], references: [id])
+  author              User?           @relation(fields: [authorId], references: [id])
   authorId            Int?
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  EventRegistration   EventRegistration[]
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  //default registratios if event is deleted
+  EventRegistration EventRegistration[]
 }
 
 model EventRegistration {
   id        Int      @id @default(autoincrement())
-  event     Event    @relation(fields: [eventId], references: [id])
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId   Int
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   timestamp DateTime @default(now())
 }
