@@ -1,10 +1,10 @@
 function loading() {
   return (
-    <div className="flex flex-col justify-center w-full gap-3 max-w-2xl mx-auto">
-      <h1 className="w-[50%] h-8 skeleton" />
-      <div className="w-[80%] h-5 skeleton" />
-      <div className="w-[65%] h-5 skeleton" />
-      <div className="w-full h-96 skeleton" />
+    <div className="mx-auto flex w-full max-w-2xl flex-col justify-center gap-3">
+      <h1 className="skeleton h-8 w-[50%]" />
+      <div className="skeleton h-5 w-[80%]" />
+      <div className="skeleton h-5 w-[65%]" />
+      <div className="skeleton h-96 w-full" />
     </div>
   );
 }

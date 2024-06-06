@@ -53,9 +53,9 @@ async function EventsSection({ content }: EventsSectionProps) {
 
   return (
     <Section heading={heading} subheading={subheading}>
-      <div className="flex flex-wrap gap-5 justify-center w-full">
+      <div className="flex w-full flex-wrap justify-center gap-5">
         {!events.length ? (
-          <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+          <Card className="flex h-full w-full flex-col items-center justify-center gap-2 p-20">
             <CardTitle>{content.heading.noEvents}</CardTitle>
           </Card>
         ) : (
@@ -63,12 +63,12 @@ async function EventsSection({ content }: EventsSectionProps) {
             <Link
               key={event.id}
               href={`/events/${event.id}`}
-              className="w-full md:w-[20rem] lg:w-[25rem] transition-all duration-300 ease-in-out transform hover:-translate-y-2">
-              <Card className="flex flex-col items-center justify-center gap-2 text-center w-full h-full px-2 py-10 md:p-20 drop-shadow-sm">
+              className="w-full transform transition-all duration-300 ease-in-out hover:-translate-y-2 md:w-[20rem] lg:w-[25rem]">
+              <Card className="flex h-full w-full flex-col items-center justify-center gap-2 px-2 py-10 text-center drop-shadow-sm md:p-20">
                 <CardTitle>{event.title}</CardTitle>
-                <CardDescription className="text-sm flex flex-col items-center justify-center gap-1">
+                <CardDescription className="flex flex-col items-center justify-center gap-1 text-sm">
                   <span className="flex items-center justify-center">
-                    <CalendarDays className="w-4 h-4 mr-1" />
+                    <CalendarDays className="mr-1 h-4 w-4" />
                     {event.startDate.toLocaleDateString("en-US", {
                       weekday: "short",
                       year: "numeric",

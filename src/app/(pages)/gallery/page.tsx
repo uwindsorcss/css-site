@@ -28,18 +28,18 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <h1 className="text-2xl md:text-4xl text-center font-bold">Gallery</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <h1 className="text-center text-2xl font-bold md:text-4xl">Gallery</h1>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         {events.length === 0 && (
           <div className="col-span-full text-center">
-            <span className="text-lg text-muted-foreground font-semibold">No events to show</span>
+            <span className="text-lg font-semibold text-muted-foreground">No events to show</span>
           </div>
         )}
         {events.map((event, i) => {
           return (
             <Link
               key={i}
-              className="bg-card flex flex-col items-center p-5 border rounded-md border-border shadow-sm hover:shadow-md hover:border-blue-950/50 hover:shadow-blue-950/20 dark:hover:border-yellow-600/50  dark:hover:shadow-yellow-600/20 hover:-translate-y-1 transition duration-300 ease-in-out transform"
+              className="flex transform flex-col items-center rounded-md border border-border bg-card p-5 shadow-sm transition duration-300 ease-in-out hover:-translate-y-1 hover:border-blue-950/50 hover:shadow-md hover:shadow-blue-950/20 dark:hover:border-yellow-600/50 dark:hover:shadow-yellow-600/20"
               href={`/gallery/${event.id}`}>
               <Image
                 className="rounded-md"
@@ -49,7 +49,7 @@ export default async function GalleryPage() {
                 height={360}
                 style={{ objectFit: "cover" }}
               />
-              <span className="text-lg font-semibold mt-5">{event.title}</span>
+              <span className="mt-5 text-lg font-semibold">{event.title}</span>
             </Link>
           );
         })}

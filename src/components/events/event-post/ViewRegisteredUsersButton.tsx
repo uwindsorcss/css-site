@@ -59,7 +59,7 @@ function UsersCountComponent({
 }) {
   return (
     <Button className={clsx(!session && "cursor-auto")}>
-      <User className="w-5 h-5 mr-1" />
+      <User className="mr-1 h-5 w-5" />
       {`${capacity !== null && isOverCapacity ? capacity : count}${
         capacity !== null ? ` / ${capacity}` : ""
       }`}
@@ -77,7 +77,7 @@ function UserRegistrationTable({
   capacity: number | null;
 }) {
   if (registrations.length === 0) {
-    return <h2 className="text-center text-muted-foreground text-sm m-20">No Users Registered</h2>;
+    return <h2 className="m-20 text-center text-sm text-muted-foreground">No Users Registered</h2>;
   }
 
   return (
@@ -98,7 +98,7 @@ function UserRegistrationTable({
           ))}
           {isOverCapacity && capacity !== null && (
             <>
-              <h1 className="px-4 pt-4 mt-4 text-lg font-medium text-foreground">Waitlist</h1>
+              <h1 className="mt-4 px-4 pt-4 text-lg font-medium text-foreground">Waitlist</h1>
               {registrations.slice(capacity).map(({ id, user, timestamp }) => (
                 <UserRow key={id} user={user} timestamp={timestamp} />
               ))}
@@ -164,7 +164,7 @@ export default async function ViewRegisteredUsersButton({
           isOverCapacity={isOverCapacity}
         />
       </DialogTrigger>
-      <DialogContent className="max-h-[80vh] overflow-y-auto w-full max-w-[700px]">
+      <DialogContent className="max-h-[80vh] w-full max-w-[700px] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center text-xl">
             {title}

@@ -32,7 +32,7 @@ async function ServerCardContent({ cardInfo }: ServerCardContentProps) {
 
   return (
     <>
-      <CardContent className="flex flex-col items-center justify-center gap-1 text-muted-foreground text-center text-sm">
+      <CardContent className="flex flex-col items-center justify-center gap-1 text-center text-sm text-muted-foreground">
         <DiscordAccountInfo />
       </CardContent>
       <CardFooter className="flex w-full px-2 pb-2">

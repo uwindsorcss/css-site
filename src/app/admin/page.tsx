@@ -48,9 +48,9 @@ export default async function AdminPage() {
 
   return (
     <>
-      <h1 className="text-4xl text-center font-bold">Admin Dashboard</h1>
-      <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
-        <div className="p-5 rounded-md w-full bg-card text-card-foreground duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236]">
+      <h1 className="text-center text-4xl font-bold">Admin Dashboard</h1>
+      <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-6">
+        <div className="w-full rounded-md bg-card p-5 text-card-foreground duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236]">
           <p className="text-sm font-medium leading-6 text-gray-800 dark:text-gray-400">
             The roles are as follows:
             <br />
@@ -78,12 +78,12 @@ export default async function AdminPage() {
               <TableRow key={user.id}>
                 <TableCell className="font-medium">{user.name}</TableCell>
                 <TableCell>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex items-center gap-2">
                     {camelCaseToTitleCase(user.role)}
                     <UpdateRoleDropdown userId={user.id} currentRole={user.role} />
                   </div>
                 </TableCell>
-                <TableCell className="flex gap-2 text-right justify-end">
+                <TableCell className="flex justify-end gap-2 text-right">
                   <RemoveUserDialog userId={user.id} userName={user.name || ""} />
                 </TableCell>
               </TableRow>

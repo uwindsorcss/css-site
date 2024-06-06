@@ -16,21 +16,21 @@ interface HeroProps {
 function HeroSection({ content }: HeroProps) {
   return (
     <div className="relative">
-      <div className="absolute top-0 bottom-0 w-full light-hero-gradient dark:dark-hero-gradient mask-gradient" />
+      <div className="light-hero-gradient dark:dark-hero-gradient mask-gradient absolute bottom-0 top-0 w-full" />
       <HeroCircuitAnimation />
-      <section className="flex flex-col items-center justify-center min-h-screen gap-4 sm:gap-8 relative z-10 p-5 text-center">
-        <h2 className="text-[1.3rem] md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-violet-500 dark:from-indigo-400 dark:to-purple-400">
+      <section className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-4 p-5 text-center sm:gap-8">
+        <h2 className="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-[1.3rem] font-bold text-transparent dark:from-indigo-400 dark:to-purple-400 md:text-3xl">
           {content.preHeading}
         </h2>
-        <h1 className="text-[1.5rem] md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r dark:from-[#7dacfc] dark:to-indigo-400 from-blue-600 to-indigo-600">
+        <h1 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-[1.5rem] font-extrabold text-transparent dark:from-[#7dacfc] dark:to-indigo-400 md:text-5xl lg:text-6xl">
           {content.heading}
         </h1>
-        <h3 className="text-[0.9rem] sm:text-[1.1rem] text-muted-foreground">
+        <h3 className="text-[0.9rem] text-muted-foreground sm:text-[1.1rem]">
           {content.description}
         </h3>
         <Button variant="accent" asChild>
           <Link href="/discord">
-            <SiDiscord className="w-5 h-5 mr-2" />
+            <SiDiscord className="mr-2 h-5 w-5" />
             {content.buttonText}
           </Link>
         </Button>

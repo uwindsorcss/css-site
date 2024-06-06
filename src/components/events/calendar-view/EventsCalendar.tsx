@@ -13,13 +13,13 @@ function EventsCalendar({ events }: { events: any[] }) {
     return (
       <>
         <HoverCard>
-          <HoverCardTrigger className="hidden md:block mx-auto transform hover:scale-105 transition-all duration-300 ease-in-out">
+          <HoverCardTrigger className="mx-auto hidden transform transition-all duration-300 ease-in-out hover:scale-105 md:block">
             <Link href={`/events/${eventInfo.event.id}?view=calendar`} className="relative flex">
               <div
-                className="w-5 h-5 rounded-md bg-blue-500/50 dark:bg-amber-400/50 animate-ping opacity-40"
+                className="h-5 w-5 animate-ping rounded-md bg-blue-500/50 opacity-40 dark:bg-amber-400/50"
                 style={{ animationDuration: "3s" }}
               />
-              <div className="absolute w-5 h-5 rounded-md bg-blue-500 dark:bg-amber-400 transition-all duration-300 ease-in-out" />
+              <div className="absolute h-5 w-5 rounded-md bg-blue-500 transition-all duration-300 ease-in-out dark:bg-amber-400" />
             </Link>
           </HoverCardTrigger>
           <HoverCardContent className="w-auto text-xs font-medium">
@@ -29,7 +29,7 @@ function EventsCalendar({ events }: { events: any[] }) {
             </span>
           </HoverCardContent>
         </HoverCard>
-        <span className="md:hidden font-medium">{eventInfo.event.title}</span>
+        <span className="font-medium md:hidden">{eventInfo.event.title}</span>
       </>
     );
   }

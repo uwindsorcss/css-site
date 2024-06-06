@@ -20,7 +20,7 @@ function EventsFilter({ filter }: { filter?: string }) {
 
   return (
     <Select onValueChange={(value) => handleFilterChange(value)} value={filter ?? "All"}>
-      <SelectTrigger className="w-full text-center mt-2">
+      <SelectTrigger className="mt-2 w-full text-center">
         <SelectValue placeholder="All" />
       </SelectTrigger>
       <SelectContent className="w-full">

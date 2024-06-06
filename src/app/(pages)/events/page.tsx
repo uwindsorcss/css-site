@@ -17,7 +17,11 @@ export const metadata: Metadata = {
 };
 
 interface EventsProps {
-  searchParams: URLSearchParams & { page?: string; view?: string; filter?: string };
+  searchParams: URLSearchParams & {
+    page?: string;
+    view?: string;
+    filter?: string;
+  };
 }
 
 export default async function EventsPage({ searchParams }: EventsProps) {
@@ -27,7 +31,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
 
   return (
     <>
-      <h1 className="text-4xl text-center font-bold">Events</h1>
+      <h1 className="text-center text-4xl font-bold">Events</h1>
       <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
         {session && canEditEvent(session) && (
           <EventFormDialog
@@ -45,7 +49,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
         </TabsList>
         <TabsContent
           value="list"
-          className="grid grid-cols-1 gap-4 break-words max-w-3xl w-full mx-auto">
+          className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-4 break-words">
           <div className="grid grid-cols-1 gap-6">
             <EventsFilter filter={filter} />
             <Suspense fallback={eventsSkeleton}>
@@ -64,5 +68,5 @@ export default async function EventsPage({ searchParams }: EventsProps) {
 }
 
 const eventsSkeleton = Array.from({ length: 3 }, (_, i) => (
-  <div key={i} className="w-full h-60 bg-card rounded-md border border-border skeleton-card" />
+  <div key={i} className="skeleton-card h-60 w-full rounded-md border border-border bg-card" />
 ));

@@ -66,7 +66,7 @@ export const Checkbox = forwardRef<HTMLInputElement, any>(function Checkbox(
       name={props.name}
       render={({ field }) => (
         <FormItemPrimitive>
-          <div className="flex items-center gap-2 mt-6 mb-2">
+          <div className="mb-2 mt-6 flex items-center gap-2">
             <CheckboxPrimitive
               ref={ref}
               id={id}

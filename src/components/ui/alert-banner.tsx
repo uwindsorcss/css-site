@@ -41,7 +41,7 @@ function AlertBanner({
   const Text = () => (
     <>
       {prefix && (
-        <span className="font-bold after:font-normal after:content-['|'] after:ml-2 after:mr-2">
+        <span className="font-bold after:ml-2 after:mr-2 after:font-normal after:content-['|']">
           {prefix}
         </span>
       )}
@@ -53,7 +53,7 @@ function AlertBanner({
     <div
       id={dismissalCookieId}
       className={clsx(
-        "items-center p-1 text-center bg-indigo-600 text-xs sm:text-sm text-primary-foreground select-none",
+        "select-none items-center bg-indigo-600 p-1 text-center text-xs text-primary-foreground sm:text-sm",
         hideOnMobile ? "hidden md:flex" : "flex"
       )}>
       <div className="flex-1">
@@ -61,7 +61,7 @@ function AlertBanner({
           <Link href={url}>
             <Text />
             {linkText && (
-              <span className="ml-2 text-white underline whitespace-nowrap">{linkText}</span>
+              <span className="ml-2 whitespace-nowrap text-white underline">{linkText}</span>
             )}
           </Link>
         ) : (

@@ -9,16 +9,16 @@ interface DiscordMemberCountsProps {
 }
 
 const GreenPing = () => (
-  <div className="relative inline-flex items-center h-2 w-2 mr-1">
-    <span className="w-2 h-2 rounded-full bg-green-500" />
-    <span className="absolute w-2 h-2 rounded-full animate-ping opacity-75 bg-green-500" />
+  <div className="relative mr-1 inline-flex h-2 w-2 items-center">
+    <span className="h-2 w-2 rounded-full bg-green-500" />
+    <span className="absolute h-2 w-2 animate-ping rounded-full bg-green-500 opacity-75" />
   </div>
 );
 
 const GrayPing = () => (
-  <div className="relative inline-flex items-center h-2 w-2 mr-1">
-    <span className="w-2 h-2 rounded-full bg-gray-500" />
-    <span className="absolute w-2 h-2 rounded-full animate-ping opacity-75 bg-gray-500" />
+  <div className="relative mr-1 inline-flex h-2 w-2 items-center">
+    <span className="h-2 w-2 rounded-full bg-gray-500" />
+    <span className="absolute h-2 w-2 animate-ping rounded-full bg-gray-500 opacity-75" />
   </div>
 );
 
@@ -32,7 +32,7 @@ const CountDisplay = ({
   countText: string;
   isPinging?: boolean;
 }) => (
-  <div className="inline-flex items-center text-center gap-1 text-sm text-foreground">
+  <div className="inline-flex items-center gap-1 text-center text-sm text-foreground">
     {color === "green" ? <GreenPing /> : <GrayPing />}
     <AnimatedNumber value={countValue} />
     {countText}

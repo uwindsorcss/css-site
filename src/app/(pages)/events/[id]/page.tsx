@@ -63,7 +63,7 @@ export default async function Post({ params, searchParams }: PageProps) {
 
   if (!event || (!event.visible && (!session || !canEditEvent(session)))) {
     return (
-      <div className="text-center font-bold text-2xl mt-10 text-muted-foreground">
+      <div className="mt-10 text-center text-2xl font-bold text-muted-foreground">
         Event Not Found
       </div>
     );
@@ -105,7 +105,7 @@ export default async function Post({ params, searchParams }: PageProps) {
         },
         { text: event.location, Icon: MapPin },
       ]}>
-      <div className="flex flex-wrap w-full gap-2 my-2">
+      <div className="my-2 flex w-full flex-wrap gap-2">
         <>
           {event.registrationEnabled && (
             <>
@@ -136,7 +136,7 @@ export default async function Post({ params, searchParams }: PageProps) {
         </>
       </div>
       <MarkDownView allowLinks markdown={event.description || ""} />
-      <div className="w-full mt-10">
+      <div className="mt-10 w-full">
         <BackButton href="/events" searchParams={searchParams} />
       </div>
     </FeedView>

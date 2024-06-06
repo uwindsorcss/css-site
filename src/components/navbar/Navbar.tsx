@@ -15,7 +15,7 @@ async function NavBar() {
   return (
     <div
       className={clsx(
-        "z-50 fixed top-0 left-0 right-0 bg-primary text-primary-foreground",
+        "fixed left-0 right-0 top-0 z-50 bg-primary text-primary-foreground",
         zeroRightClassName
       )}>
       {alertBanner && alertBanner.display && (
@@ -29,8 +29,8 @@ async function NavBar() {
           linkText={alertBanner.linkText}
         />
       )}
-      <div className="h-full px-8 my-1 mx-auto items-center max-w-7xl grid grid-row-1 grid-cols-2 lg:grid-cols-3">
-        <div className="flex justify-between py-2 justify-self-start">
+      <div className="grid-row-1 mx-auto my-1 grid h-full max-w-7xl grid-cols-2 items-center px-8 lg:grid-cols-3">
+        <div className="flex justify-between justify-self-start py-2">
           <Logo />
         </div>
         <DesktopMenu />

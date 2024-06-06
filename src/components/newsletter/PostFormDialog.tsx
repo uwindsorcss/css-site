@@ -69,7 +69,7 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
         label="Content"
         type="text"
         placeholder="Write your post here..."
-        className="min-h-[500px] h-full"
+        className="h-full min-h-[500px]"
         {...form.register("content")}
       />
       <Checkbox label="Post as a team" {...form.register("isTeam")} />

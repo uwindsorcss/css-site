@@ -14,7 +14,7 @@ import {
 
 function DesktopMenu() {
   return (
-    <div className="hidden lg:flex h-auto items-center justify-center">
+    <div className="hidden h-auto items-center justify-center lg:flex">
       <NavigationMenu>
         <NavigationMenuList>
           {links.map((link, id) =>

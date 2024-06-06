@@ -22,8 +22,8 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
 
   return (
     <>
-      <h1 className="text-4xl text-center font-bold">News</h1>
-      <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-6">
+      <h1 className="text-center text-4xl font-bold">News</h1>
+      <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-6">
         {session && canEditPost(session) && (
           <PostFormDialog
             triggerButton={
@@ -43,5 +43,5 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
 }
 
 const postsSkeleton = Array.from({ length: 3 }, (_, i) => (
-  <div key={i} className="w-full h-60 bg-card rounded-md border border-border skeleton-card" />
+  <div key={i} className="skeleton-card h-60 w-full rounded-md border border-border bg-card" />
 ));

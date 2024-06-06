@@ -48,7 +48,7 @@ const Pagination = ({ baseUrl, currentPage, filter, totalPages }: PaginationProp
   };
 
   return (
-    <div className="flex justify-center gap-2 mt-4">
+    <div className="mt-4 flex justify-center gap-2">
       <PaginationButton disabled={isFirstPage} href={isFirstPage ? undefined : getHref(1)}>
         <ChevronsLeft />
       </PaginationButton>

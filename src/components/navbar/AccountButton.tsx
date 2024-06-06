@@ -36,7 +36,7 @@ function AccountButton({ session }: { session: Session | null }) {
             <AvatarImage
               src={session.user.image ?? ""}
               alt={name}
-              className="hover:brightness-90 transition-all"
+              className="transition-all hover:brightness-90"
             />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
@@ -76,7 +76,7 @@ function AccountButton({ session }: { session: Session | null }) {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => signOut()}>
-            <LogOut className="text-destructive mr-3 h-4 w-4" />
+            <LogOut className="mr-3 h-4 w-4 text-destructive" />
             <span className="text-destructive">Log out</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -86,10 +86,10 @@ function AccountButton({ session }: { session: Session | null }) {
   return (
     <>
       <Button className="flex md:hidden" size="icon" variant={"outline"} onClick={() => signIn()}>
-        <User className="w-4 h-4" />
+        <User className="h-4 w-4" />
       </Button>
       <Button className="hidden md:flex" variant={"outline"} onClick={() => signIn()}>
-        <User className="w-4 h-4 mr-2" />
+        <User className="mr-2 h-4 w-4" />
         <span>Sign In</span>
       </Button>
     </>

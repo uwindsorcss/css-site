@@ -9,7 +9,7 @@ function HeroCircuitAnimation() {
       animate={{ opacity: 0.5 }}
       transition={{ duration: 2 }}>
       <svg
-        className="absolute h-screen transform -translate-x-1/2 -translate-y-1/2"
+        className="absolute h-screen -translate-x-1/2 -translate-y-1/2 transform"
         style={{ top: "47.5%", left: "49.5%" }}
         fill="none"
         viewBox="0 0 891 264">

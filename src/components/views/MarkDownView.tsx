@@ -15,14 +15,14 @@ type Props = {
 const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown, allowLinks }) {
   return (
     <ReactMarkdown
-      className={clsx(className, "prose dark:prose-invert max-w-none w-full break-words")}
+      className={clsx(className, "prose w-full max-w-none break-words dark:prose-invert")}
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw]}
       components={{
         p: ({ node, ...props }) => <p className="whitespace-pre-wrap" {...props} />,
         a: ({ node, ...props }) => {
           if (allowLinks) return <a {...props} />;
-          return <span className="underline font-medium" {...props} />;
+          return <span className="font-medium underline" {...props} />;
         },
         // @ts-ignore
         anika: Anika,

@@ -19,7 +19,7 @@ function MobileMenu({ open, toggleOpen }: MobileMenuProps) {
         <>
           <RemoveScrollBar />
           <motion.aside
-            className="lg:hidden bg-primary text-primary-foreground w-full absolute left-0 right-0 top-16 z-50"
+            className="absolute left-0 right-0 top-16 z-50 w-full bg-primary text-primary-foreground lg:hidden"
             initial={{ height: 0 }}
             animate={{
               height: "100vh",
@@ -29,19 +29,19 @@ function MobileMenu({ open, toggleOpen }: MobileMenuProps) {
               transition: { delay: 0.1 },
             }}>
             <motion.div
-              className="p-5 flex flex-col overflow-y-auto h-full pb-16"
+              className="flex h-full flex-col overflow-y-auto p-5 pb-16"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.1 } }}
               exit={{ opacity: 0 }}>
               {links.map((link, id) =>
                 link.sublinks ? (
-                  <div key={id} className="border-b-2 border-border-900">
-                    <div className="text-xl font-medium p-2">{link.name}</div>
-                    <div className="ml-3 mb-1">
+                  <div key={id} className="border-border-900 border-b-2">
+                    <div className="p-2 text-xl font-medium">{link.name}</div>
+                    <div className="mb-1 ml-3">
                       {link.sublinks.map((sublink) => (
                         <Link
                           key={sublink.href}
-                          className="flex flex-col py-2 hover:bg-accent hover:text-accent-foreground transition-colors"
+                          className="flex flex-col py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
                           href={sublink.href}
                           target={sublink.href?.startsWith("http") ? "_blank" : "_self"}
                           rel={sublink.href?.startsWith("http") ? "noopener noreferrer" : ""}
@@ -49,10 +49,10 @@ function MobileMenu({ open, toggleOpen }: MobileMenuProps) {
                           <div className="inline-flex text-sm font-medium leading-none">
                             {sublink.name}
                             {sublink.href?.startsWith("http") && (
-                              <ArrowUpRight className="inline-block w-3 h-3 ml-1 text-muted dark:text-muted-foreground" />
+                              <ArrowUpRight className="ml-1 inline-block h-3 w-3 text-muted dark:text-muted-foreground" />
                             )}
                           </div>
-                          <div className="text-muted dark:text-muted-foreground text-xs mt-1">
+                          <div className="mt-1 text-xs text-muted dark:text-muted-foreground">
                             {sublink.description}
                           </div>
                         </Link>
@@ -61,7 +61,7 @@ function MobileMenu({ open, toggleOpen }: MobileMenuProps) {
                   </div>
                 ) : (
                   <Link
-                    className="border-b-2 border-border-900 hover:bg-accent hover:text-accent-foreground transition-colors no-underline text-xl font-medium p-2"
+                    className="border-border-900 border-b-2 p-2 text-xl font-medium no-underline transition-colors hover:bg-accent hover:text-accent-foreground"
                     href={link.href}
                     key={id}
                     onClick={() => toggleOpen()}>

@@ -12,7 +12,7 @@ function MobileMenuButton() {
   return (
     <div className="lg:hidden">
       <Button variant="outline" size="icon" onClick={() => cycleOpen()}>
-        {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </Button>
       <MobileMenu open={open} toggleOpen={() => cycleOpen()} />
     </div>

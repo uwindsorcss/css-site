@@ -74,10 +74,10 @@ function ChipTyping() {
   return (
     <div
       onClick={handleClick}
-      className="absolute w-[90px] h-[105px] sm:w-[125px] sm:h-[150px] top-[53px] right-[50%] sm:top-[44px] sm:right-[5%] select-none translate-x-[50%] cursor-pointer"
+      className="absolute right-[50%] top-[53px] h-[105px] w-[90px] translate-x-[50%] cursor-pointer select-none sm:right-[5%] sm:top-[44px] sm:h-[150px] sm:w-[125px]"
       draggable={false}>
       {count === 0 && (
-        <div className="absolute top-[-20px] right-[20%] transform text-xs sm:text-sm text-center rotate-[10deg] opacity-50">
+        <div className="absolute right-[20%] top-[-20px] rotate-[10deg] transform text-center text-xs opacity-50 sm:text-sm">
           <span className="text-xs sm:text-sm">Click me!</span>
         </div>
       )}

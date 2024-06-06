@@ -28,9 +28,9 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
 
   return (
     <Section heading={content.heading.featuredNewsletters} subheading={content.subheading}>
-      <div className="flex flex-col items-center justify-center w-full max-w-3xl gap-4">
+      <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-4">
         {posts === null || posts.length === 0 ? (
-          <Card className="flex flex-col items-center justify-center gap-2 w-full h-full p-20">
+          <Card className="flex h-full w-full flex-col items-center justify-center gap-2 p-20">
             <CardTitle>{content.heading.noNewsletters}</CardTitle>
           </Card>
         ) : (

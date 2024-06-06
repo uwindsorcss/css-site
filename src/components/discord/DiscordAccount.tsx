@@ -10,10 +10,10 @@ async function DiscordAccount({ account }: DiscordAccountProps) {
   const { username, avatarUrl } = await getUpdatedDiscordAccount(account);
 
   return (
-    <div className="inline-flex font-semibold text-foreground items-center gap-2 mt-2">
-      <Avatar className="w-10 h-10">
+    <div className="mt-2 inline-flex items-center gap-2 font-semibold text-foreground">
+      <Avatar className="h-10 w-10">
         <AvatarImage src={avatarUrl} alt={"Discord Avatar"} />
-        <AvatarFallback className="w-full h-full skeleton-card" />
+        <AvatarFallback className="skeleton-card h-full w-full" />
       </Avatar>
       {username}
     </div>

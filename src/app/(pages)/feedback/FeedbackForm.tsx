@@ -42,7 +42,7 @@ export default function FeedbackForm({ authenticated }: { authenticated: boolean
 
   if (!authenticated) {
     return (
-      <div className="w-full flex justify-center">
+      <div className="flex w-full justify-center">
         <Button className="w-full md:w-auto" onClick={() => signIn()}>
           Sign In to Leave Feedback
         </Button>
@@ -51,7 +51,7 @@ export default function FeedbackForm({ authenticated }: { authenticated: boolean
   }
 
   return (
-    <Form form={form} onSubmit={onSubmit} className="space-y-4 w-full">
+    <Form form={form} onSubmit={onSubmit} className="w-full space-y-4">
       <Input
         label={content.labels.subject}
         placeholder={content.placeholders.subject}

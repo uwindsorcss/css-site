@@ -16,7 +16,7 @@ const Subheading = ({ text, Icon, text2, Icon2 }: SubheadingProps) => {
   return (
     <div
       className={`flex gap-2 text-sm font-medium text-muted-foreground ${
-        text2 ? "md:flex-row flex-col flex-wrap" : ""
+        text2 ? "flex-col flex-wrap md:flex-row" : ""
       }`}>
       <span className="flex items-center gap-1">
         {renderIcon(Icon)}
@@ -43,10 +43,10 @@ interface FeedViewProps {
 
 const FeedView = ({ children, heading, subheadings }: FeedViewProps) => {
   return (
-    <div className="flex flex-col items-center justify-center w-full gap-2 max-w-2xl mx-auto">
+    <div className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2">
       {(heading || (subheadings && subheadings.length > 0)) && (
-        <div className="w-full flex flex-col gap-2">
-          {heading && <h1 className="text-xl sm:text-2xl font-bold">{heading}</h1>}
+        <div className="flex w-full flex-col gap-2">
+          {heading && <h1 className="text-xl font-bold sm:text-2xl">{heading}</h1>}
           {subheadings?.map(({ text, Icon, text2, Icon2 }, index) => (
             <Subheading key={index} text={text} Icon={Icon} text2={text2} Icon2={Icon2} />
           ))}

@@ -23,22 +23,22 @@ async function CallToActionSection({ content }: CallToActionSectionProps) {
   const { memberCount } = await getMemberCount();
 
   return (
-    <Section className="flex flex-col items-center justify-center w-full bg-radial-gradient">
-      <div className="relative flex flex-col items-center justify-center text-center gap-2 md:gap-4 bg-secondary text-secondary-foreground rounded-md w-full max-w-[1000px] py-24 px-12">
-        <div className="absolute w-[100px] h-[115px] sm:w-[125px] sm:h-[150px] top-[-105px] right-[-15px] sm:top-[-140px] sm:right-[-40px]">
+    <Section className="flex w-full flex-col items-center justify-center bg-radial-gradient">
+      <div className="relative flex w-full max-w-[1000px] flex-col items-center justify-center gap-2 rounded-md bg-secondary px-12 py-24 text-center text-secondary-foreground md:gap-4">
+        <div className="absolute right-[-15px] top-[-105px] h-[115px] w-[100px] sm:right-[-40px] sm:top-[-140px] sm:h-[150px] sm:w-[125px]">
           <Image src="/images/chip.png" alt="Chip" fill />
         </div>
-        <h2 className="text-xl md:text-3xl lg:text-4xl font-bold">{content.heading}</h2>
-        <span className="inline-block text-md md:text-lg lg:text-xl font-medium mb-2">
+        <h2 className="text-xl font-bold md:text-3xl lg:text-4xl">{content.heading}</h2>
+        <span className="text-md mb-2 inline-block font-medium md:text-lg lg:text-xl">
           {content.count.prefix}
-          <span className="font-black md:mx-1 min-w-[4rem]">
+          <span className="min-w-[4rem] font-black md:mx-1">
             <AnimatedNumber value={memberCount} />
           </span>
           {content.count.suffix}
         </span>
         <Button variant="secondary" asChild>
           <Link href="/discord">
-            <SiDiscord className="w-5 h-5 mr-2" />
+            <SiDiscord className="mr-2 h-5 w-5" />
             {content.buttonText}
           </Link>
         </Button>

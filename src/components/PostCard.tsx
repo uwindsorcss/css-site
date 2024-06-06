@@ -44,31 +44,31 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
     <Link
       key={id}
       href={linkUrl}
-      className="group relative flex flex-col gap-2 p-6 w-full bg-card text-card-foreground rounded-md border border-border transition-border duration-300 ease-in-out hover:bg-gray-200 dark:hover:bg-[#192236] hover:border-gray-600">
+      className="transition-border group relative flex w-full flex-col gap-2 rounded-md border border-border bg-card p-6 text-card-foreground duration-300 ease-in-out hover:border-gray-600 hover:bg-gray-200 dark:hover:bg-[#192236]">
       {/* Visibility and New Indicators */}
       {"visible" in post && !post.visible ? (
-        <span className="absolute top-0 right-0 bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr w-11 flex items-center justify-center">
+        <span className="absolute right-0 top-0 flex w-11 items-center justify-center rounded-bl rounded-tr bg-gray-500 px-2 py-1 text-xs font-bold text-white">
           <EyeOff size={16} />
         </span>
       ) : (
         isNewContent(createdAt) && (
-          <span className="absolute top-0 right-0 bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-bl rounded-tr">
+          <span className="absolute right-0 top-0 rounded-bl rounded-tr bg-indigo-500 px-2 py-1 text-xs font-bold text-white">
             New
           </span>
         )
       )}
 
-      <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
-      <div className="flex font-medium gap-2 flex-col md:flex-row flex-wrap text-sm text-muted-foreground">
+      <h2 className="text-xl font-semibold sm:text-2xl">{title}</h2>
+      <div className="flex flex-col flex-wrap gap-2 text-sm font-medium text-muted-foreground md:flex-row">
         <PostInfo post={post} />
       </div>
-      <div className="relative overflow-hidden mt-1">
+      <div className="relative mt-1 overflow-hidden">
         {truncateContent && (
-          <div className="absolute bottom-0 w-full h-32 bg-gradient-to-b from-transparent to-card opacity-100 group-hover:opacity-0 duration-300 ease-in-out transition-all" />
+          <div className="absolute bottom-0 h-32 w-full bg-gradient-to-b from-transparent to-card opacity-100 transition-all duration-300 ease-in-out group-hover:opacity-0" />
         )}
         <MarkDownView
           className={cn(
-            "prose dark:prose-invert max-w-none w-full break-words",
+            "prose w-full max-w-none break-words dark:prose-invert",
             truncateContent && "line-clamp-7 sm:line-clamp-8"
           )}
           markdown={truncateContent ? content!.slice(0, 400) + "..." : content ?? ""}
@@ -88,15 +88,15 @@ const InfoSpan = ({ Icon, text }: { Icon: LucideIcon; text: string }) => (
 const PostInfo = ({ post }: { post: Event | Post | PostWithAuthor }) => {
   const isEvent = "startDate" in post;
   return (
-    <div className="flex font-medium gap-2 flex-wrap">
+    <div className="flex flex-wrap gap-2 font-medium">
       <InfoSpan
         Icon={isEvent ? CalendarDays : User}
         text={
           isEvent
             ? formatDateRange(post.startDate, post.endDate)
             : "author" in post && post.author && post.author.name
-            ? post.author.name
-            : "CSS Team"
+              ? post.author.name
+              : "CSS Team"
         }
       />
       <span className="hidden sm:block">•</span>

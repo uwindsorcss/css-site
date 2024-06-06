@@ -35,7 +35,7 @@ export default async function Post({ params, searchParams }: PageProps) {
   const post = await fetchPostById(params.id);
   if (!post) {
     return (
-      <div className="text-center font-bold text-2xl mt-10 text-muted-foreground">
+      <div className="mt-10 text-center text-2xl font-bold text-muted-foreground">
         Post Not Found
       </div>
     );
@@ -47,15 +47,22 @@ export default async function Post({ params, searchParams }: PageProps) {
   return (
     <FeedView
       heading={post?.title}
-      subheadings={[{ text: authorName, Icon: User, text2: formattedTime, Icon2: AlarmClock }]}>
+      subheadings={[
+        {
+          text: authorName,
+          Icon: User,
+          text2: formattedTime,
+          Icon2: AlarmClock,
+        },
+      ]}>
       {session && canEditPost(session) && (
-        <div className="flex flex-wrap w-full gap-2 my-2">
+        <div className="my-2 flex w-full flex-wrap gap-2">
           <EditPostButton id={post!.id} post={post!} />
           <DeleteButton type={"post"} callback={deletePost} id={post!.id} />
         </div>
       )}
       <MarkDownView allowLinks markdown={post!.content} />
-      <div className="w-full mt-10">
+      <div className="mt-10 w-full">
         <BackButton href="/newsletter" searchParams={searchParams} />
       </div>
     </FeedView>

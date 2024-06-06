@@ -8,7 +8,7 @@ async function AdminLayout({ children }: { children: React.ReactNode }) {
   else if (!isAdmin(session)) return error("You must be an admin to view this page.", "/");
 
   return (
-    <div className="mx-auto flex flex-col items-center min-h-screen gap-10 px-4 md:px-8 py-28 md:py-32 max-w-7xl">
+    <div className="mx-auto flex min-h-screen max-w-7xl flex-col items-center gap-10 px-4 py-28 md:px-8 md:py-32">
       {children}
     </div>
   );

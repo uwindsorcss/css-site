@@ -31,7 +31,7 @@ function parseTextWithLinks(text: string) {
           href={linkUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:underline text-foreground">
+          className="text-foreground hover:underline">
           {linkText}
         </a>
       );
@@ -51,8 +51,8 @@ function parseTextWithLinks(text: string) {
 
 async function DiscordPage() {
   return (
-    <div className="flex flex-1 flex-col justify-center sm:items-center h-full w-full">
-      <Card className="sm:w-[400px] min-sm:max-w-[400px] p-3">
+    <div className="flex h-full w-full flex-1 flex-col justify-center sm:items-center">
+      <Card className="min-sm:max-w-[400px] p-3 sm:w-[400px]">
         <div className="flex justify-end">
           <Popover>
             <PopoverTrigger asChild>
@@ -60,7 +60,7 @@ async function DiscordPage() {
             </PopoverTrigger>
             <PopoverContent className="w-80">
               <div className="flex justify-between space-x-4">
-                <div className="flex flex-col gap-4 text-sm text-muted-foreground space-y-1">
+                <div className="flex flex-col gap-4 space-y-1 text-sm text-muted-foreground">
                   {parseTextWithLinks(discordContent.hoverCardText)}
                 </div>
               </div>
@@ -68,16 +68,16 @@ async function DiscordPage() {
           </Popover>
         </div>
         <CardHeader className="p-4">
-          <div className="flex items-center justify-center gap-2 mb-2">
+          <div className="mb-2 flex items-center justify-center gap-2">
             <CSSIcon />
-            <div className="h-10 w-px bg-border mx-2 rounded-full" />
-            <SiDiscord className="w-10 h-10" />
+            <div className="mx-2 h-10 w-px rounded-full bg-border" />
+            <SiDiscord className="h-10 w-10" />
           </div>
-          <CardTitle className="flex flex-col justify-center items-center gap-2">
-            <span className="text-xl font-semibold text-center">
+          <CardTitle className="flex flex-col items-center justify-center gap-2">
+            <span className="text-center text-xl font-semibold">
               {discordContent.cardInfo.title}
             </span>
-            <div className="flex flex-wrap gap-5 justify-center">
+            <div className="flex flex-wrap justify-center gap-5">
               <DiscordMemberCounts cardInfo={discordContent.cardInfo} />
             </div>
           </CardTitle>

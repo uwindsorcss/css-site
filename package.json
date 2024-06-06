@@ -17,17 +17,6 @@
   "prisma": {
     "seed": "./node_modules/.bin/ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
-  "prettier": {
-    "bracketSpacing": true,
-    "jsxBracketSameLine": false,
-    "printWidth": 100,
-    "proseWrap": "preserve",
-    "quoteProps": "as-needed",
-    "semi": true,
-    "singleQuote": false,
-    "tabWidth": 2,
-    "bracketSameLine": true
-  },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",
     "@fullcalendar/core": "^6.1.11",
@@ -87,5 +76,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "zod": "^3.23.4"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.1",
+    "prettier-plugin-tailwindcss": "^0.6.1"
   }
 }

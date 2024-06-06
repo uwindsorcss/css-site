@@ -18,8 +18,8 @@ function getStartDate(filter: string) {
   return filter === "Past"
     ? { lte: currentDate }
     : filter === "Upcoming"
-    ? { gt: currentDate }
-    : undefined;
+      ? { gt: currentDate }
+      : undefined;
 }
 
 async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
@@ -50,7 +50,7 @@ async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
   });
 
   if (events === null || events.length === 0)
-    return <h2 className="text-2xl text-center font-bold mt-10">No events found</h2>;
+    return <h2 className="mt-10 text-center text-2xl font-bold">No events found</h2>;
 
   return (
     <>

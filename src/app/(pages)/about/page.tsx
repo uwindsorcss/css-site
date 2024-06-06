@@ -19,7 +19,7 @@ export default async function AboutPage() {
   return (
     <>
       <FeedView>
-        <h1 className="text-4xl text-center font-bold mb-8">About Us</h1>
+        <h1 className="mb-8 text-center text-4xl font-bold">About Us</h1>
         <MarkDownView allowLinks markdown={markdownFile} />
       </FeedView>
       <div className="relative w-full">
