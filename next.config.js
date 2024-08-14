@@ -5,6 +5,15 @@ const nextConfig = {
       allowedOrigins: ["css.uwindsor.ca"],
     },
   },
+  async redirects() {
+    return [
+      {
+        source: "/ww",
+        destination: "/events",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
