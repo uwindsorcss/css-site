@@ -9,7 +9,7 @@ interface EventsFeedProps {
   filter?: string;
 }
 
-const eventsPerPage = 5;
+const eventsPerPage = 14;
 const baseUrl = "/events";
 
 function getStartDate(filter: string) {
@@ -37,7 +37,7 @@ async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
     take: eventsPerPage,
     orderBy: [
       {
-        startDate: "desc",
+        startDate: "asc",
       },
       {
         createdAt: "desc",

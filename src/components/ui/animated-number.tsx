@@ -4,6 +4,9 @@ import { motion, useInView, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 function AnimatedNumber({ value }: { value: number }) {
+  if (value === undefined) {
+    return <div></div>;
+  }
   const nodeRef = useRef() as React.MutableRefObject<HTMLSpanElement>;
   const inView = useInView(nodeRef, { once: true });
   const spring = useSpring(0, { mass: 0.8, stiffness: 75, damping: 22 });
