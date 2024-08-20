@@ -9,7 +9,7 @@ const nextConfig = {
     return [
       {
         source: "/ww",
-        destination: "/events",
+        destination: "/events?filter=Upcoming",
         permanent: false,
       },
     ];
