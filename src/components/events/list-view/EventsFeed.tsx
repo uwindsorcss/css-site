@@ -37,7 +37,7 @@ async function EventsFeed({ requestedPage, filter }: EventsFeedProps) {
     take: eventsPerPage,
     orderBy: [
       {
-        startDate: "asc",
+        startDate: filter === "Upcoming" ? "asc" : "desc",
       },
       {
         createdAt: "desc",
