@@ -63,7 +63,7 @@ export default async function Post({ params, searchParams }: PageProps) {
       )}
       <MarkDownView allowLinks markdown={post!.content} />
       <div className="mt-10 w-full">
-        <BackButton href="/newsletter" searchParams={searchParams} />
+        <BackButton href="/highlight" searchParams={searchParams} />
       </div>
     </FeedView>
   );

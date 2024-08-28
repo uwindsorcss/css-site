@@ -8,7 +8,7 @@ interface PostsFeedProps {
 }
 
 const postsPerPage = 5;
-const baseUrl = "/newsletter";
+const baseUrl = "/highlight";
 
 export default async function PostsFeed({ requestedPage }: PostsFeedProps) {
   const totalPages = Math.ceil((await prisma.post.count()) / postsPerPage);

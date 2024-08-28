@@ -35,7 +35,7 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
   const isEvent = "startDate" in post;
   const linkUrl = isEvent
     ? `/events/${post.id}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`
-    : `/newsletter/${post.id}${currentPage ? `?page=${currentPage}` : ""}`;
+    : `/highlight/${post.id}${currentPage ? `?page=${currentPage}` : ""}`;
   const content = isEvent ? post.description : post.content;
   const numOfLines: number = markdownToTextWithNewLines(content!).split("\n").length;
   const truncateContent = truncate && (content!.length > 400 || numOfLines > 5);

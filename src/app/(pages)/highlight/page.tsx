@@ -9,7 +9,7 @@ import { auth } from "@/auth";
 const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
 
 export const metadata: Metadata = {
-  title: "Newsletter",
+  title: "Highlight",
 };
 
 interface NewsletterPageProps {
