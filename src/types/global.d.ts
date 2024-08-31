@@ -23,6 +23,7 @@ declare global {
   interface PostFormData {
     title: string;
     isTeam?: boolean;
+    imageUrl?: string;
     content: string;
   }
 

@@ -19,6 +19,7 @@ const postSchema = z.object({
       required_error: "The content is required.",
     })
     .min(1),
+  imageUrl: z.string().optional(),
   isTeam: z.boolean().optional(),
 });
 
@@ -36,6 +37,7 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
     defaultValues: initialValues || {
       title: "",
       content: "",
+      imageUrl: "",
       isTeam: false,
     },
   });
@@ -45,6 +47,7 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
       title: data.title,
       isTeam: data.isTeam,
       content: data.content,
+      imageUrl: data.imageUrl,
     };
 
     if (id) await updatePost(post, id);
@@ -65,6 +68,7 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
       pendingButtonText={id ? "Updating Post..." : "Creating Post..."}
       contentClassName="sm:max-w-[800px]">
       <Input label="Title" type="text" placeholder=" e.g. Newsletter" {...form.register("title")} />
+      <Input label="ImageUrl" type="text" placeholder=" " {...form.register("imageUrl")} />
       <Textarea
         label="Content"
         type="text"

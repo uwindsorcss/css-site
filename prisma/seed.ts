@@ -58,6 +58,7 @@ async function seed() {
         data: {
           title: newsletterPostData.title,
           id: newsletterPostData.id,
+          imageUrl: newsletterPostData.imageUrl,
           content: newsletterPostData.content,
         },
       });
