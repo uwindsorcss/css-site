@@ -69,6 +69,12 @@ docker compose up -d --build db
 pnpx prisma migrate dev
 ```
 
+6. Generate types from the schema using Prisma:
+
+```bash
+pnpm prisma generate
+```
+
 ### Development
 
 Start the Next.js development server:
