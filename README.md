@@ -25,7 +25,7 @@ This repository contains the source code for the University of Windsor Computer 
 pnpm install
 ```
 
-3. Copy the `.env.example` file and rename it to `.env`. Update the variables with appropriate values:
+3. Copy the `.env.example` file and rename it to `.env`. Update the variables with the appropriate values. Ensure you generate a secret for `NEXTAUTH_SECRET`, as it is required.
 
 ```env
 NODE_ENV="development"
