@@ -28,33 +28,38 @@ pnpm install
 3. Copy the `.env.example` file and rename it to `.env`. Update the variables with the appropriate values. Ensure you generate a secret for `NEXTAUTH_SECRET`, as it is required.
 
 ```env
+# Set this to "production" for production environments and "development" for development environments
 NODE_ENV="development"
-SEED="true"
-SEED_OLD_DATA="false"
 
-NEXTAUTH_URL="http://localhost:3000"
-# You can generate a secret using `openssl rand -hex 32`
-NEXTAUTH_SECRET="your-nextauth-secret"
+# Database Seeding Options
+SEED="true" # Set to "true" to seed the database with sample data
+SEED_OLD_DATA="false" 
 
-# The following variables are required for authentication
-AZURE_AD_CLIENT_ID="your-azure-ad-client-id"
-AZURE_AD_CLIENT_SECRET="your-azure-ad-client-secret"
-AZURE_AD_TENANT_ID="your-azure-ad-tenant-id"
-
-DISCORD_CLIENT_ID="your-discord-client-id"
-DISCORD_CLIENT_SECRET="your-discord-client-secret"
-DISCORD_BOT_TOKEN="your-discord-bot-token"
-DISCORD_GUILD_ID="your-discord-guild-id"
-DISCORD_CALLBACK_URL="http://localhost:3000/api/discord/callback"
-DISCORD_SUGGESTION_WEBHOOK_URL="your-discord-suggestion-webhook-url"
-
-# The following variables are required for the database
-POSTGRES_PASSWORD="your-postgres-password"
-POSTGRES_USER="your-postgres-user"
-POSTGRES_DB="your-postgres-db"
+# Postgres Database Configuration (REQUIRED)
+# These variables are necessary to initialize the Database Docker container and to connect the site to the database
+POSTGRES_PASSWORD=""
+POSTGRES_USER=""
+POSTGRES_DB=""
 POSTGRES_HOST="localhost"
 POSTGRES_PORT="5432"
-DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}" # Leave this as is
+
+# NextAuth Configuration (REQUIRED)
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="" # Generate a secret using `openssl rand -base64 32`
+
+# Azure AD Configuration (Needed for authenticating users with the University's Azure AD)
+AZURE_AD_CLIENT_ID=""
+AZURE_AD_CLIENT_SECRET=""
+AZURE_AD_TENANT_ID=
+
+# Discord Configuration (Needed for linking a user's account with their Discord and inviting them to the server)
+DISCORD_CLIENT_ID=""
+DISCORD_CLIENT_SECRET=""
+DISCORD_BOT_TOKEN=""
+DISCORD_GUILD_ID=""
+DISCORD_CALLBACK_URL="http://localhost:3000/api/discord/callback"
+DISCORD_SUGGESTION_WEBHOOK_URL=""
 ```
 
 4. Set up the database container using Docker Compose:
