@@ -24,9 +24,12 @@ async function BoardMembers() {
             <Image
               src={member.image}
               alt={member.name}
-              layout="fill"
-              objectFit="cover"
               className="rounded-full"
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
             />
           </div>
           <p className="text-md font-semibold">
