@@ -3,7 +3,7 @@ import { FC, ReactNode, memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import Anika from "../easter-eggs/Anika";
+import BoardMembers from "../about/BoardMembers";
 
 type Props = {
   className?: string;
@@ -25,7 +25,7 @@ const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown
           return <span className="font-medium underline" {...props} />;
         },
         // @ts-ignore
-        anika: Anika,
+        members: BoardMembers,
       }}>
       {markdown}
     </ReactMarkdown>

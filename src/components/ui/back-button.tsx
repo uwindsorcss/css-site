@@ -4,15 +4,15 @@ import { buttonVariants } from "./button";
 
 interface BackButtonProps {
   href: string;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string>;
 }
 
 function BackButton({ href, searchParams }: BackButtonProps) {
-  const params = new URLSearchParams(searchParams as Record<string, string>);
-  const queryStr = params.toString() ? `?${params}` : "";
+  const queryStr = new URLSearchParams(searchParams).toString();
+  const url = queryStr ? `${href}?${queryStr}` : href;
 
   return (
-    <Link href={`${href}${queryStr}`} className={buttonVariants()}>
+    <Link href={url} className={buttonVariants()}>
       <ChevronLeft />
     </Link>
   );

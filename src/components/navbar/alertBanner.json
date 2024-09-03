@@ -1,10 +1,10 @@
 {
   "display": true,
-  "hideOnMobile": true,
-  "id": "mc-server-release",
+  "hideOnMobile": false,
+  "id": "welcome-week-2024",
   "prefix": "New",
-  "text": "CSS Minecraft SMP Server Released!",
+  "text": "Check Out Our Welcome Week Events!",
   "linkText": "Learn more",
-  "url": "/highlight/58",
-  "expirationDate": "2024-06-01T00:00:00"
+  "url": "/ww",
+  "expirationDate": "2024-09-07T00:00:00"
 }
