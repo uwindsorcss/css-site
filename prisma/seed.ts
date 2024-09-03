@@ -48,7 +48,7 @@ async function seed() {
     //Newsletter Posts
     counter = 0;
     const newsletterPostsJsonData = await fs.readFile(
-      "./prisma/developmentData/newsletter-posts.json",
+      "./prisma/developmentData/highlight-posts.json",
       "utf-8"
     );
     data = parse(newsletterPostsJsonData);

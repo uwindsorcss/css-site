@@ -9,7 +9,7 @@ import { auth } from "@/auth";
 const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
 
 export const metadata: Metadata = {
-  title: "Newsletter",
+  title: "Highlight",
 };
 
 interface NewsletterPageProps {
@@ -22,7 +22,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
 
   return (
     <>
-      <h1 className="text-center text-4xl font-bold">News</h1>
+      <h1 className="text-center text-4xl font-bold">Highlights</h1>
       <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-6">
         {session && canEditPost(session) && (
           <PostFormDialog
