@@ -3,7 +3,6 @@ import { FC, ReactNode, memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import Anika from "../easter-eggs/Anika";
 import BoardMembers from "../about/BoardMembers";
 
 type Props = {
@@ -25,8 +24,6 @@ const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown
           if (allowLinks) return <a {...props} />;
           return <span className="font-medium underline" {...props} />;
         },
-        // @ts-ignore
-        anika: Anika,
         // @ts-ignore
         members: BoardMembers,
       }}>
