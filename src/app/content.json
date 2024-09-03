@@ -42,13 +42,13 @@
     },
     "buttonText": "View All Events"
   },
-  "newsletter": {
+  "highlights": {
     "heading": {
-      "featuredNewsletters": "Featured Newsletters",
-      "noNewsletters": "No Newsletters Found"
+      "featuredHighlights": "Featured Highlights",
+      "noHighlights": "No Highlights Found"
     },
-    "subheading": "Discover the latest insights and updates in our newsletters.",
-    "buttonText": "View All Newsletters"
+    "subheading": "Discover the latest insights and updates in our highlights.",
+    "buttonText": "View All Highlights"
   },
   "callToAction": {
     "heading": "Join Our Community",

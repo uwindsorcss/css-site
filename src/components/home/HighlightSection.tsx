@@ -5,20 +5,20 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import PostCard from "../PostCard";
 
-interface NewsletterSectionProps {
+interface HighlightSectionProps {
   content: {
-    heading: NewsletterHeading;
+    heading: HighlightHeading;
     subheading: string;
     buttonText: string;
   };
 }
 
-interface NewsletterHeading {
-  featuredNewsletters: string;
-  noNewsletters: string;
+interface HighlightHeading {
+  featuredHighlights: string;
+  noHighlights: string;
 }
 
-async function NewsletterSection({ content }: NewsletterSectionProps) {
+async function HighlightSection({ content }: HighlightSectionProps) {
   const posts = await prisma.post.findMany({
     take: 3,
     orderBy: {
@@ -27,11 +27,11 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
   });
 
   return (
-    <Section heading={content.heading.featuredNewsletters} subheading={content.subheading}>
+    <Section heading={content.heading.featuredHighlights} subheading={content.subheading}>
       <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-4">
         {posts === null || posts.length === 0 ? (
           <Card className="flex h-full w-full flex-col items-center justify-center gap-2 p-20">
-            <CardTitle>{content.heading.noNewsletters}</CardTitle>
+            <CardTitle>{content.heading.noHighlights}</CardTitle>
           </Card>
         ) : (
           <>
@@ -48,4 +48,4 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
   );
 }
 
-export default NewsletterSection;
+export default HighlightSection;
