@@ -20,7 +20,7 @@ import { auth } from "@/auth";
 
 interface PageProps {
   params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Record<string, string>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
