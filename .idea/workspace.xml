@@ -5,13 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7225ed5-2108-486b-a13a-1e80e7589c80" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prisma/seed.ts" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/seed.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/(pages)/newsletter/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(pages)/newsletter/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/newsletter/PostFormDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/newsletter/PostFormDialog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/newsletter/newsletter-post/EditPostButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/newsletter/newsletter-post/EditPostButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(pages)/newsletter/[id]/loading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(pages)/highlights/[id]/loading.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(pages)/newsletter/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(pages)/highlights/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(pages)/newsletter/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(pages)/highlights/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/sitemap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/sitemap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PostCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PostCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/NewsletterSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/NewsletterSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navbar/alertBanner.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/alertBanner.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/navbar/links.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/links.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/newsletter/PostFormDialog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/highlights/PostFormDialog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/newsletter/PostsFeed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/highlights/PostsFeed.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/newsletter/newsletter-post/EditPostButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/highlights/highlight-post/EditPostButton.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/lib/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/actions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/global.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/global.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +80,7 @@
       <workItem from="1724886216245" duration="497000" />
       <workItem from="1724904502798" duration="190000" />
       <workItem from="1724904721079" duration="54000" />
-      <workItem from="1725142437949" duration="3250000" />
+      <workItem from="1725142437949" duration="5246000" />
     </task>
     <servers />
   </component>

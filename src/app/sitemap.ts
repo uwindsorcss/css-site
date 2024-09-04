@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   });
   const postUrls = posts.map((post) => ({
-    url: baseUrl + `/newsletter/${post.id}`,
+    url: baseUrl + `/highlights/${post.id}`,
     lastModified: post.updatedAt,
   }));
 
@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: baseUrl + "/newsletter",
+      url: baseUrl + "/highlights",
       lastModified: new Date(),
       priority: 0.8,
     },

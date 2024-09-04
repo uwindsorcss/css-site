@@ -521,7 +521,7 @@ export async function deletePost(id: number) {
     await prisma.post.delete({
       where: { id },
     });
-    return success("Post deleted successfully.", "/newsletter");
+    return success("Post deleted successfully.", "/highlights");
   } catch (error) {
     handleServerActionError(error as Error, "deletePost");
   }

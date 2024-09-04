@@ -1,7 +1,7 @@
 [
   { "name": "Home", "href": "/" },
   { "name": "About", "href": "/about" },
-  { "name": "News", "href": "/newsletter" },
+  { "name": "Highlights", "href": "/highlights" },
   { "name": "Events", "href": "/events" },
   { "name": "Discord", "href": "/discord" },
   { "name": "Store", "href": "https://store.uwindsorcss.ca" },

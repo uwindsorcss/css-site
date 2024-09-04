@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
-import EditPostButton from "@/components/newsletter/newsletter-post/EditPostButton";
+import EditPostButton from "@/components/highlights/highlight-post/EditPostButton";
 import { prisma } from "@/lib/db";
 import { canEditPost, getRelativeTimeDiff } from "@/lib/utils";
 import { deletePost } from "@/lib/actions";
@@ -69,7 +69,7 @@ export default async function Post({ params, searchParams }: PageProps) {
         </div>
       )}
       <div className="mt-10 w-full">
-        <BackButton href="/newsletter" searchParams={searchParams} />
+        <BackButton href="/highlights" searchParams={searchParams} />
       </div>
     </FeedView>
   );

@@ -42,7 +42,7 @@ async function NewsletterSection({ content }: NewsletterSectionProps) {
         )}
       </div>
       <Button asChild>
-        <Link href="/newsletter">{content.buttonText}</Link>
+        <Link href="/highlights">{content.buttonText}</Link>
       </Button>
     </Section>
   );

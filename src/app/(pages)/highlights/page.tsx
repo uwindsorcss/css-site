@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
 import { Metadata } from "next";
-import PostsFeed from "@/components/newsletter/PostsFeed";
+import PostsFeed from "@/components/highlights/PostsFeed";
 import { Button } from "@/components/ui/button";
 import { canEditPost } from "@/lib/utils";
 import { Suspense } from "react";
 import { SquarePen } from "lucide-react";
 import { auth } from "@/auth";
-const PostFormDialog = dynamic(() => import("@/components/newsletter/PostFormDialog"));
+const PostFormDialog = dynamic(() => import("@/components/highlights/PostFormDialog"));
 
 export const metadata: Metadata = {
   title: "Newsletter",
@@ -22,7 +22,7 @@ export default async function NewsletterPage({ searchParams }: NewsletterPagePro
 
   return (
     <>
-      <h1 className="text-center text-4xl font-bold">News</h1>
+      <h1 className="text-center text-4xl font-bold">Highlights</h1>
       <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-6">
         {session && canEditPost(session) && (
           <PostFormDialog
