@@ -47,23 +47,24 @@ async function seed() {
 
     //Newsletter Posts
     counter = 0;
-    const newsletterPostsJsonData = await fs.readFile(
-      "./prisma/developmentData/highlight-posts.json",
+    const highlightJsonData = await fs.readFile(
+      "./prisma/developmentData/highlights.json",
       "utf-8"
     );
-    data = parse(newsletterPostsJsonData);
+    data = parse(highlightJsonData);
 
-    for (const newsletterPostData of data) {
-      const newsletterPost = await prisma.post.create({
+    for (const highlightData of data) {
+      const highlight = await prisma.post.create({
         data: {
-          title: newsletterPostData.title,
-          id: newsletterPostData.id,
-          imageUrl: newsletterPostData.imageUrl,
-          content: newsletterPostData.content,
+          title: highlightData.title,
+          id: highlightData.id,
+          bannerUrl: highlightData.bannerUrl,
+          bannerAlt: highlightData.bannerAlt,
+          content: highlightData.content,
         },
       });
 
-      console.log(`Newsletter Post "${newsletterPost.title}" created.`);
+      console.log(`Newsletter Post "${highlight.title}" created.`);
       counter++;
     }
     console.log(`${counter} development newsletter posts seeded.`);

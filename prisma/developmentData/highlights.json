@@ -14,5 +14,11 @@
   {
     "title": "Test Post 4",
     "content": "This is a test post"
+  },
+  {
+    "title": "Test Post with Banner",
+    "content": "This is a test post with a banner.",
+    "bannerUrl": "https://github.com/UWindsorCSS/logos-and-branding/raw/master/CSS%20Full%20Logo/CSS%20Logo%20White%20Text.png?raw=true",
+    "bannerAlt": "CSS Logo"
   }
 ]

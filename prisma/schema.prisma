@@ -148,7 +148,8 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String
   content   String   @db.Text
-  imageUrl  String?
+  bannerUrl  String?
+  bannerAlt  String?
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
   createdAt DateTime @default(now())
