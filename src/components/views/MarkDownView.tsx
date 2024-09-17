@@ -1,9 +1,10 @@
+import { FC, ReactNode } from "react";
 import clsx from "clsx";
-import { FC, ReactNode, memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import BoardMembers from "../about/BoardMembers";
+import ImageWithModal from "@/components/modals/ImageModal";
 
 type Props = {
   className?: string;
@@ -12,7 +13,8 @@ type Props = {
   allowLinks?: boolean;
 };
 
-const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown, allowLinks }) {
+// memo removed to prevent hydration mismatch
+const MarkDownView: FC<Props> = function MarkdownView({ className, markdown, allowLinks }) {
   return (
     <ReactMarkdown
       className={clsx(className, "prose w-full max-w-none break-words dark:prose-invert")}
@@ -24,12 +26,13 @@ const MarkDownView: FC<Props> = memo(function MarkdownView({ className, markdown
           if (allowLinks) return <a {...props} />;
           return <span className="font-medium underline" {...props} />;
         },
+        img: ({ node, ...props }) => <ImageWithModal src={props.src || ''} alt={props.alt ?? ''} {...props} />,
         // @ts-ignore
         members: BoardMembers,
       }}>
       {markdown}
     </ReactMarkdown>
   );
-});
+};
 
 export default MarkDownView;
