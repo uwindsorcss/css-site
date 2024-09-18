@@ -16,10 +16,9 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt }) => {
   return (
     <>
       <div className="relative w-full h-64 cursor-pointer" onClick={() => setIsModalOpen(true)}>
-        <Image
+        <img
           src={src}
           alt={alt}
-          fill
           style={{ objectFit: "contain" }}
         />
       </div>
@@ -29,10 +28,9 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt }) => {
           onClick={() => setIsModalOpen(false)}
         >
           <div className="relative w-screen h-screen p-4">
-            <Image
+            <img
               src={src}
               alt={alt}
-              fill
               style={{ objectFit: "contain" }}
             />
             <button
