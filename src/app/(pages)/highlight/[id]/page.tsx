@@ -47,6 +47,10 @@ export default async function Post({ params, searchParams }: PageProps) {
   return (
     <FeedView
       heading={post?.title}
+      banner={(post?.bannerUrl && {
+        url: post?.bannerUrl ?? "",
+        alt: post?.bannerAlt ?? "Banner image for the highlight."
+      }) || undefined}
       subheadings={[
         {
           text: authorName,
@@ -63,11 +67,6 @@ export default async function Post({ params, searchParams }: PageProps) {
         </div>
       )}
       <MarkDownView allowLinks markdown={post!.content} />
-      {post.imageUrl && (  // displays image if url exists
-        <div className="mt-4">
-          <img src={post.imageUrl} alt="Post Image" className="w-full" />
-        </div>
-      )}
       <div className="mt-10 w-full">
         <BackButton href="/highlight" searchParams={searchParams} />
       </div>

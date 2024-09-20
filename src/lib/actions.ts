@@ -466,7 +466,8 @@ export async function createPost(post: PostFormData) {
     await prisma.post.create({
       data: {
         title: post.title,
-        imageUrl: post.imageUrl,
+        bannerUrl: post.bannerUrl,
+        bannerAlt: post.bannerAlt,
         content: post.content,
         ...(post.isTeam ? {} : { author: { connect: { id: session.user.id } } }),
       },
@@ -487,7 +488,8 @@ export async function updatePost(post: PostFormData, id: number) {
 
     const data: any = {
       title: post.title,
-      imageUrl: post.imageUrl,
+      bannerUrl: post.bannerUrl,
+      bannerAlt: post.bannerAlt,
       content: post.content,
     };
 
