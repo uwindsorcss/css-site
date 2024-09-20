@@ -36,12 +36,12 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
   const linkUrl = isEvent
     ? `/events/${post.id}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`
     : `/highlight/${post.id}${currentPage ? `?page=${currentPage}` : ""}`;
-  const banner = !isEvent 
+  const banner = !isEvent && post.bannerUrl
     ? {
         url: post.bannerUrl ?? "",
         alt: post.bannerAlt ?? "Banner image for the highlight.",
       }
-    : null;
+    : false;
   const content = isEvent ? post.description : post.content;
   const numOfLines: number = markdownToTextWithNewLines(content!).split("\n").length;
   const truncateContent = truncate && (content!.length > 400 || numOfLines > 5);
