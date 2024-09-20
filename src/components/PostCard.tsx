@@ -31,11 +31,17 @@ const isNewContent = (createdAt: Date) => {
 };
 
 function PostCard({ post, currentPage, filter, truncate = false }: ContentProps) {
-  const { id, title, bannerUrl, bannerAlt, createdAt } = post;
+  const { id, title, createdAt } = post;
   const isEvent = "startDate" in post;
   const linkUrl = isEvent
     ? `/events/${post.id}?page=${currentPage}${filter ? `&filter=${filter}` : ""}`
     : `/highlight/${post.id}${currentPage ? `?page=${currentPage}` : ""}`;
+  const banner = !isEvent 
+    ? {
+        url: post.bannerUrl ?? "",
+        alt: post.bannerAlt ?? "Banner image for the highlight.",
+      }
+    : null;
   const content = isEvent ? post.description : post.content;
   const numOfLines: number = markdownToTextWithNewLines(content!).split("\n").length;
   const truncateContent = truncate && (content!.length > 400 || numOfLines > 5);
@@ -59,8 +65,8 @@ function PostCard({ post, currentPage, filter, truncate = false }: ContentProps)
       )}
 
       <h2 className="text-xl font-semibold sm:text-2xl">{title}</h2>
-      {bannerUrl && (
-        <img className="w-full max-h-[60vh] object-contain rounded-md" src={bannerUrl} alt={bannerAlt} />
+      {banner && (
+        <img className="w-full max-h-[60vh] object-contain rounded-md" src={banner.url} alt={banner.alt} />
         // TODO: ^ should prob use nextjs Image, but causes problems when using external URLS
         // TODO: (fix) with non-landscape images, the corners wont be rounded
       )}
