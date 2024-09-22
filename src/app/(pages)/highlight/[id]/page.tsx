@@ -47,6 +47,10 @@ export default async function Post({ params, searchParams }: PageProps) {
   return (
     <FeedView
       heading={post?.title}
+      banner={(post?.bannerUrl && {
+        url: post?.bannerUrl ?? "",
+        alt: post?.bannerAlt ?? "Banner image for the highlight."
+      }) || undefined}
       subheadings={[
         {
           text: authorName,
@@ -55,6 +59,7 @@ export default async function Post({ params, searchParams }: PageProps) {
           Icon2: AlarmClock,
         },
       ]}>
+
       {session && canEditPost(session) && (
         <div className="my-2 flex w-full flex-wrap gap-2">
           <EditPostButton id={post!.id} post={post!} />
@@ -63,7 +68,7 @@ export default async function Post({ params, searchParams }: PageProps) {
       )}
       <MarkDownView allowLinks markdown={post!.content} />
       <div className="mt-10 w-full">
-        <BackButton href="/newsletter" searchParams={searchParams} />
+        <BackButton href="/highlight" searchParams={searchParams} />
       </div>
     </FeedView>
   );

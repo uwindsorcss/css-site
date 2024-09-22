@@ -466,10 +466,13 @@ export async function createPost(post: PostFormData) {
     await prisma.post.create({
       data: {
         title: post.title,
+        bannerUrl: post.bannerUrl,
+        bannerAlt: post.bannerAlt,
         content: post.content,
         ...(post.isTeam ? {} : { author: { connect: { id: session.user.id } } }),
       },
     });
+    alert("Post created successfully.");
 
     return success("Post created successfully.");
   } catch (error) {
@@ -485,6 +488,8 @@ export async function updatePost(post: PostFormData, id: number) {
 
     const data: any = {
       title: post.title,
+      bannerUrl: post.bannerUrl,
+      bannerAlt: post.bannerAlt,
       content: post.content,
     };
 
@@ -518,7 +523,7 @@ export async function deletePost(id: number) {
     await prisma.post.delete({
       where: { id },
     });
-    return success("Post deleted successfully.", "/newsletter");
+    return success("Post deleted successfully.", "/highlight");
   } catch (error) {
     handleServerActionError(error as Error, "deletePost");
   }

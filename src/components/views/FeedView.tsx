@@ -35,18 +35,29 @@ const Subheading = ({ text, Icon, text2, Icon2 }: SubheadingProps) => {
   );
 };
 
+interface ImageProps {
+  url: string;
+  alt: string;
+}
+
 interface FeedViewProps {
   children: React.ReactNode;
   heading?: string;
+  banner?: ImageProps;
   subheadings?: SubheadingProps[];
 }
 
-const FeedView = ({ children, heading, subheadings }: FeedViewProps) => {
+const FeedView = ({ children, heading, banner, subheadings }: FeedViewProps) => {
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2">
       {(heading || (subheadings && subheadings.length > 0)) && (
         <div className="flex w-full flex-col gap-2">
           {heading && <h1 className="text-xl font-bold sm:text-2xl">{heading}</h1>}
+          {banner && (
+            <img className="w-full max-h-[60vh] object-contain rounded-md" src={banner.url} alt={banner.alt} />
+            // TODO: ^ should prob use nextjs Image, but causes problems when using external URLS
+            // TODO: (fix) with non-landscape images, the corners wont be rounded
+          )}
           {subheadings?.map(({ text, Icon, text2, Icon2 }, index) => (
             <Subheading key={index} text={text} Icon={Icon} text2={text2} Icon2={Icon2} />
           ))}

@@ -7,6 +7,8 @@ function EditPostButton({ id, post }: { id: number; post: Post }) {
   const values = {
     title: post.title || "",
     content: post.content || "",
+    bannerUrl: post.bannerUrl || "",
+    bannerAlt: post.bannerAlt || "",
     isTeam: post.authorId ? false : true,
   };
 
