@@ -27,11 +27,11 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt }) => {
           className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50"
           onClick={() => setIsModalOpen(false)}
         >
-          <div className="relative w-screen h-screen p-4">
+          <div className="relative w-screen h-screen p-4 flex justify-center items-center">
             <img
               src={src}
               alt={alt}
-              style={{ objectFit: "contain" }}
+              className="w-full h-full object-contain"
             />
             <button
               onClick={(e) => {
