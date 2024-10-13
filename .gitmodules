@@ -1,0 +1,3 @@
+[submodule "src/winzard"]
+	path = src/winzard
+	url = git@github.com:b44ken/winzard
