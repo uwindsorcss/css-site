@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* baody {
+  margin: 0;
+  font-family: 'Roboto', sans-serif; 
+}
+
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.main > div {
+  height: 700px;
+  margin: 8px;
+  border: 1px solid #000;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.days {
+  width: 800px;
+  max-width: 100%;
+}
+
+.column-day {
+  width: 20%;
+  height: 100%;
+  border-left: 2px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.column-day:nth-child(1) {
+  border-left: none;
+}
+
+.column-day-name {
+  align-items: stretch;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 4px;
+  margin: 0;  
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+.column-lines {
+  height: calc(700px - 50px);
+  border-radius: 12px;
+  z-index: -1;
+  background: repeating-linear-gradient(#fff, #fff 29px, #aaa 30px, #aaa 30px);
+}
+
+
+.course {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #000;
+  margin: 0 8px;
+  padding: 0;
+}
+
+.column-content {
+  position: relative;
+}
+
+.controls {
+  flex-direction: column;
+  margin: 16px;
+  padding: 0 16px;
+  width: 300px;
+}
+
+.course-tag {
+  border: 1px solid black;
+  width: 150px;
+  margin: 8px auto;
+  padding: 4px;
+}
+
+.course-tag div {
+  display: inline-block;
+  width: calc(100% - 30px);
+}
+
+.course-tag button {
+  width: 30px;
+}
+
+.permutation-controls {
+  margin: 0 auto;
+  width: 90px;
+}
+
+.permutation-controls button {
+  width: 30px;
+}
+
+.permutation-controls div {
+  display: inline-block;
+  text-align: center;
+  width: calc(100% - 60px);
+}
+
+input[type="time"] {
+  text-align: center;
+  width: 140px;
+  margin: 4px calc(50% - 70px);
+}
+
+@media screen and (max-aspect-ratio: 1/1) {
+  .main {
+    flex-direction: column;
+  }
+  .days {
+    width: 100vw;
+  }
+  .course {
+    width: calc(100% - 4px);
+    margin: 1px;
+  }
+}
+*/
