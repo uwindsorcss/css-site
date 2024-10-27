@@ -4,7 +4,6 @@
   { "name": "Highlights", "href": "/highlight" },
   { "name": "Events", "href": "/events" },
   { "name": "Discord", "href": "/discord" },
-  { "name": "Timetable Builder", "href": "/winzard" },
   { "name": "Store", "href": "https://store.uwindsorcss.ca" },
   {
     "name": "Resources",
@@ -19,6 +18,11 @@
         "name": "Incoming Student Guide",
         "href": "https://uwindsorcss.github.io/wiki/resources/guides/first-year",
         "description": "A guide for new students to help them get started with CS at UWindsor."
+      },
+      {
+        "name": "Timetable Builder",
+        "href": "/winzard",
+        "description": "A handy automatic timetable maker for UWindsor students."
       }
     ]
   }
