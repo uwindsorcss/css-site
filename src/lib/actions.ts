@@ -373,6 +373,19 @@ export async function addEventImage({ eventId, url }: { eventId: number; url: st
   }
 }
 
+export async function getEventImages(eventId: number) {
+  try {
+    const images = await prisma.eventImage.findMany({
+      where: {
+        eventId,
+      },
+    });
+    return images;
+  } catch (error) {
+    handleServerActionError(error as Error, "getEventImages");
+  }
+}
+
 export async function registerForEvent(eventId: number) {
   try {
     const session = await auth();

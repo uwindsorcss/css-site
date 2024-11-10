@@ -1,17 +1,18 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CldUploadWidget } from "next-cloudinary";
 import { addEventImage } from "@/lib/actions";
+import { getEventImages } from '@/lib/actions';
 
 interface PageProps {
   params: { events: string };
 }
 
-export default function Event({ params }: PageProps) {
+export default async function Event({ params }: PageProps) {
   const eventId = Number(params.events);
-
+  const [eventImages, setEventImages] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-
+  
   const handleUploadSuccess = (result: any) => {
     const imageUrl = result.info.secure_url;
     setImageUrl(imageUrl);
@@ -31,11 +32,33 @@ export default function Event({ params }: PageProps) {
   const handleDeletePreview = () => {
     setImageUrl(null);
   };
+  
+  useEffect(() => {
+    const fetchEventImages = async () => {
+      const images = await getEventImages(eventId);
+      const imageUrls = images? images.map((image) => image.url) : [];
+      setEventImages(imageUrls);
+    };
+    fetchEventImages();
+  }, []);
 
   // TODO Replace true with session can edit check.
   return (
     <div className="text-center">
-      <h1 className="text-4xl font-bold mb-5">{params.events}</h1>
+      <h2 className="text-2xl font-semibold mt-10">Gallery</h2>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 mt-5">
+        {eventImages.length === 0 && (
+          <p className="text-center text-lg font-semibold text-muted-foreground">No images to show</p>
+        )}
+        {eventImages.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt={`Event image ${index + 1}`}
+            className="w-full rounded shadow-md object-cover"
+          />
+        ))}
+      </div>
       { true && (
         <CldUploadWidget
         uploadPreset="next_preset"
