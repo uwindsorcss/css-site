@@ -399,6 +399,26 @@ export async function deleteEventImage(imageId: number) {
   }
 }
 
+export async function setEventThumbnail(eventId: number, imageUrl: string) {
+  try {
+    await prisma.thumbnailImage.upsert({
+      where: { eventId }, 
+      update: {
+        url: imageUrl, 
+      },
+      create: {
+        url: imageUrl,
+        event: {
+          connect: { id: eventId }, 
+        },
+      },
+    });
+    return success("Thumbnail updated successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "setEventThumbnail");
+  }
+}
+
 export async function registerForEvent(eventId: number) {
   try {
     const session = await auth();

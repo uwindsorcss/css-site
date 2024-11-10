@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { CldUploadWidget } from "next-cloudinary";
-import { addEventImage, deleteEventImage, getEventImages } from "@/lib/actions";
+import { addEventImage, deleteEventImage, getEventImages, setEventThumbnail } from "@/lib/actions";
 import { Button } from '@/components/ui/button';
 import { Upload, X } from 'lucide-react';
 import { EventImage } from '@/types/models';
@@ -38,6 +38,10 @@ export default function Event({ params }: PageProps) {
     await deleteEventImage(imageId);
   };
 
+  const setAsThumbnail = (eventId: number, imageUrl: string) => {
+    setEventThumbnail(eventId, imageUrl);
+  };
+
   useEffect(() => {
     const fetchEventImages = async () => {
       setLoading(true); // Start loading
@@ -67,6 +71,12 @@ export default function Event({ params }: PageProps) {
               >
                 <X size={18} />
               </button>
+              <Button
+              onClick={() => setAsThumbnail(eventId, img.url)}
+              className="absolute bottom-4 right-4 rounded px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            >
+              Set as Thumbnail
+            </Button>
             </div>
           ))}
         </div>
