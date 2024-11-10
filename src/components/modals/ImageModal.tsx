@@ -8,9 +8,10 @@ type ImageProps = {
   alt: string;
   width?: string | number;
   height?: string | number;
+  customClass?: string;
 };
 
-const ImageWithModal: React.FC<ImageProps> = ({ src, alt }) => {
+const ImageWithModal: React.FC<ImageProps> = ({ src, alt, customClass }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -20,6 +21,7 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt }) => {
           src={src}
           alt={alt}
           style={{ objectFit: "contain" }}
+          className={customClass || ""}
         />
       </div>
       {isModalOpen && (

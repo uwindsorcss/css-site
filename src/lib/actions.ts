@@ -386,6 +386,19 @@ export async function getEventImages(eventId: number) {
   }
 }
 
+export async function deleteEventImage(imageId: number) {
+  try {
+    await prisma.eventImage.delete({
+      where: {
+        id: imageId,
+      },
+    });
+    return success("Image deleted successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "deleteEventImage");
+  }
+}
+
 export async function registerForEvent(eventId: number) {
   try {
     const session = await auth();
