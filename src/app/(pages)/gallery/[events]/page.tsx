@@ -54,16 +54,16 @@ export default function Event({ params }: PageProps) {
 
   return (
     <div className="text-center">
-      <h2 className="text-2xl font-semibold">Gallery</h2>
+       <h1 className="text-center text-2xl font-bold md:text-4xl">Gallery</h1>
       {loading ? (
-        <p className="text-lg font-semibold text-muted-foreground">Loading event gallery...</p>
+        <p className="text-center text-2xl font-bold md:text-4xl">Loading event gallery...</p>
       ) : (
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 mt-6 mb-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 mt-10 mb-10">
           {eventImages.length === 0 && (
-            <p className="text-center text-lg font-semibold text-muted-foreground">No images to show</p>
+            <p className="text-lg font-semibold text-muted-foreground">No images to show</p>
           )}
           {eventImages.map((img) => (
-            <div key={img.id} className="relative group">
+            <div key={img.id} className="relative group rounded-md border border-border bg-card p-5 shadow-sm transition duration-300 ease-in-out hover:border-blue-950/50 hover:shadow-md hover:shadow-blue-950/20 dark:hover:border-yellow-600/50 dark:hover:shadow-yellow-600/20">
               <ImageWithModal src={img.url} alt="Event image" customClass="rounded shadow-md object-cover" />
               <button
                 onClick={() => handleDeleteImage(img.id)}
@@ -74,6 +74,7 @@ export default function Event({ params }: PageProps) {
               <Button
               onClick={() => setAsThumbnail(eventId, img.url)}
               className="absolute bottom-4 right-4 rounded px-3 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              variant={"ghost"}
             >
               Set as Thumbnail
             </Button>
