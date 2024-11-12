@@ -33,7 +33,7 @@ export default async function EventsPage({ searchParams }: EventsProps) {
     <>
       <h1 className="text-center text-4xl font-bold">Events</h1>
       <Tabs defaultValue={view ?? "list"} aria-label="Events View" className="w-full max-w-3xl">
-        {session && canEditEvent(session) && (
+        { session && canEditEvent(session) && (
           <EventFormDialog
             triggerButton={
               <Button size="full" className="mb-4" variant="accent">

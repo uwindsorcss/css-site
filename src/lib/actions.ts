@@ -262,13 +262,15 @@ export async function getDiscordAccountAvatar(discordId: string, avatarId: strin
 }
 
 // Event Actions
-export async function createEvent(event: EventFormData) {
+export async function createEvent(event: EventFormData){
   try {
-    const session = await auth();
-    if (!session || !canEditEvent(session))
-      return error("You do not have permission to create events.");
+    // const session = await auth();
+    // if (!session || !canEditEvent(session)) {
+    //   error("You do not have permission to create events.");
+    //   return -1;
+    // }
 
-    await prisma.event.create({
+    const eventCreated = await prisma.event.create({
       data: {
         title: event.title,
         description: event.description,
@@ -281,8 +283,8 @@ export async function createEvent(event: EventFormData) {
         endDate: event.endDate,
       },
     });
-
-    return success("Event created successfully.");
+    success("Event created successfully.");
+    return eventCreated.id;
   } catch (error) {
     handleServerActionError(error as Error, "createEvent");
   }
@@ -354,6 +356,66 @@ export async function deleteEvent(id: number) {
     return success("Event deleted successfully.", "/events");
   } catch (error) {
     handleServerActionError(error as Error, "deleteEvent");
+  }
+}
+
+export async function addEventImage({ eventId, url }: { eventId: number; url: string }) {
+  try {
+    await prisma.eventImage.create({
+      data: {
+        eventId,
+        url,
+      },
+    });
+    return success("Image added to database successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "addEventImage");
+  }
+}
+
+export async function getEventImages(eventId: number) {
+  try {
+    const images = await prisma.eventImage.findMany({
+      where: {
+        eventId,
+      },
+    });
+    return images;
+  } catch (error) {
+    handleServerActionError(error as Error, "getEventImages");
+  }
+}
+
+export async function deleteEventImage(imageId: number) {
+  try {
+    await prisma.eventImage.delete({
+      where: {
+        id: imageId,
+      },
+    });
+    return success("Image deleted successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "deleteEventImage");
+  }
+}
+
+export async function setEventThumbnail(eventId: number, imageUrl: string) {
+  try {
+    await prisma.thumbnailImage.upsert({
+      where: { eventId }, 
+      update: {
+        url: imageUrl, 
+      },
+      create: {
+        url: imageUrl,
+        event: {
+          connect: { id: eventId }, 
+        },
+      },
+    });
+    return success("Thumbnail updated successfully.");
+  } catch (error) {
+    handleServerActionError(error as Error, "setEventThumbnail");
   }
 }
 

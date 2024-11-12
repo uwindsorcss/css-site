@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AlarmClock, CalendarDays, Link, MapPin } from "lucide-react";
+import { AlarmClock, CalendarDays, Link, MapPin, Pencil } from "lucide-react";
 import FeedView from "@/components/views/FeedView";
 import MarkDownView from "@/components/views/MarkDownView";
 import BackButton from "@/components/ui/back-button";
@@ -17,6 +17,9 @@ import CopyButton from "@/components/ui/copy-button";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteEvent } from "@/lib/actions";
 import { auth } from "@/auth";
+import NextLink from "next/link";
+import { Button } from "@/components/ui/button";
+import ImageWithModal from "@/components/modals/ImageModal";
 
 interface PageProps {
   params: { id: string };
@@ -58,6 +61,7 @@ export default async function Post({ params, searchParams }: PageProps) {
     where: { id: eventId },
     include: {
       _count: { select: { EventRegistration: true } },
+      thumbnailImage: true,
     },
   });
 
@@ -127,6 +131,11 @@ export default async function Post({ params, searchParams }: PageProps) {
             label="Share"
             Icon={<Link size={18} className="mr-1" />}
           />
+          <NextLink href={`/gallery/${event.id}`}>
+            <Button>
+              View Gallery
+            </Button>
+          </NextLink>
           {session && canEditEvent(session) && (
             <div className="flex flex-wrap gap-2">
               <EditEventButton id={event.id} event={event} />
@@ -136,6 +145,9 @@ export default async function Post({ params, searchParams }: PageProps) {
         </>
       </div>
       <MarkDownView allowLinks markdown={event.description || ""} />
+      {event.thumbnailImage && (
+        <ImageWithModal src={event.thumbnailImage.url} alt="Event image" customClass="rounded shadow-md"/>
+      )}
       <div className="mt-10 w-full">
         <BackButton href="/events" searchParams={searchParams} />
       </div>
