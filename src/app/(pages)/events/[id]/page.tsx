@@ -133,7 +133,7 @@ export default async function Post({ params, searchParams }: PageProps) {
           />
           <NextLink href={`/gallery/${event.id}`}>
             <Button>
-              View Gallary
+              View Gallery
             </Button>
           </NextLink>
           {session && canEditEvent(session) && (
