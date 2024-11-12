@@ -16,11 +16,11 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt, customClass }) => {
 
   return (
     <>
-      <div className="relative w-full h-64 cursor-pointer" onClick={() => setIsModalOpen(true)}>
+      <div className="relative w-full h-64 cursor-pointer overflow-hidden" onClick={() => setIsModalOpen(true)}>
         <img
           src={src}
           alt={alt}
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "cover", width: "100%", height: "100%" }}
           className={customClass || ""}
         />
       </div>
