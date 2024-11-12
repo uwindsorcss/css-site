@@ -18,8 +18,7 @@ export default function EventGallery({ eventId, initialImages, canEdit }: EventG
   const [eventImages, setEventImages] = useState<EventImage[]>(initialImages);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  canEdit = true;
-
+  
   const handleUploadSuccess = (result: any) => {
     setImageUrl(result.info.secure_url);
   };
