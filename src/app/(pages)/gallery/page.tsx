@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { Metadata } from "next";
+import { auth } from "@/auth";
+import { canEditEvent } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Gallery",
@@ -16,15 +18,17 @@ export default async function GalleryPage() {
       id: true,
       title: true,
       thumbnailImage: true,
-    },
-    where: {
-      NOT: {
-        eventImages: {
-          none: {},
-        },
-      },
+      eventImages: true,
     },
   });
+
+  const session = await auth();
+
+  // Filter out events that don't have any images for non-editors
+  // Editors can also add images to events without images
+  if (session && !canEditEvent(session)) {
+    events.filter((event) => event.eventImages.length > 0);
+  }
 
   return (
     <>
