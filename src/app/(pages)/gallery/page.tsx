@@ -23,10 +23,10 @@ export default async function GalleryPage() {
   });
 
   const session = await auth();
+  const canEdit = session ? canEditEvent(session) : false;
 
-  // Filter out events that don't have any images for non-editors
-  // Editors can also add images to events without images
-  if (session && !canEditEvent(session)) {
+  // Remove events with no images if user can't edit
+  if (!canEdit) {
     events.filter((event) => event.eventImages.length > 0);
   }
 
