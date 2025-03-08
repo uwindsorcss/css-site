@@ -9,6 +9,8 @@ import { deletePost } from "@/lib/actions";
 import DeleteButton from "@/components/DeleteButton";
 import { AlarmClock, User } from "lucide-react";
 import { auth } from "@/auth";
+import NextLink from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface PageProps {
   params: { id: string };
@@ -47,10 +49,6 @@ export default async function Post({ params, searchParams }: PageProps) {
   return (
     <FeedView
       heading={post?.title}
-      banner={(post?.bannerUrl && {
-        url: post?.bannerUrl ?? "",
-        alt: post?.bannerAlt ?? "Banner image for the highlight."
-      }) || undefined}
       subheadings={[
         {
           text: authorName,
@@ -59,14 +57,20 @@ export default async function Post({ params, searchParams }: PageProps) {
           Icon2: AlarmClock,
         },
       ]}>
-
-      {session && canEditPost(session) && (
-        <div className="my-2 flex w-full flex-wrap gap-2">
+      <div className="my-2 flex w-full flex-wrap gap-2">
+        <NextLink href={`/gallery/${post.id}`}>
+          <Button>
+            View Gallery
+          </Button>
+        </NextLink>
+        {session && canEditPost(session) && (
+          <>
           <EditPostButton id={post!.id} post={post!} />
           <DeleteButton type={"post"} callback={deletePost} id={post!.id} />
-        </div>
+          </>
       )}
-      <MarkDownView allowLinks markdown={post!.content} />
+    </div>
+  <MarkDownView allowLinks markdown={post!.content} />
       <div className="mt-10 w-full">
         <BackButton href="/highlight" searchParams={searchParams} />
       </div>
