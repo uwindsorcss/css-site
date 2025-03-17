@@ -16,7 +16,7 @@
     "content": "This is a test post"
   },
   {
-    "title": "Test Post with Banner",
-    "content": "This is a test post with a banner."
+    "title": "Test Post without Banner",
+    "content": "This is a test post without a banner."
   }
 ]

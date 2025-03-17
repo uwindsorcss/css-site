@@ -58,8 +58,6 @@ async function seed() {
         data: {
           title: highlightData.title,
           id: highlightData.id,
-          bannerUrl: highlightData.bannerUrl,
-          bannerAlt: highlightData.bannerAlt,
           content: highlightData.content,
         },
       });
