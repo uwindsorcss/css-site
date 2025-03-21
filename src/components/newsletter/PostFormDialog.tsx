@@ -19,10 +19,6 @@ const postSchema = z.object({
       required_error: "The content is required.",
     })
     .min(1),
-  bannerUrl: z.string().optional(),
-  bannerAlt: z.string().optional(),
-  // TODO: ideally this should make it so alt text is required if an image is provided
-  //       using z.object() with .refine() could be a potential solution.
   isTeam: z.boolean().optional(),
 });
 
@@ -40,8 +36,6 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
     defaultValues: initialValues || {
       title: "",
       content: "",
-      bannerUrl: "",
-      bannerAlt: "",
       isTeam: false,
     },
   });
@@ -51,8 +45,6 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
       title: data.title,
       isTeam: data.isTeam,
       content: data.content,
-      bannerUrl: data.bannerUrl,
-      bannerAlt: data.bannerAlt,
     };
 
     if (id) await updatePost(post, id);
@@ -73,8 +65,6 @@ function PostFormDialog({ triggerButton, id, initialValues }: PostFormProps) {
       pendingButtonText={id ? "Updating Post..." : "Creating Post..."}
       contentClassName="sm:max-w-[800px]">
       <Input label="Title" type="text" placeholder=" e.g. Newsletter" {...form.register("title")} />
-      <Input label="Banner URL" type="text" placeholder="Banner Image URL" {...form.register("bannerUrl")} />
-      <Input label="Banner Alt Text" type="text" placeholder="Banner Image Alt Text" {...form.register("bannerAlt")} />
       <Textarea
         label="Content"
         type="text"
