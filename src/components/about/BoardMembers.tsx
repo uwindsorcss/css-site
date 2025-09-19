@@ -9,6 +9,10 @@ interface Member {
   position: string;
 }
 
+const EASTER_EGGS = {
+  "Anika Khan": <Anika />
+};
+
 async function BoardMembers() {
   const membersFile = await fs.readFile(
     path.join(process.cwd(), "src", "components", "about") + "/content.json",
@@ -33,7 +37,7 @@ async function BoardMembers() {
             />
           </div>
           <p className="text-md font-semibold">
-            {member.name === "Anika Khan" ? <Anika /> : member.name}
+            {EASTER_EGGS[member.name as keyof(typeof EASTER_EGGS)] ?? member.name}
           </p>
           <p className="text-sm text-gray-300">{member.position}</p>
         </div>
