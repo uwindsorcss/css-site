@@ -1,87 +1,87 @@
 [
   {
-    "name": "Tanzim Hossain",
-    "image": "/images/members/tanzim.jpg",
+    "name": "Affan Shahid",
+    "image": "/images/members/affan.png",
     "position": "President"
   },
   {
-    "name": "Borhan Saflo",
-    "image": "/images/members/borhan.jpg",
+    "name": "Brock Bovay",
+    "image": "/images/members/brock.png",
     "position": "Vice President"
-  },
-  {
-    "name": "Ahmad Munim",
-    "image": "/images/members/ahmad.jpg",
-    "position": "Treasurer"
-  },
-  {
-    "name": "Niko Jones",
-    "image": "/images/members/niko.jpg",
-    "position": "Head of Events"
-  },
-  {
-    "name": "Cam Vandermeersch",
-    "image": "/images/members/cam.jpg",
-    "position": "Head of Communications"
-  },
-  {
-    "name": "Umayer Khan",
-    "image": "/images/members/umayer.jpg",
-    "position": "Head of Student Affairs"
-  },
-  {
-    "name": "Calder Johnson",
-    "image": "/images/members/calder.jpg",
-    "position": "Head of Technology"
-  },
-  {
-    "name": "Gabriel Rueda",
-    "image": "/images/members/gabriel.jpg",
-    "position": "Career Advisor"
-  },
-  {
-    "name": "Affan Shahid",
-    "image": "/images/members/affan.jpg",
-    "position": "Merchandising Coordinator"
   },
   {
     "name": "Joshua Lebert",
     "image": "/images/members/joshua.jpg",
-    "position": "Promotions Coordinator"
+    "position": "Treasurer"
   },
   {
-    "name": "Lynn Hajj Hassan",
-    "image": "/images/members/lynn.jpg",
-    "position": "Design Coordinator"
+    "name": "Afnan Ahmed",
+    "image": "/images/members/afnan.webp",
+    "position": "Head of Events"
   },
   {
     "name": "Katarina Mantay",
-    "image": "/images/members/katarina.jpg",
-    "position": "Event Organizer"
-  },
-  {
-    "name": "Saymon Hwaier",
-    "image": "/images/members/saymon.jpg",
-    "position": "Event Coordinator"
-  },
-  {
-    "name": "Justin Zheng",
-    "image": "/images/members/justin.jpg",
-    "position": "Event Coordinator"
+    "image": "/images/members/katarina.png",
+    "position": "Head of Communications"
   },
   {
     "name": "Julia Ducharme",
-    "image": "/images/members/julia.jpg",
+    "image": "/images/members/julia.png",
+    "position": "Head of Student Affairs"
+  },
+  {
+    "name": "Kevin Zhang",
+    "image": "/images/members/kevin.png",
+    "position": "Head of Technology"
+  },
+  {
+    "name": "Tanzim Hossain",
+    "image": "/images/members/tanzim.jpg",
+    "position": "Career Advisor"
+  },
+  {
+    "name": "Aditya Patel",
+    "image": "/images/members/aditya.png",
+    "position": "Merchandising Coordinator"
+  },
+  {
+    "name": "Asma Altumi",
+    "image": "/images/members/asma.png",
+    "position": "Promotions Coordinator"
+  },
+  {
+    "name": "Ali Al Maamouri",
+    "image": "/images/members/ali.png",
+    "position": "Design Coordinator"
+  },
+  {
+    "name": "Abishek Bhandari",
+    "image": "/images/members/abishek.png",
     "position": "Event Coordinator"
   },
   {
-    "name": "Varun Panchal",
-    "image": "/images/members/varun.jpg",
+    "name": "Anant Kumar Singh",
+    "image": "/images/members/anant.png",
+    "position": "Event Coordinator"
+  },
+  {
+    "name": "Kaitlyn Carbonaro",
+    "image": "/images/members/kaitlyn.png",
+    "position": "Event Coordinator"
+  },
+  {
+    "name": "Riley Lozon",
+    "image": "/images/members/riley.png",
+    "position": "Event Coordinator"
+  },
+  {
+    "name": "Shameer Sheikh",
+    "image": "/images/members/shameer.png",
     "position": "Event Coordinator"
   },
   {
     "name": "Faraan Rashid",
-    "image": "/images/members/faraan.jpg",
+    "image": "/images/members/faraan.png",
     "position": "Senior Representative"
   },
   {
