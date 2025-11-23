@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import IconCard from "./IconCard";
 import Section from "./Section";
 import { GraduationCap, Code2, Users, FerrisWheel } from "lucide-react";
+import MarmotConfetti from "../easter-eggs/MarmotConfetti";
 
 export const revalidate = 3600;
 
@@ -24,6 +25,8 @@ function AboutUsSection({ content }: AboutUsSectionProps) {
   const icons = [GraduationCap, Code2, Users, FerrisWheel];
   return (
     <Section heading={content.heading} subheading={content.subheading}>
+      <MarmotConfetti />
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {content.cards.map((card, index) => (
           <IconCard
