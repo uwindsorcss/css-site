@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import Image from "next/image";
 import Anika from "../easter-eggs/Anika";
+import Marmot from "../easter-eggs/Marmot";
 
 interface Member {
   name: string;
@@ -10,7 +11,8 @@ interface Member {
 }
 
 const EASTER_EGGS = {
-  "Anika Khan": <Anika />
+  "Anika Khan": <Anika />,
+  "Ali Al Maamouri": <Marmot />,
 };
 
 async function BoardMembers() {
