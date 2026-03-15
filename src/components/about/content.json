@@ -80,6 +80,11 @@
     "position": "Event Coordinator"
   },
   {
+    "name": "Anika Khan",
+    "image": "/images/members/anika.jpg",
+    "position": "Secretary"
+  },
+  {
     "name": "Faraan Rashid",
     "image": "/images/members/faraan.png",
     "position": "Senior Representative"
@@ -103,10 +108,5 @@
     "name": "Cristian Argento",
     "image": "/images/members/cristian.png",
     "position": "1st Year Representative"
-  },
-  {
-    "name": "Anika Khan",
-    "image": "/images/members/anika.jpg",
-    "position": "Secretary"
   }
 ]
