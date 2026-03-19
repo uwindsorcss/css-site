@@ -19,7 +19,6 @@
   },
   "pnpm": {
     "overrides": {
-      "brace-expansion": "2.0.2",
       "braces": "3.0.3",
       "cross-spawn": "7.0.5",
       "diff": "4.0.4",
