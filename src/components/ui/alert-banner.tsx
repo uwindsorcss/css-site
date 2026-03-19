@@ -25,9 +25,11 @@ async function AlertBanner({
   const cookieStore = await cookies();
   const dismissalCookieId = `dismiss_banner_${id}`;
 
+  // eslint-disable-next-line react-hooks/purity
+  const now = Date.now();
   const isShown =
     !cookieStore.get(dismissalCookieId) &&
-    (!expirationDate || expirationDate.getTime() > Date.now());
+    (!expirationDate || expirationDate.getTime() > now);
 
   async function dismissBanner(dismissalCookieId: string) {
     "use server";
