@@ -13,7 +13,7 @@ interface AlertBannerProps {
   linkText?: string;
 }
 
-function AlertBanner({
+async function AlertBanner({
   id,
   expirationDate,
   hideOnMobile,
@@ -22,7 +22,7 @@ function AlertBanner({
   text,
   url,
 }: AlertBannerProps) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const dismissalCookieId = `dismiss_banner_${id}`;
 
   const isShown =
@@ -31,7 +31,7 @@ function AlertBanner({
 
   async function dismissBanner(dismissalCookieId: string) {
     "use server";
-    cookies().set(dismissalCookieId, "true", {
+    (await cookies()).set(dismissalCookieId, "true", {
       expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
   }

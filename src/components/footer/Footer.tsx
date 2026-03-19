@@ -2,17 +2,17 @@ import SocialIcon from "./SocialIcon";
 import {
   SiFacebook,
   SiInstagram,
-  SiLinkedin,
   SiX,
   SiYoutube,
   SiGithub,
 } from "@icons-pack/react-simple-icons";
+import { Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="bg-primary px-5 py-20 text-center text-primary-foreground">
       <div className="mb-8 flex justify-center gap-4">
-        <SocialIcon href="https://www.linkedin.com/company/uwindsorcss/" Icon={SiLinkedin} />
+        <SocialIcon href="https://www.linkedin.com/company/uwindsorcss/" Icon={Linkedin} />
         <SocialIcon href="https://x.com/UWindsorCSS" Icon={SiX} />
         <SocialIcon href="https://instagram.com/uwindsorcss" Icon={SiInstagram} />
         <SocialIcon href="https://facebook.com/uwindsorcss" Icon={SiFacebook} />
