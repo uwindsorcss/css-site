@@ -1,0 +1,46 @@
+[env]
+_.file = ".env"
+
+[tools]
+node = "lts"
+pnpm = "latest"
+
+[tasks."db:up"]
+description = "Start the Postgres container"
+run = "docker compose up db -d"
+
+[tasks."db:down"]
+description = "Stop the Postgres container"
+run = "docker compose down"
+
+[tasks."db:logs"]
+description = "Tail Postgres container logs"
+run = "docker compose logs db -f"
+
+[tasks.migrate]
+description = "Run Prisma migrations"
+run = "pnpm prisma migrate deploy"
+depends = ["db:up"]
+
+[tasks.seed]
+description = "Seed the database"
+run = "pnpm prisma db seed"
+depends = ["migrate"]
+
+[tasks.generate]
+description = "Generate Prisma client"
+run = "pnpm prisma generate"
+
+[tasks.setup]
+description = "Full dev setup: start DB, migrate, and seed"
+depends = ["seed", "generate"]
+
+[tasks.dev]
+description = "Start the Next.js dev server (DB must be up)"
+run = "pnpm dev"
+depends = ["migrate", "generate"]
+
+[tasks.studio]
+description = "Open Prisma Studio"
+run = "pnpm prisma studio"
+depends = ["db:up"]
