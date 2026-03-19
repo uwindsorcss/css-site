@@ -5,6 +5,7 @@ import { HelpCircle } from "lucide-react";
 import CSSIcon from "@/components/discord/CSSIcon";
 import discordContent from "./content.json";
 import { Metadata } from "next";
+import type { ReactNode } from "react";
 import DiscordMemberCounts from "@/components/discord/DiscordMemberCounts";
 import ServerCardContent from "@/components/discord/DiscordCardContent";
 
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 function parseTextWithLinks(text: string) {
   const linkRegex = /\[([^[]+)]\(([^)]+)\)/g;
   const lines = text.split("\n");
-  const parts: JSX.Element[] = [];
+  const parts: ReactNode[] = [];
 
   lines.forEach((line, lineIndex) => {
     let lastIndex = 0;

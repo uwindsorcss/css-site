@@ -55,7 +55,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, InputPropsWClass>(functi
   );
 });
 
-export const Checkbox = forwardRef<HTMLInputElement, any>(function Checkbox(
+export const Checkbox = forwardRef<HTMLButtonElement, any>(function Checkbox(
   { label, ...props },
   ref
 ) {

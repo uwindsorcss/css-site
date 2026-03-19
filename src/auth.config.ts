@@ -37,7 +37,7 @@ const authConfig: NextAuthConfig = {
       name: "University of Windsor",
       clientId: process.env.AZURE_AD_CLIENT_ID,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-      tenantId: process.env.AZURE_AD_TENANT_ID,
+      issuer: `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/v2.0/`,
       allowDangerousEmailAccountLinking: true,
       wellKnown: `https://login.microsoftonline.com/${process.env.AZURE_AD_TENANT_ID}/v2.0/.well-known/openid-configuration?appid=${process.env.AZURE_AD_CLIENT_ID}`,
       authorization: {
