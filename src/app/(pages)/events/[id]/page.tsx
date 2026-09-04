@@ -132,9 +132,7 @@ export default async function Post({ params, searchParams }: PageProps) {
             Icon={<Link size={18} className="mr-1" />}
           />
           <NextLink href={`/gallery/${event.id}`}>
-            <Button>
-              View Gallery
-            </Button>
+            <Button>View Gallery</Button>
           </NextLink>
           {session && canEditEvent(session) && (
             <div className="flex flex-wrap gap-2">
@@ -146,7 +144,11 @@ export default async function Post({ params, searchParams }: PageProps) {
       </div>
       <MarkDownView allowLinks markdown={event.description || ""} />
       {event.thumbnailImage && (
-        <ImageWithModal src={event.thumbnailImage.url} alt="Event image" customClass="rounded shadow-md"/>
+        <ImageWithModal
+          src={event.thumbnailImage.url}
+          alt="Event image"
+          customClass="rounded shadow-md"
+        />
       )}
       <div className="mt-10 w-full">
         <BackButton href="/events" searchParams={searchParams} />
