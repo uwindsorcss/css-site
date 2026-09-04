@@ -31,12 +31,12 @@
   },
   {
     "name": "To be announced",
-    "image": "",
+    "image": "/images/members/cat.png",
     "position": "Head of Technology"
   },
   {
     "name": "To be announced",
-    "image": "",
+    "image": "/images/members/cat.png",
     "position": "Career Advisor"
   },
   {
@@ -45,23 +45,23 @@
     "position": "Merchandising Coordinator"
   },
   {
-    "name": "Asma Altumi",
-    "image": "/images/members/asma.png",
+    "name": "to be announced",
+    "image": "/images/members/cat.png",
     "position": "Promotions Coordinator"
   },
   {
     "name": "Lynn Hajj Hassan",
-    "image": "/images/members/lynn.png",
+    "image": "/images/members/cat.png",
     "position": "Design Coordinator"
   },
   {
     "name": "Madi Gertsakis",
-    "image": "/images/members/madi.png",
+    "image": "/images/members/cat.png",
     "position": "Event Coordinator"
   },
   {
     "name": "Rayan Chami",
-    "image": "/images/members/rayan.png",
+    "image": "/images/members/cat.png",
     "position": "Event Coordinator"
   },
   {
@@ -76,7 +76,7 @@
   },
   {
     "name": "Sadat Tanzim",
-    "image": "/images/members/sadat.png",
+    "image": "/images/members/cat.png",
     "position": "Event Coordinator"
   },
   {
@@ -106,7 +106,7 @@
   },
   {
     "name": "Riley Lozon",
-    "image": "/images/members/riley.png",
+    "image": "/images/members/cat.png",
     "position": "Secretary"
   }
 ]
