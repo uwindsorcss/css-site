@@ -7,6 +7,4 @@ export type EventImage = {
   eventId: number | null;
 };
 
-export type Event = {
-
-}
+export type Event = {};

@@ -16,7 +16,9 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt, customClass }) => {
 
   return (
     <>
-      <div className="relative w-full h-64 cursor-pointer overflow-hidden" onClick={() => setIsModalOpen(true)}>
+      <div
+        className="relative h-64 w-full cursor-pointer overflow-hidden"
+        onClick={() => setIsModalOpen(true)}>
         <img
           src={src}
           alt={alt}
@@ -26,22 +28,16 @@ const ImageWithModal: React.FC<ImageProps> = ({ src, alt, customClass }) => {
       </div>
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-90 flex justify-center items-center z-50"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div className="relative w-screen h-screen p-4 flex justify-center items-center">
-            <img
-              src={src}
-              alt={alt}
-              className="w-full h-full object-contain"
-            />
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          onClick={() => setIsModalOpen(false)}>
+          <div className="relative flex h-screen w-screen items-center justify-center p-4">
+            <img src={src} alt={alt} className="h-full w-full object-contain" />
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 setIsModalOpen(false);
               }}
-              className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 z-10"
-            >
+              className="absolute right-4 top-4 z-10 rounded-full bg-white p-2 dark:bg-gray-800">
               Close
             </button>
           </div>

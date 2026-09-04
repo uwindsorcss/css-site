@@ -1,7 +1,7 @@
 [
   {
-    "name": "Affan Shahid",
-    "image": "/images/members/affan.png",
+    "name": "Joshua Lebert",
+    "image": "/images/members/joshua.jpg",
     "position": "President"
   },
   {
@@ -10,58 +10,63 @@
     "position": "Vice President"
   },
   {
-    "name": "Joshua Lebert",
-    "image": "/images/members/joshua.jpg",
+    "name": "Julia Ducharme",
+    "image": "/images/members/julia.png",
     "position": "Treasurer"
   },
   {
-    "name": "Afnan Ahmed",
-    "image": "/images/members/afnan.webp",
+    "name": "Yousif Elia",
+    "image": "/images/members/yousif.png",
     "position": "Head of Events"
-  },
-  {
-    "name": "Katarina Mantay",
-    "image": "/images/members/katarina.png",
-    "position": "Head of Communications"
-  },
-  {
-    "name": "Julia Ducharme",
-    "image": "/images/members/julia.png",
-    "position": "Head of Student Affairs"
-  },
-  {
-    "name": "Kevin Zhang",
-    "image": "/images/members/kevin.png",
-    "position": "Head of Technology"
-  },
-  {
-    "name": "Tanzim Hossain",
-    "image": "/images/members/tanzim.jpg",
-    "position": "Career Advisor"
   },
   {
     "name": "Aditya Patel",
     "image": "/images/members/aditya.png",
+    "position": "Head of Communications"
+  },
+  {
+    "name": "Abir Hirani",
+    "image": "/images/members/abir.png",
+    "position": "Head of Student Affairs"
+  },
+  {
+    "name": "To be announced",
+    "image": "/images/members/cat.png",
+    "position": "Head of Technology"
+  },
+  {
+    "name": "To be announced",
+    "image": "/images/members/cat.png",
+    "position": "Career Advisor"
+  },
+  {
+    "name": "Ali Abou Hamad",
+    "image": "/images/members/ali.png",
     "position": "Merchandising Coordinator"
   },
   {
-    "name": "Asma Altumi",
-    "image": "/images/members/asma.png",
+    "name": "to be announced",
+    "image": "/images/members/cat.png",
     "position": "Promotions Coordinator"
   },
   {
-    "name": "Ali Al Maamouri",
-    "image": "/images/members/ali.png",
+    "name": "Lynn Hajj Hassan",
+    "image": "/images/members/cat.png",
     "position": "Design Coordinator"
   },
   {
-    "name": "Abishek Bhandari",
-    "image": "/images/members/abishek.png",
+    "name": "Madi Gertsakis",
+    "image": "/images/members/cat.png",
     "position": "Event Coordinator"
   },
   {
-    "name": "Anant Kumar Singh",
-    "image": "/images/members/anant.png",
+    "name": "Rayan Chami",
+    "image": "/images/members/cat.png",
+    "position": "Event Coordinator"
+  },
+  {
+    "name": "Katarina Mantay",
+    "image": "/images/members/katarina.png",
     "position": "Event Coordinator"
   },
   {
@@ -70,23 +75,18 @@
     "position": "Event Coordinator"
   },
   {
-    "name": "Riley Lozon",
-    "image": "/images/members/riley.png",
+    "name": "Sadat Tanzim",
+    "image": "/images/members/cat.png",
     "position": "Event Coordinator"
   },
   {
-    "name": "Shameer Sheikh",
-    "image": "/images/members/shameer.png",
-    "position": "Event Coordinator"
-  },
-  {
-    "name": "Faraan Rashid",
-    "image": "/images/members/faraan.png",
+    "name": "Ewaoluwa Olakunle",
+    "image": "/images/members/ewa.png",
     "position": "Senior Representative"
   },
   {
-    "name": "Joanne Hou",
-    "image": "/images/members/joanne.jpg",
+    "name": "Iyanuoluwa Adegboyega",
+    "image": "/images/members/iyanu.png",
     "position": "2nd Year Representative"
   },
   {
@@ -105,8 +105,8 @@
     "position": "1st Year Representative"
   },
   {
-    "name": "Anika Khan",
-    "image": "/images/members/anika.jpg",
+    "name": "Riley Lozon",
+    "image": "/images/members/cat.png",
     "position": "Secretary"
   }
 ]

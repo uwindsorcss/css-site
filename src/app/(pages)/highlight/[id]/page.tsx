@@ -59,18 +59,16 @@ export default async function Post({ params, searchParams }: PageProps) {
       ]}>
       <div className="my-2 flex w-full flex-wrap gap-2">
         <NextLink href={`/gallery/${post.id}`}>
-          <Button>
-            View Gallery
-          </Button>
+          <Button>View Gallery</Button>
         </NextLink>
         {session && canEditPost(session) && (
           <>
-          <EditPostButton id={post!.id} post={post!} />
-          <DeleteButton type={"post"} callback={deletePost} id={post!.id} />
+            <EditPostButton id={post!.id} post={post!} />
+            <DeleteButton type={"post"} callback={deletePost} id={post!.id} />
           </>
-      )}
-    </div>
-  <MarkDownView allowLinks markdown={post!.content} />
+        )}
+      </div>
+      <MarkDownView allowLinks markdown={post!.content} />
       <div className="mt-10 w-full">
         <BackButton href="/highlight" searchParams={searchParams} />
       </div>

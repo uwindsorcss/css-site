@@ -2,7 +2,6 @@ import fs from "fs/promises";
 import path from "path";
 import Image from "next/image";
 import Anika from "../easter-eggs/Anika";
-import Marmot from "../easter-eggs/Marmot";
 
 interface Member {
   name: string;
@@ -12,7 +11,6 @@ interface Member {
 
 const EASTER_EGGS = {
   "Anika Khan": <Anika />,
-  "Ali Al Maamouri": <Marmot />,
 };
 
 async function BoardMembers() {
@@ -39,7 +37,7 @@ async function BoardMembers() {
             />
           </div>
           <p className="text-md font-semibold">
-            {EASTER_EGGS[member.name as keyof(typeof EASTER_EGGS)] ?? member.name}
+            {EASTER_EGGS[member.name as keyof typeof EASTER_EGGS] ?? member.name}
           </p>
           <p className="text-sm text-gray-300">{member.position}</p>
         </div>

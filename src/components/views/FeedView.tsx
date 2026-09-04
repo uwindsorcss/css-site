@@ -54,7 +54,11 @@ const FeedView = ({ children, heading, banner, subheadings }: FeedViewProps) => 
         <div className="flex w-full flex-col gap-2">
           {heading && <h1 className="text-xl font-bold sm:text-2xl">{heading}</h1>}
           {banner && (
-            <img className="w-full max-h-[60vh] object-contain rounded-md" src={banner.url} alt={banner.alt} />
+            <img
+              className="max-h-[60vh] w-full rounded-md object-contain"
+              src={banner.url}
+              alt={banner.alt}
+            />
             // TODO: ^ should prob use nextjs Image, but causes problems when using external URLS
             // TODO: (fix) with non-landscape images, the corners wont be rounded
           )}
