@@ -4,7 +4,7 @@
   { "name": "Highlights", "href": "/highlight" },
   { "name": "Events", "href": "/events" },
   { "name": "Discord", "href": "/discord" },
-  { "name": "Store", "href": "https://f47qnw-bi.myshopify.com"}, 
+  { "name": "Store", "href": "https://f47qnw-bi.myshopify.com" },
   {
     "name": "Resources",
     "href": "#",
@@ -20,5 +20,6 @@
         "description": "A guide for new students to help them get started with CS at UWindsor."
       }
     ]
-  }
+  },
+  { "name": "Scavenger Hunt", "href": "/hunt" }
 ]
