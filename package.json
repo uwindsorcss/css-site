@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/list": "^6.1.11",
@@ -26,6 +28,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@icons-pack/react-simple-icons": "^9.4.1",
     "@internationalized/date": "^3.5.2",
+    "@mui/material": "^9.4.0",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
