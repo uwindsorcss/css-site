@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import EventGallery from '@/components/gallery/EventGallery';
+import EventGallery from "@/components/gallery/EventGallery";
 import { getEventImages } from "@/lib/actions";
 import { canEditEvent } from "@/lib/utils";
 
@@ -13,11 +13,5 @@ export default async function Event({ params }: PageProps) {
   const session = await auth();
   const canEdit = session ? canEditEvent(session) : false;
 
-  return (
-    <EventGallery
-      eventId={eventId}
-      initialImages={images || []}
-      canEdit={canEdit}
-    />
-  );
+  return <EventGallery eventId={eventId} initialImages={images || []} canEdit={canEdit} />;
 }

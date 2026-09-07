@@ -26,7 +26,9 @@ const MarkDownView: FC<Props> = function MarkdownView({ className, markdown, all
           if (allowLinks) return <a {...props} />;
           return <span className="font-medium underline" {...props} />;
         },
-        img: ({ node, ...props }) => <ImageWithModal src={props.src || ''} alt={props.alt ?? ''} {...props} />,
+        img: ({ node, ...props }) => (
+          <ImageWithModal src={props.src || ""} alt={props.alt ?? ""} {...props} />
+        ),
         // @ts-ignore
         members: BoardMembers,
       }}>

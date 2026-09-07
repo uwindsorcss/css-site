@@ -39,7 +39,7 @@ async function BoardMembers() {
             />
           </div>
           <p className="text-md font-semibold">
-            {EASTER_EGGS[member.name as keyof(typeof EASTER_EGGS)] ?? member.name}
+            {EASTER_EGGS[member.name as keyof typeof EASTER_EGGS] ?? member.name}
           </p>
           <p className="text-sm text-gray-300">{member.position}</p>
         </div>

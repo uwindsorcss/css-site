@@ -262,7 +262,7 @@ export async function getDiscordAccountAvatar(discordId: string, avatarId: strin
 }
 
 // Event Actions
-export async function createEvent(event: EventFormData){
+export async function createEvent(event: EventFormData) {
   try {
     // const session = await auth();
     // if (!session || !canEditEvent(session)) {
@@ -402,14 +402,14 @@ export async function deleteEventImage(imageId: number) {
 export async function setEventThumbnail(eventId: number, imageUrl: string) {
   try {
     await prisma.thumbnailImage.upsert({
-      where: { eventId }, 
+      where: { eventId },
       update: {
-        url: imageUrl, 
+        url: imageUrl,
       },
       create: {
         url: imageUrl,
         event: {
-          connect: { id: eventId }, 
+          connect: { id: eventId },
         },
       },
     });
