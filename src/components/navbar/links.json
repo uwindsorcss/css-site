@@ -20,5 +20,6 @@
         "description": "A guide for new students to help them get started with CS at UWindsor."
       }
     ]
-  }
+  },
+  { "name": "Scavenger Hunt", "href": "/hunt" }
 ]
