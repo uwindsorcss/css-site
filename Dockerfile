@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM node:24-slim AS base
 WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl
 ENV PNPM_HOME="/pnpm"
